@@ -19,11 +19,15 @@ import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 
 import java.io.IOException
+<<<<<<< HEAD
 import java.io.File
 import java.io.FileWriter
 import java.util.Collections.replaceAll
 
 
+=======
+import android.os.AsyncTask
+>>>>>>> 6fc02d5bb7c34fc01a70d28b5f32ed512ac8c492
 
 
 
@@ -52,10 +56,17 @@ class MainActivity : AppCompatActivity() {
       override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
       setContentView(R.layout.activity_main)
+<<<<<<< HEAD
 //        val r =MyTask().execute()
 //        val url = "https://10times.com/dubai-ae"
 //        val doc = Jsoup.connect(url).get()
 //        val title = doc.title()
+=======
+//          val r =MyTask().execute()
+////        val url = "https://10times.com/dubai-ae"
+////        val doc = Jsoup.connect(url).get()
+////        val title = doc.title()
+>>>>>>> 6fc02d5bb7c34fc01a70d28b5f32ed512ac8c492
 //        val textView: TextView = findViewById(R.id.textView2)
 //        textView.setText("" + r)
 
@@ -64,6 +75,7 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
 
+<<<<<<< HEAD
 //        val myWebView: WebView = findViewById(R.id.webview)
 //        myWebView.loadUrl("https://google.com")
 //        myWebView.settings.javaScriptEnabled = true
@@ -83,12 +95,34 @@ class MainActivity : AppCompatActivity() {
 //        // system behavior (probably exit the activity)
 //        return super.onKeyDown(keyCode, event)
 //    }
+=======
+        val myWebView: WebView = findViewById(R.id.webview)
+        myWebView.loadUrl("https://diplomatssummit.com")
+        myWebView.settings.javaScriptEnabled = true
+        myWebView.webViewClient = WebViewClient()
+        (WebViewClient())
+
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        val myWebView: WebView = findViewById(R.id.webview)
+        // Check if the key event was the Back button and if there's history
+        if (keyCode == KeyEvent.KEYCODE_BACK && myWebView.canGoBack()) {
+            myWebView.goBack()
+            return true
+        }
+        // If it wasn't the Back key or there's no web page history, bubble up to the default
+        // system behavior (probably exit the activity)
+        return super.onKeyDown(keyCode, event)
+    }
+>>>>>>> 6fc02d5bb7c34fc01a70d28b5f32ed512ac8c492
 
 
 
     var background = object : Thread(){
         override fun run() {
             val doc: Document
+<<<<<<< HEAD
 //            fun WriteToFile(s: String) {
 //                try {
 //                    val fo = FileWriter("/app/src/myfile.html",true)
@@ -129,6 +163,16 @@ class MainActivity : AppCompatActivity() {
 
 
 
+=======
+            try {
+                doc = Jsoup.connect("https://10times.com/dubai-ae").get()
+                val divTag = doc.getElementById("content")
+
+                this@MainActivity.runOnUiThread(java.lang.Runnable {
+                    val textView: TextView = findViewById(R.id.textView2)
+                    textView.setText("" + divTag)
+                })
+>>>>>>> 6fc02d5bb7c34fc01a70d28b5f32ed512ac8c492
 
             } catch (e: IOException) {
                 e.printStackTrace()
