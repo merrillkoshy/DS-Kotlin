@@ -1,12 +1,17 @@
 package diplomatssummit.com.diplomatssummit
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.net.Uri
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +22,9 @@ import org.jsoup.nodes.Document
 import java.io.IOException
 import android.webkit.WebViewClient
 import android.webkit.WebSettings
-
-
+import android.widget.FrameLayout
+import android.widget.ProgressBar
+import kotlinx.android.synthetic.main.fragment_events.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -40,45 +46,124 @@ class Eventsds : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    val event_listing: ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initializeWidgets()
+
+
+        SiteGrabber().execute()
+    }
+
+
+
+
+    private fun initializeWidgets() {
+
+        try {
+
+            val textView: TextView = view!!.findViewById(R.id.textView)
+            val progressBar: ProgressBar = view!!.findViewById(R.id.progress_bar)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_events, container, false)
-
-
-
-//        val doc = Jsoup.connect("https://10times.com/dubai-ae").get()
-//        val stringer = "#content > tr:nth-child(" + 1 + ")"
-//        val selecting = doc.select(stringer)
-
-
-
-        val textView: TextView = view.findViewById(R.id.textView)
-        val document = Jsoup.connect("https://10times.com/dubai-ae").get()
-        val parsed = Jsoup.parseBodyFragment("https://10times.com/dubai-ae");
-        val body = document.body()
-        val paragraphs = body.getElementsByTag("p")
-        for (paragraph in paragraphs) {
-            System.out.println(paragraph.text())
-        }
-        val stringer = "#content > tr:nth-child(" + 1 + ")"
-        val selecting = document.select(stringer)
-        val mHandler = Handler()
-        val mRunnable= Runnable { textView.setText(selecting.toString()) }
-        mHandler.post(mRunnable)
-
-
-
-
+        val recy : RecyclerView=view.findViewById(R.id.event_list_recy)
+        recy.layoutManager = LinearLayoutManager(this)
+        recy.adapter = EventAdapter(event_listing,this)
 
         return view
 
     }
+
+    private inner class SiteGrabber : AsyncTask<Void, Boolean, String>() {
+
+        override fun doInBackground(vararg voids: Void): String {
+
+            publishProgress(true)
+
+            val data = StringBuilder()
+            val sitecont = StringBuilder()
+            var i=0
+            try {
+
+                    val document = Jsoup.connect("https://10times.com/dubai-ae").get()
+                    //Document parsed = Jsoup.parseBodyFragment("https://10times.com/dubai-ae");
+                    val body = document.body()
+                    val newValue = ""
+                    val paragraphs = body.getElementsByTag("h2")
+
+                    loop@for (element in paragraphs){
+                        val ad="#reveal-ad"
+                        val ad_select=document.select(ad)
+
+                        i++
+                        val date=document.select("#content > tr:nth-child(" + i + ") > td.text-drkr").toString()
+                        if(date=="")
+                            continue@loop
+                        val pattern = "<[^>]*>".toRegex()
+
+                        val oldValue = pattern
+
+
+                        val output1 = date.replace(oldValue, newValue)
+                        val output=output1.replace(ad_select.text(),"")
+                        data.append("\n\n").append(output).append("\n\n").append(element.text())
+                    }
+                    data.append("\n\n")
+
+
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            publishProgress(false)
+
+            return data.toString()
+        }
+
+
+
+        override fun onProgressUpdate(vararg values: Boolean?) {
+            super.onProgressUpdate(*values)
+
+            if (values != null && values.size > 0) {
+
+                val state = values[0]
+                progress_bar.setVisibility(if (state!!) View.VISIBLE else View.GONE)
+            }
+        }
+
+
+
+        override fun onPostExecute(response: String?) {
+            var response = response
+
+            if (response == null || response.isEmpty()) {
+                response = "Parsing Exception"
+            }
+
+            updateResponse(response)
+        }
+    }
+    private fun addlist(response: String) {
+        var response = response
+        event_listing.add(response)
+    }
+
+    private fun updateResponse(response: String) {
+
+        textView.setText(response)
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
@@ -100,19 +185,7 @@ class Eventsds : Fragment() {
         listener = null
     }
 
-//    object JsoupTester {
-//        @JvmStatic
-//        fun main(args: Array<String>) {
-//
-//            val html = "https://10times.com/dubai-ae"
-//            val document = Jsoup.parseBodyFragment(html)
-//            val body = document.body()
-//            val paragraphs = body.getElementsByTag("p")
-//            for (paragraph in paragraphs) {
-//                System.out.println(paragraph.text())
-//            }
-//        }
-//    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -149,38 +222,6 @@ class Eventsds : Fragment() {
                 }
     }
 
-//    var background = object : Thread() {
-//        override fun run() {
-//            val doc: Document
-//            try {
-//                val doc = Jsoup.connect("https://10times.com/dubai-ae").get()
-//                val stringer = "#content > tr:nth-child(" + 1 + ")"
-//                val selecting = doc.select(stringer)
-//                this@Eventsds.runOnUiThread(java.lang.Runnable {
-//                    val textView: TextView = view(R.id.textView2)
-//                    textView.setText(selecting.toString())
-//                })
-//
-////                for (i in 1..2) {
-////                    val stringer = "#content > tr:nth-child(" + i + ")"
-////                    val selecting = doc.select(stringer)
-////                    val s = Jsoup.parse(selecting.toString())
-////                    val pattern = "<[^>]*>".toRegex()
-////
-////                    var str = s.toString()
-////                    val oldValue = pattern
-////                    val newValue = ""
-////
-////                    val output = "testing"
-//////                    val output = str.replace(oldValue, newValue)
-////
-////
-////                }
-//            } catch (e: IOException) {
-//                e.printStackTrace()
-//            }
-//        }
-//
-//    }
+
 }
 
