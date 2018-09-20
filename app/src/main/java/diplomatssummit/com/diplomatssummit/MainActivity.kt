@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
 import android.support.v4.app.Fragment
+import android.webkit.WebView
+import android.webkit.WebViewClient
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -16,7 +18,7 @@ import org.jsoup.nodes.Document
 import java.io.IOException
 
 
-class MainActivity : AppCompatActivity(),Home.OnFragmentInteractionListener,Eventsds.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity(),Home.OnFragmentInteractionListener,DS_Events.OnFragmentInteractionListener {
 
     private var mTextMessage: TextView? = null
 
@@ -29,8 +31,8 @@ class MainActivity : AppCompatActivity(),Home.OnFragmentInteractionListener,Even
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_events -> {
-                title = "EventTest"
-                val eventsFragment = Eventsds.newInstance()
+                title = "Events in Dubai"
+                val eventsFragment = DS_Events.newInstance()
                 openFragment(eventsFragment)
                 return@OnNavigationItemSelectedListener true
             }
@@ -52,20 +54,23 @@ class MainActivity : AppCompatActivity(),Home.OnFragmentInteractionListener,Even
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        val mWebView: WebView =findViewById(R.id.webview)
+        mWebView.loadUrl("https://diplomatssummit.com/mobile/index.php")
+
+        // Enable Javascript
+        val webSettings = mWebView.getSettings()
+        webSettings.setJavaScriptEnabled(true)
+
+        // Force links and redirects to open in the WebView instead of in a browser
+        mWebView.setWebViewClient(WebViewClient())
+
+
+
         val bottomNavigation: BottomNavigationView = findViewById(R.id.navigation)
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-
-
-
-
-//        val doc = Jsoup.connect("https://10times.com/dubai-ae").get()
-//        val stringer = "#content > tr:nth-child(" + 1 + ")"
-//        val selecting = doc.select(stringer)
-//        this@MainActivity.runOnUiThread(java.lang.Runnable {
-//            val textView: TextView = findViewById(R.id.textView2)
-//            textView.setText(selecting.toString())
-//        })
 
 
     }

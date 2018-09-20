@@ -1,28 +1,17 @@
 package diplomatssummit.com.diplomatssummit
 
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebView
 import android.widget.TextView
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import java.io.IOException
-import android.webkit.WebViewClient
-import android.webkit.WebSettings
-import android.widget.FrameLayout
 import android.widget.ProgressBar
 import kotlinx.android.synthetic.main.fragment_events.*
 
@@ -76,8 +65,8 @@ class Eventsds : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_events, container, false)
         val recy : RecyclerView=view.findViewById(R.id.event_list_recy)
-        recy.layoutManager = LinearLayoutManager(this)
-        recy.adapter = EventAdapter(event_listing,this)
+        recy.layoutManager = LinearLayoutManager(activity)
+        recy.adapter = EventAdapter(event_listing)
 
         return view
 
@@ -151,7 +140,7 @@ class Eventsds : Fragment() {
                 response = "Parsing Exception"
             }
 
-            updateResponse(response)
+            addlist(response)
         }
     }
     private fun addlist(response: String) {
@@ -159,10 +148,10 @@ class Eventsds : Fragment() {
         event_listing.add(response)
     }
 
-    private fun updateResponse(response: String) {
-
-        textView.setText(response)
-    }
+//    private fun updateResponse(response: String) {
+//
+//        textView.setText(response)
+//    }
 
 
     // TODO: Rename method, update argument and hook method into UI event

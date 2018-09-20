@@ -45,9 +45,9 @@ class Home : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_events, container, false)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
         val mWebView: WebView = view.findViewById(R.id.webview)
-        mWebView.loadUrl("https://10times.com/dubai-ae")
+        mWebView.loadUrl("http://diplomatssummit.com/mobile/index.php")
 
         // Enable Javascript
         val webSettings = mWebView.getSettings()
