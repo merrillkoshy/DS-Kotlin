@@ -1,4 +1,4 @@
-package diplomatssummit.com.diplomatssummit
+package diplomatssummit.com.diplomatssummit.old
 
 import android.content.Context
 import android.net.Uri
@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import org.jsoup.Jsoup
 import android.widget.ProgressBar
+import diplomatssummit.com.diplomatssummit.R
 import kotlinx.android.synthetic.main.fragment_events.*
 
 

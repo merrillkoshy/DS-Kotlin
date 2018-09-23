@@ -1,4 +1,4 @@
-package diplomatssummit.com.diplomatssummit
+package diplomatssummit.com.diplomatssummit.events
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -12,9 +12,8 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ProgressBar
 
-import kotlinx.android.synthetic.main.fragment_events.*
-import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
+import diplomatssummit.com.diplomatssummit.R
 import kotlinx.android.synthetic.main.fragment_ds__events.*
 
 

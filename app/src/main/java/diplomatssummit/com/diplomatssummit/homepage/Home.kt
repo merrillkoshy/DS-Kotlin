@@ -1,14 +1,22 @@
-package diplomatssummit.com.diplomatssummit
+package diplomatssummit.com.diplomatssummit.homepage
 
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.ImageButton
+import android.widget.ImageView
+import diplomatssummit.com.diplomatssummit.R
+import diplomatssummit.com.diplomatssummit.events.DS_Events
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,6 +37,9 @@ class Home : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    val eventButton: ImageButton? = null
+    val invButton: ImageButton? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,19 +53,33 @@ class Home : Fragment() {
         }
     }
 
+    private fun openFragment(fragment: Fragment) {
+        val transaction = fragmentManager?.beginTransaction()
+        transaction?.replace(R.id.container, fragment)
+        transaction?.addToBackStack(null)
+        transaction?.commit()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        val mWebView: WebView = view.findViewById(R.id.webview)
-        mWebView.loadUrl("http://diplomatssummit.com/mobile/index.php")
+//        val eventButton: ImageView =view.findViewById(R.id.tradeevents)
+//        val invButton: ImageView=view.findViewById(R.id.invest)
+//        eventButton.setOnClickListener() {
+//            val eveFragment = DS_Events.newInstance()
+//            openFragment(eveFragment)
+//        }
 
-        // Enable Javascript
-        val webSettings = mWebView.getSettings()
-        webSettings.setJavaScriptEnabled(true)
-
-        // Force links and redirects to open in the WebView instead of in a browser
-        mWebView.setWebViewClient(WebViewClient())
+//        val mWebView: WebView = view.findViewById(R.id.webview)
+//        mWebView.loadUrl("http://diplomatssummit.com/mobile/index.php")
+//
+//        // Enable Javascript
+//        val webSettings = mWebView.getSettings()
+//        webSettings.setJavaScriptEnabled(true)
+//
+//        // Force links and redirects to open in the WebView instead of in a browser
+//        mWebView.setWebViewClient(WebViewClient())
         return view
 
     }
@@ -63,6 +88,8 @@ class Home : Fragment() {
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
+
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -93,6 +120,10 @@ class Home : Fragment() {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
+
+
+
+
 
     companion object {
         /**

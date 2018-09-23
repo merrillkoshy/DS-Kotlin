@@ -1,9 +1,10 @@
-package diplomatssummit.com.diplomatssummit
+package diplomatssummit.com.diplomatssummit.old
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import diplomatssummit.com.diplomatssummit.R
 import kotlinx.android.synthetic.main.event_list_item.view.*
 
 class EventAdapter(val items: ArrayList<String>) : RecyclerView.Adapter<ViewHolder>() {
