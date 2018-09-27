@@ -16,7 +16,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import diplomatssummit.com.diplomatssummit.R
 import diplomatssummit.com.diplomatssummit.events.DS_Events
-
+import diplomatssummit.com.diplomatssummit.invest.DS_Invest
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -64,12 +64,16 @@ class Home : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-//        val eventButton: ImageView =view.findViewById(R.id.tradeevents)
-//        val invButton: ImageView=view.findViewById(R.id.invest)
-//        eventButton.setOnClickListener() {
-//            val eveFragment = DS_Events.newInstance()
-//            openFragment(eveFragment)
-//        }
+        val eventButton: ImageView =view.findViewById(R.id.tradeevents)
+        val invButton: ImageView=view.findViewById(R.id.inv)
+        eventButton.setOnClickListener() {
+            val eveFragment = DS_Events.newInstance()
+            openFragment(eveFragment)
+        }
+        invButton.setOnClickListener(){
+            val invFragment=DS_Invest.newInstance()
+            openFragment(invFragment)
+        }
 
 //        val mWebView: WebView = view.findViewById(R.id.webview)
 //        mWebView.loadUrl("http://diplomatssummit.com/mobile/index.php")

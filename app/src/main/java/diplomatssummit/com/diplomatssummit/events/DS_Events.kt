@@ -13,6 +13,7 @@ import android.webkit.WebViewClient
 import android.widget.ProgressBar
 
 import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
 import diplomatssummit.com.diplomatssummit.R
 import kotlinx.android.synthetic.main.fragment_ds__events.*
 
@@ -70,6 +71,10 @@ class DS_Events : Fragment() {
 
 
         webSettings.setJavaScriptEnabled(true)
+        webSettings.setAppCacheEnabled(true)
+        webSettings.setAppCachePath(context!!.cacheDir.path)
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ONLY)
+
 
         // Force links and redirects to open in the WebView instead of in a browser
        mWebView.webViewClient=object :WebViewClient(){
