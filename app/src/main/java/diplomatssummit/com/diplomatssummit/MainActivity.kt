@@ -7,13 +7,24 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.webkit.WebSettings
+import android.webkit.WebView
 import android.widget.ListView
+import diplomatssummit.com.diplomatssummit.R.id.container
 import diplomatssummit.com.diplomatssummit.events.DS_Events
 import diplomatssummit.com.diplomatssummit.homepage.Home
 import diplomatssummit.com.diplomatssummit.invest.DS_Invest
+import diplomatssummit.com.diplomatssummit.R.id.textView
+import diplomatssummit.com.diplomatssummit.events.timeline_events
+import diplomatssummit.com.diplomatssummit.partners
 
-class MainActivity : AppCompatActivity(), DS_Events.OnFragmentInteractionListener,Home.OnFragmentInteractionListener, DS_Invest.OnFragmentInteractionListener {
+
+class MainActivity : AppCompatActivity(), DS_Events.OnFragmentInteractionListener,Home.OnFragmentInteractionListener, DS_Invest.OnFragmentInteractionListener,
+        timeline_events.OnFragmentInteractionListener,gallery.OnFragmentInteractionListener,partners.OnFragmentInteractionListener{
 
     private var mTextMessage: TextView? = null
 
@@ -57,6 +68,22 @@ class MainActivity : AppCompatActivity(), DS_Events.OnFragmentInteractionListene
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+//        val fm = supportFragmentManager
+//
+//        //if you added fragment via layout xml
+//        val fragment = fm.findFragmentById(R.id.webviewEvent)
+//        val fview=fragment?.view
+//        val mWebView: WebView = fview!!.findViewById(R.id.webviewEvent)
+//
+//        val webSettings = mWebView.getSettings()
+//        webSettings.setDomStorageEnabled(true);
+//
+//
+//        webSettings.setJavaScriptEnabled(true)
+//        webSettings.setAppCacheEnabled(true)
+//        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT)
+
 
 
 //        lv = findViewById(R.id.listView) as ListView

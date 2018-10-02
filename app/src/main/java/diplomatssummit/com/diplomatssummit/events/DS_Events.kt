@@ -71,9 +71,9 @@ class DS_Events : Fragment() {
 
 
         webSettings.setJavaScriptEnabled(true)
-        webSettings.setAppCacheEnabled(true)
-        webSettings.setAppCachePath(context!!.cacheDir.path)
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ONLY)
+//        webSettings.setAppCacheEnabled(true)
+//        webSettings.setAppCachePath(context!!.cacheDir.path)
+//        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT)
 
 
         // Force links and redirects to open in the WebView instead of in a browser

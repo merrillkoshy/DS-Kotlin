@@ -1,6 +1,7 @@
 package diplomatssummit.com.diplomatssummit.homepage
 
 import android.content.Context
+import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -14,9 +15,13 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageButton
 import android.widget.ImageView
+import com.squareup.picasso.Picasso
 import diplomatssummit.com.diplomatssummit.R
 import diplomatssummit.com.diplomatssummit.events.DS_Events
+import diplomatssummit.com.diplomatssummit.events.timeline_events
+import diplomatssummit.com.diplomatssummit.gallery
 import diplomatssummit.com.diplomatssummit.invest.DS_Invest
+import diplomatssummit.com.diplomatssummit.partners
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,8 +42,11 @@ class Home : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
-    val eventButton: ImageButton? = null
-    val invButton: ImageButton? = null
+    val eventButton: ImageView? = null
+    val invButton: ImageView? = null
+    val timel:ImageView?=null
+    val galbutton:ImageView?=null
+    val bp:ImageView?=null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +61,14 @@ class Home : Fragment() {
         }
     }
 
+    fun getScreenWidth(): Int {
+        return Resources.getSystem().getDisplayMetrics().widthPixels
+    }
+
+    fun getScreenHeight(): Int {
+        return Resources.getSystem().getDisplayMetrics().heightPixels
+    }
+
     private fun openFragment(fragment: Fragment) {
         val transaction = fragmentManager?.beginTransaction()
         transaction?.replace(R.id.container, fragment)
@@ -64,15 +80,42 @@ class Home : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        val eventButton: ImageView =view.findViewById(R.id.tradeevents)
+//        val eventButton: ImageView =view.findViewById(R.id.tradeevents)
+
         val invButton: ImageView=view.findViewById(R.id.inv)
-        eventButton.setOnClickListener() {
-            val eveFragment = DS_Events.newInstance()
-            openFragment(eveFragment)
-        }
+        val timel: ImageView=view.findViewById(R.id.tradeevents)
+        val galbutton: ImageView=view.findViewById(R.id.gal)
+        val bp: ImageView=view.findViewById(R.id.bp)
+        val dp: ImageView=view.findViewById(R.id.dp)
+        val art: ImageView=view.findViewById(R.id.art)
+
+        Picasso.get().load(R.mipmap.events).centerCrop().resize(1348, 555).onlyScaleDown().into(timel)
+        Picasso.get().load(R.mipmap.inv).centerCrop().resize(1000, 700).onlyScaleDown().into(invButton)
+        Picasso.get().load(R.mipmap.gallery).centerCrop().resize(600, 400).onlyScaleDown().into(galbutton)
+        Picasso.get().load(R.mipmap.bp).centerCrop().resize(1224, 717).onlyScaleDown().into(bp)
+        Picasso.get().load(R.mipmap.art).centerCrop().resize(600, 400).onlyScaleDown().into(art)
+        Picasso.get().load(R.mipmap.dp).centerCrop().resize(1364, 298).onlyScaleDown().into(dp)
+
+
+//        eventButton.setOnClickListener() {
+//            val eveFragment = DS_Events.newInstance()
+//            openFragment(eveFragment)
+//        }
         invButton.setOnClickListener(){
             val invFragment=DS_Invest.newInstance()
             openFragment(invFragment)
+        }
+        timel.setOnClickListener(){
+            val tlFragment=timeline_events.newInstance()
+            openFragment(tlFragment)
+        }
+        galbutton.setOnClickListener(){
+            val galFragment=gallery.newInstance()
+            openFragment(galFragment)
+        }
+        bp.setOnClickListener(){
+            val bpFragment= partners.newInstance()
+            openFragment(bpFragment)
         }
 
 //        val mWebView: WebView = view.findViewById(R.id.webview)
