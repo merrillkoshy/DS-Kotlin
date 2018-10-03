@@ -89,12 +89,12 @@ class Home : Fragment() {
         val dp: ImageView=view.findViewById(R.id.dp)
         val art: ImageView=view.findViewById(R.id.art)
 
-        Picasso.get().load(R.mipmap.events).centerCrop().resize(1348, 555).onlyScaleDown().into(timel)
-        Picasso.get().load(R.mipmap.inv).centerCrop().resize(1000, 700).onlyScaleDown().into(invButton)
-        Picasso.get().load(R.mipmap.gallery).centerCrop().resize(600, 400).onlyScaleDown().into(galbutton)
-        Picasso.get().load(R.mipmap.bp).centerCrop().resize(1224, 717).onlyScaleDown().into(bp)
-        Picasso.get().load(R.mipmap.art).centerCrop().resize(600, 400).onlyScaleDown().into(art)
-        Picasso.get().load(R.mipmap.dp).centerCrop().resize(1364, 298).onlyScaleDown().into(dp)
+        Picasso.get().load("https://diplomatssummit.com/mobile/hp_assets/events.png").centerCrop().resize(1348, 555).onlyScaleDown().into(timel)
+        Picasso.get().load("https://diplomatssummit.com/mobile/hp_assets/inv.png").centerCrop().resize(1000, 700).onlyScaleDown().into(invButton)
+        Picasso.get().load("https://diplomatssummit.com/mobile/hp_assets/gallery.png").centerCrop().resize(600, 400).onlyScaleDown().into(galbutton)
+        Picasso.get().load("https://diplomatssummit.com/mobile/hp_assets/bp.jpg").centerCrop().resize(1224, 717).onlyScaleDown().into(bp)
+        Picasso.get().load("https://diplomatssummit.com/mobile/hp_assets/art.jpg").centerCrop().resize(600, 400).onlyScaleDown().into(art)
+        Picasso.get().load("https://diplomatssummit.com/mobile/hp_assets/dp.png").centerCrop().resize(1364, 298).onlyScaleDown().into(dp)
 
 
 //        eventButton.setOnClickListener() {
