@@ -29,10 +29,10 @@ class TleModel : BaseModel {
             this.url=url
         }
     }
-    fun toDomain(): Annotation =
-            urls(
-                    uid,
-                    url
-            )
-}
+//    fun toDomain(): Annotation =
+//           urls(
+////                    uid,
+////                    url
+//           )
+////}
 }

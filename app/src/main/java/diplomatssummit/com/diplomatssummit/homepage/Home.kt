@@ -17,6 +17,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import diplomatssummit.com.diplomatssummit.R
+import diplomatssummit.com.diplomatssummit.articles.articles
 import diplomatssummit.com.diplomatssummit.events.DS_Events
 import diplomatssummit.com.diplomatssummit.events.timeline_events
 import diplomatssummit.com.diplomatssummit.gallery
@@ -47,7 +48,7 @@ class Home : Fragment() {
     val timel:ImageView?=null
     val galbutton:ImageView?=null
     val bp:ImageView?=null
-
+    val art:ImageView?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -117,7 +118,10 @@ class Home : Fragment() {
             val bpFragment= partners.newInstance()
             openFragment(bpFragment)
         }
-
+        art.setOnClickListener(){
+            val artFragment=articles.newInstance()
+            openFragment(artFragment)
+        }
 //        val mWebView: WebView = view.findViewById(R.id.webview)
 //        mWebView.loadUrl("http://diplomatssummit.com/mobile/index.php")
 //

@@ -23,12 +23,17 @@ import diplomatssummit.com.diplomatssummit.events.timeline_events
 import diplomatssummit.com.diplomatssummit.partners
 import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
+import diplomatssummit.com.diplomatssummit.articles.articles
 
 
-
-
-class MainActivity : AppCompatActivity(), DS_Events.OnFragmentInteractionListener,Home.OnFragmentInteractionListener, DS_Invest.OnFragmentInteractionListener,
-        timeline_events.OnFragmentInteractionListener,gallery.OnFragmentInteractionListener,partners.OnFragmentInteractionListener{
+class MainActivity : AppCompatActivity(),
+        DS_Events.OnFragmentInteractionListener,
+        Home.OnFragmentInteractionListener,
+        DS_Invest.OnFragmentInteractionListener,
+        timeline_events.OnFragmentInteractionListener,
+        gallery.OnFragmentInteractionListener,
+        partners.OnFragmentInteractionListener,
+        articles.OnFragmentInteractionListener{
 
     private var mTextMessage: TextView? = null
 
