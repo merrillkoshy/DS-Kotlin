@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
+import diplomatssummit.com.diplomatssummit.databases.SampleMethods
 
 /**
  * A sample splash screen created by devdeeds.com
@@ -32,6 +33,10 @@ class SplashActivity : AppCompatActivity() {
         //Navigate with delay
         mDelayHandler!!.postDelayed(mRunnable, SPLASH_DELAY)
 
+
+        //invoke samplem db operations
+        val sampleObj = SampleMethods();
+        sampleObj.readAllMedias();
     }
 
     public override fun onDestroy() {

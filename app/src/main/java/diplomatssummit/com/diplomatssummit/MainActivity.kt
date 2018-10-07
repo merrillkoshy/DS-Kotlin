@@ -24,10 +24,11 @@ import diplomatssummit.com.diplomatssummit.partners
 import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
 import diplomatssummit.com.diplomatssummit.articles.articles
+import diplomatssummit.com.diplomatssummit.databases.dbflow
 
 
 class MainActivity : AppCompatActivity(),
-        DS_Events.OnFragmentInteractionListener,
+        DS_Events.OnFragmentInteractionListener,dbflow.OnFragmentInteractionListener,
         Home.OnFragmentInteractionListener,
         DS_Invest.OnFragmentInteractionListener,
         timeline_events.OnFragmentInteractionListener,
@@ -60,7 +61,9 @@ class MainActivity : AppCompatActivity(),
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
-                mTextMessage!!.setText(R.string.title_notifications)
+                title = "DB_Test"
+                val dbmediaFragment = dbflow.newInstance()
+                openFragment(dbmediaFragment)
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -77,7 +80,7 @@ class MainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        FlowManager.init(FlowConfig.Builder(this).build())
+
 //        val fm = supportFragmentManager
 //
 //        //if you added fragment via layout xml
