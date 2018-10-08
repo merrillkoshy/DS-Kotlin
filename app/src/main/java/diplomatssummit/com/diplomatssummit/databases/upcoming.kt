@@ -10,18 +10,23 @@ import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
-import diplomatssummit.com.diplomatssummit.R
+import diplomatssummit.com.diplomatssummit.*
+import diplomatssummit.com.diplomatssummit.CustomRecyclerAdapter
+
 import diplomatssummit.com.diplomatssummit.articles.articles
 import diplomatssummit.com.diplomatssummit.databases.core.MediaTable
 import diplomatssummit.com.diplomatssummit.events.timeline_events
-import diplomatssummit.com.diplomatssummit.gallery
 import diplomatssummit.com.diplomatssummit.invest.DS_Invest
-import diplomatssummit.com.diplomatssummit.partners
+import kotlinx.android.synthetic.main.main_display.*
+import java.io.File
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,14 +47,13 @@ class dbflow : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    var imageModel:ArrayList<ImageModel> = ArrayList()
+    val main_recyclerview:RecyclerView?=null
 
     val art: ImageView?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
 
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
@@ -69,19 +73,47 @@ class dbflow : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.heroes, container, false)
+        val view = inflater.inflate(R.layout.main_display, container, false)
+        val viewholder = inflater.inflate(R.layout.main_item,container,false)
+
+        val sampleObj = SampleMethods()
+        val ar= sampleObj.readMediaRowsBasedOnType(1)
+        val size=sampleObj.itemsize()
+        var i=0
+        while (i<size) {
+            var imagePath = ar[i].MediaUrl
+            imageModel.add(ImageModel(imagePath))
+            Log.d("test",imagePath)
+            i++
+        }
+
+        val customRecyclerAdapter:CustomRecyclerAdapter= CustomRecyclerAdapter(imageModel)
+        val recycler:RecyclerView= view.findViewById(R.id.main_recyclerview)
+        recycler.layoutManager=GridLayoutManager(view.context,3)
+        recycler.adapter=customRecyclerAdapter
+        val iv:ImageView=viewholder.findViewById(R.id.img_view)
+        while (i<size) {
+            var imagePath = ar[i].MediaUrl
+            Picasso.get().load(imagePath).into(iv)
+        }
+//        val art: ImageView =view.findViewById(R.id.dbflowtest)
+//        val medurl=MediaTable().MediaUrl[1].toString()
 
 
-        val art: ImageView =view.findViewById(R.id.dbflowtest)
-        val medurl=MediaTable().MediaUrl[1].toString()
+//        most invaluable code
+//        val sampleObj = SampleMethods()
+//
+//        val ar= sampleObj.readMediaRowsBasedOnType(1)
+//        val size=sampleObj.itemsize()
+//        Log.d("Picasso_load"," "+ar[1].MediaUrl)
+//        Log.d("itSiz"," "+size)
+//        Picasso.get().load(ar[0].MediaUrl).into(art)
 
-
-
-        Picasso.get().load(medurl).centerCrop().resize(1364, 298).onlyScaleDown().into(art)
 
         return view
 
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {

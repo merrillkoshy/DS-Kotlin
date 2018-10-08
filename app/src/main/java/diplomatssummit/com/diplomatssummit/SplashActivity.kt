@@ -33,10 +33,6 @@ class SplashActivity : AppCompatActivity() {
         //Navigate with delay
         mDelayHandler!!.postDelayed(mRunnable, SPLASH_DELAY)
 
-
-        //invoke samplem db operations
-        val sampleObj = SampleMethods();
-        sampleObj.readAllMedias();
     }
 
     public override fun onDestroy() {

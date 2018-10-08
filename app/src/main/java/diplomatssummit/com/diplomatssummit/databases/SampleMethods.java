@@ -1,12 +1,11 @@
 package diplomatssummit.com.diplomatssummit.databases;
 
 import android.util.Log;
-import android.widget.ImageView;
 
 import com.raizlabs.android.dbflow.sql.language.OperatorGroup;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
-import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import diplomatssummit.com.diplomatssummit.databases.core.MediaTable;
@@ -23,22 +22,24 @@ public class SampleMethods {
 
         List<MediaTable> mediaTableList = SQLite.select().from(MediaTable.class).queryList();
 
-        for (MediaTable mediaTable: mediaTableList) {
-
-            /*ImageView tempIv = null;
-            Picasso.get().load(mediaTable.MediaUrl).into(tempIv);*/
-
-            Log.d(TAG, "MediaTable - " + mediaTable.toString());
-        }
+//        for (MediaTable mediaTable: mediaTableList) {
+//
+//            /*ImageView tempIv = null;
+//            Picasso.get().load(mediaTable.MediaUrl).into(tempIv);*/
+//
+//            Log.d(TAG, "MediaTableAFF - " + mediaTable.toString());
+//        }
 
         readMediaRowsBasedOnType(MEDIA_IMAGE);
-        readMediaRowsBasedOnType(MEDIA_VIDEO);
+//        readMediaRowsBasedOnType(MEDIA_VIDEO);
 
         createMedia();
     }
 
-    public void readMediaRowsBasedOnType(Long mediaType) {
 
+    public List<MediaTable> readMediaRowsBasedOnType(Long mediaType) {
+
+        int i=0;
         OperatorGroup operatorGroup = OperatorGroup.clause()
                 .and(MediaTable_Table.MediaType.eq(mediaType));
 
@@ -48,8 +49,23 @@ public class SampleMethods {
                 .queryList();
 
         for (MediaTable mediaTable: mediaRowList) {
-            Log.d(TAG, "MediaTable - " + mediaTable.toString());
+
+            Log.d(TAG, "MediaTableLINK - " + mediaTable.MediaUrl);
         }
+
+        return mediaRowList;
+    }
+
+    public int itemsize(){
+
+        OperatorGroup operatorGroup = OperatorGroup.clause()
+                .and(MediaTable_Table.MediaType.eq((long) 1));
+
+        List<MediaTable> mediaRowList = SQLite.select()
+                .from(MediaTable.class)
+                .where(operatorGroup)
+                .queryList();
+        return mediaRowList.size();
     }
 
     public void createMedia() {
