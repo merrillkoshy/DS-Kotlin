@@ -7,28 +7,16 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.widget.ListView
-import diplomatssummit.com.diplomatssummit.R.id.container
 import diplomatssummit.com.diplomatssummit.events.DS_Events
 import diplomatssummit.com.diplomatssummit.homepage.Home
 import diplomatssummit.com.diplomatssummit.invest.DS_Invest
-import diplomatssummit.com.diplomatssummit.R.id.textView
 import diplomatssummit.com.diplomatssummit.events.timeline_events
-import diplomatssummit.com.diplomatssummit.partners
-import com.raizlabs.android.dbflow.config.FlowConfig
-import com.raizlabs.android.dbflow.config.FlowManager
 import diplomatssummit.com.diplomatssummit.articles.articles
-import diplomatssummit.com.diplomatssummit.databases.dbflow
+import diplomatssummit.com.diplomatssummit.databases.DbFlow
 
 
 class MainActivity : AppCompatActivity(),
-        DS_Events.OnFragmentInteractionListener,dbflow.OnFragmentInteractionListener,
+        DS_Events.OnFragmentInteractionListener,
         Home.OnFragmentInteractionListener,
         DS_Invest.OnFragmentInteractionListener,
         timeline_events.OnFragmentInteractionListener,
@@ -62,8 +50,10 @@ class MainActivity : AppCompatActivity(),
             }
             R.id.navigation_notifications -> {
                 title = "DB_Test"
-                val dbmediaFragment = dbflow.newInstance()
-                openFragment(dbmediaFragment)
+
+                val dbflow = DbFlow()
+
+                openFragment(dbflow)
                 return@OnNavigationItemSelectedListener true
             }
         }

@@ -2,8 +2,8 @@ package diplomatssummit.com.diplomatssummit.databases
 
 import android.app.Application
 import com.raizlabs.android.dbflow.config.FlowConfig
-
 import com.raizlabs.android.dbflow.config.FlowManager
+
 
 class DatabaseApplication : Application() {
     override fun onCreate() {

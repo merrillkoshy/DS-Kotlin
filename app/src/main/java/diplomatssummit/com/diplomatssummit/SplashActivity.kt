@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
-import diplomatssummit.com.diplomatssummit.databases.SampleMethods
+
 
 /**
  * A sample splash screen created by devdeeds.com
