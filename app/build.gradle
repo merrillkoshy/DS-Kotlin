@@ -69,6 +69,7 @@ dependencies {
     // kotlin extensions
     implementation "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbflow_version}"
 
+    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:2.0.3'
 
 }
 repositories {

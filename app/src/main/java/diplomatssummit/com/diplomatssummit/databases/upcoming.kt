@@ -18,9 +18,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.squareup.picasso.Picasso
+import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
 import diplomatssummit.com.diplomatssummit.*
 import diplomatssummit.com.diplomatssummit.CustomRecyclerAdapter
 import diplomatssummit.com.diplomatssummit.app_ui.SamplePagerAdapter
@@ -51,7 +53,7 @@ private const val ARG_PARAM2 = "param2"
 
 class DbFlow : Fragment() {
 
-
+    val tv:TextView?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -68,20 +70,44 @@ class DbFlow : Fragment() {
         initializeWidgets(view);
     }
 
+    /*Populate images from DB onto the view*/
     private fun initializeWidgets(view: View) {
-
-        val viewpager:ViewPager = view.findViewById(R.id.sample_pager)
-        //adapter creation
-
-        val imageUrl = "https://raw.githubusercontent.com/JakeWharton/butterknife/master/website/static/logo.png"
         val imageList = populateDBimages()
+        val imageList2=populateDBimages2()
 
+        var title="UPCOMING EVENTS"
+        var pe="PAST EVENTS"
+        val tv:TextView=view.findViewById(R.id.tv)
+        val tv2:TextView=view.findViewById(R.id.tv2)
+        page(view, imageList!!)
+        tv.text=title
+        tv2.text=pe
+        tv2.setOnClickListener {
+            if (tv2.text!=title){
+                tv.text=pe
+                tv2.text=title
+                page(view, imageList2!!)
+            }
+            else{
+                tv.text=title
+                tv2.text=pe
+                page(view, imageList)
+            }
+        }
+
+    }
+
+/*Populate adapter with the necessary DB input*/
+    fun page(view: View,imageList:ArrayList<String>){
+        val viewpager:ViewPager = view.findViewById(R.id.sample_pager)
         val pagerAdapter = SamplePagerAdapter(context, imageList)
         viewpager.adapter = pagerAdapter
+        val springdot:SpringDotsIndicator=view.findViewById(R.id.spring_dot)
+        springdot.setViewPager(viewpager)
     }
 
 
-fun populateDBimages(): ArrayList<String>? {
+    fun populateDBimages(): ArrayList<String>? {
 
         val sampleObj = SampleMethods()
         val ar= sampleObj.readMediaRowsBasedOnType(1)
@@ -95,11 +121,32 @@ fun populateDBimages(): ArrayList<String>? {
             Log.d("test",imagePath)
 
             i++
-        }
+    }
 
 
     return imagelist
     }
+
+    fun populateDBimages2(): ArrayList<String>? {
+
+        val sampleObj = PeMethods()
+        val ar= sampleObj.readMediaRowsBasedOnType(1)
+        val size=sampleObj.itemsize()
+        var imagelist= arrayListOf<String>()
+        var i=0
+
+        while (i<size) {
+            var imagePath = ar[i].MediaUrl
+            imagePath?.let { imagelist.add(i, it) }
+            Log.d("test2",imagePath)
+
+            i++
+        }
+
+
+        return imagelist
+    }
+
 }
 
 
