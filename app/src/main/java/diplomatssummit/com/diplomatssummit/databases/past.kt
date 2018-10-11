@@ -7,19 +7,17 @@ import android.content.Context
 import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
@@ -28,9 +26,6 @@ import com.squareup.picasso.Picasso
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
 import diplomatssummit.com.diplomatssummit.*
 import diplomatssummit.com.diplomatssummit.CustomRecyclerAdapter
-
-import diplomatssummit.com.diplomatssummit.app_ui.OnSwipeTouchListener
-
 import diplomatssummit.com.diplomatssummit.app_ui.SamplePagerAdapter
 
 import diplomatssummit.com.diplomatssummit.articles.articles
@@ -57,21 +52,7 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 
-class DbFlow : Fragment(),PastEvents.OnFragmentInteractionListener {
-
-
-
-    override fun onFragmentInteraction(uri: Uri) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    private fun openFragment(fragment: Fragment) {
-        val transaction = fragmentManager?.beginTransaction()
-        transaction?.replace(R.id.container, fragment)
-        transaction?.addToBackStack(null)
-        transaction?.commit()
-    }
-
+class PastEvents : Fragment() {
 
     val tv:TextView?=null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,7 +63,6 @@ class DbFlow : Fragment(),PastEvents.OnFragmentInteractionListener {
                               savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.activity_sample_pager, container, false)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -94,37 +74,22 @@ class DbFlow : Fragment(),PastEvents.OnFragmentInteractionListener {
     /*Populate images from DB onto the view*/
     private fun initializeWidgets(view: View) {
 
-        var title="UPCOMING EVENTS"
         var imageList:ArrayList<String>?=null
-        val switcher:Button=view.findViewById(R.id.switcher)
-        switcher.text=title
         imageList = populateDBimages()
 
-        val tv:TextView=view.findViewById(R.id.tv)
-
+        var pe="PAST EVENTS"
+        val tv2:TextView=view.findViewById(R.id.tv2)
         page(view, imageList!!)
-        tv.text=title
-
-
-        view.setOnTouchListener(object :OnSwipeTouchListener(){
-            override fun onSwipeLeft() {
-                Log.e("ViewSwipe", "Left")
-                val past=PastEvents()
-                openFragment(past)
-            }
-        })
-
-        switcher.setOnClickListener{
-            val past=PastEvents()
-            openFragment(past)
-        }
-
-
-
-
+        tv2.text=pe
     }
 
-/*Populate adapter with the necessary DB input*/
+
+    interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        fun onFragmentInteraction(uri: Uri)
+    }
+
+    /*Populate adapter with the necessary DB input*/
     fun page(view: View,imageList:ArrayList<String>){
         val viewpager:ViewPager = view.findViewById(R.id.sample_pager)
         val pagerAdapter = SamplePagerAdapter(context, imageList)
@@ -135,26 +100,6 @@ class DbFlow : Fragment(),PastEvents.OnFragmentInteractionListener {
 
 
     fun populateDBimages(): ArrayList<String>? {
-
-        val sampleObj = SampleMethods()
-        val ar= sampleObj.readMediaRowsBasedOnType(1)
-        val size=sampleObj.itemsize()
-        var imagelist= arrayListOf<String>()
-        var i=0
-
-        while (i<size) {
-            var imagePath = ar[i].MediaUrl
-            imagelist.add(i,imagePath)
-            Log.d("test",imagePath)
-
-            i++
-    }
-
-
-    return imagelist
-    }
-
-    fun populateDBimages2(): ArrayList<String>? {
 
         val sampleObj = PeMethods()
         val ar= sampleObj.readMediaRowsBasedOnType(1)
@@ -175,8 +120,5 @@ class DbFlow : Fragment(),PastEvents.OnFragmentInteractionListener {
     }
 
 
+
 }
-
-
-
-

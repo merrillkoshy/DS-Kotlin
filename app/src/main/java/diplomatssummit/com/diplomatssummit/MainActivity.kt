@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity(),
 
 //        val fm = supportFragmentManager
 //
-//        //if you added fragment via layout xml
+//        //if you added fragment via layout pagers
 //        val fragment = fm.findFragmentById(R.id.webviewEvent)
 //        val fview=fragment?.view
 //        val mWebView: WebView = fview!!.findViewById(R.id.webviewEvent)

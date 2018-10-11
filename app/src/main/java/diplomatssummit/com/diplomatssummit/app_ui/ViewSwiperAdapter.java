@@ -17,14 +17,13 @@ import java.util.List;
 
 import diplomatssummit.com.diplomatssummit.R;
 
-public class SamplePagerAdapter extends PagerAdapter {
+public class ViewSwiperAdapter extends PagerAdapter {
 
     private final String TAG = this.getClass().getSimpleName();
     private Context mContext;
     private List<String> imageList;
-    private int slideno;
 
-    public SamplePagerAdapter(Context context, List<String> imageList) {
+    public ViewSwiperAdapter(Context context, List<String> imageList) {
 
         this.mContext = context;
         this.imageList = imageList;

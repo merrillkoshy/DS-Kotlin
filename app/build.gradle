@@ -71,6 +71,7 @@ dependencies {
 
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:2.0.3'
 
+
 }
 repositories {
     mavenCentral()

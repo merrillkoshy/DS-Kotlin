@@ -19,6 +19,7 @@ public class SamplePagerActivity extends AppCompatActivity {
     ViewPager samplePager;
 
     private List<String> imageList;
+    private int slideno;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
