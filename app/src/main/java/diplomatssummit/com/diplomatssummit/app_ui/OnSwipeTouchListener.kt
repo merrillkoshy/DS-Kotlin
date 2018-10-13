@@ -1,65 +1,57 @@
-package diplomatssummit.com.diplomatssummit.app_ui
 
+import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
-import android.view.View
 
-open class OnSwipeTouchListener : View.OnTouchListener {
+class OnSwipeTouchListener : AppCompatActivity(),
+        GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener
+{
 
-    private val gestureDetector = GestureDetector(GestureListener())
 
-    fun onTouch(event: MotionEvent): Boolean {
-        return gestureDetector.onTouchEvent(event)
+
+    override fun onDown(event: MotionEvent): Boolean {
+
+        return true
     }
 
-    private inner class GestureListener : GestureDetector.SimpleOnGestureListener() {
-
-        private val SWIPE_THRESHOLD = 100
-        private val SWIPE_VELOCITY_THRESHOLD = 100
-
-        override fun onDown(e: MotionEvent): Boolean {
-            return true
-        }
-
-        override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
-            onTouch(e)
-            return true
-        }
-
-
-        override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
-            val result = false
-            try {
-                val diffY = e2.y - e1.y
-                val diffX = e2.x - e1.x
-                if (Math.abs(diffX) > Math.abs(diffY)) {
-                    if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffX > 0) {
-                            onSwipeRight()
-                        } else {
-                            onSwipeLeft()
-                        }
-                    }
-                } else {
-                    // onTouch(e);
-                }
-            } catch (exception: Exception) {
-                exception.printStackTrace()
-            }
-
-            return result
-        }
+    override fun onFling(event1: MotionEvent, event2: MotionEvent,
+                         velocityX: Float, velocityY: Float): Boolean {
+        Log.d("FLingtest","true")
+        return true
     }
 
-    override fun onTouch(v: View, event: MotionEvent): Boolean {
-        return gestureDetector.onTouchEvent(event)
+    override fun onLongPress(event: MotionEvent) {
+
     }
 
-    open fun onSwipeRight() {}
+    override fun onScroll(e1: MotionEvent, e2: MotionEvent,
+                          distanceX: Float, distanceY: Float): Boolean {
 
-    open fun onSwipeLeft() {}
+        return true
+    }
 
-    open fun onSwipeTop() {}
+    override fun onShowPress(event: MotionEvent) {
 
-    open fun onSwipeBottom() {}
+    }
+
+    override fun onSingleTapUp(event: MotionEvent): Boolean {
+
+        return true
+    }
+
+    override fun onDoubleTap(event: MotionEvent): Boolean {
+
+        return true
+    }
+
+    override fun onDoubleTapEvent(event: MotionEvent): Boolean {
+
+        return true
+    }
+
+    override fun onSingleTapConfirmed(event: MotionEvent): Boolean {
+
+        return true
+    }
 }

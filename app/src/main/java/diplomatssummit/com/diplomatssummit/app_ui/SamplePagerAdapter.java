@@ -1,15 +1,12 @@
 package diplomatssummit.com.diplomatssummit.app_ui;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -53,6 +50,7 @@ public class SamplePagerAdapter extends PagerAdapter {
         Picasso.get().load(imageUrl).centerCrop().fit().into(pagerImageView);
 
         viewGroup.addView(rootView);
+
 
         return rootView;
     }

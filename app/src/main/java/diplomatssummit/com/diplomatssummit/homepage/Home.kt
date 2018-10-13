@@ -5,21 +5,14 @@ import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import android.widget.ImageButton
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import diplomatssummit.com.diplomatssummit.R
 import diplomatssummit.com.diplomatssummit.articles.articles
-import diplomatssummit.com.diplomatssummit.events.DS_Events
-import diplomatssummit.com.diplomatssummit.events.timeline_events
+import diplomatssummit.com.diplomatssummit.databases.DbFlow
 import diplomatssummit.com.diplomatssummit.gallery
 import diplomatssummit.com.diplomatssummit.invest.DS_Invest
 import diplomatssummit.com.diplomatssummit.partners
@@ -107,8 +100,11 @@ class Home : Fragment() {
             openFragment(invFragment)
         }
         timel.setOnClickListener(){
-            val tlFragment=timeline_events.newInstance()
-            openFragment(tlFragment)
+            /*val tlFragment=timeline_events.newInstance()
+            openFragment(tlFragment)*/
+            val dbflow = DbFlow()
+
+            openFragment(dbflow)
         }
         galbutton.setOnClickListener(){
             val galFragment=gallery.newInstance()

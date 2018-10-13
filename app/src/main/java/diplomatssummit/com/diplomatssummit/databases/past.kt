@@ -1,41 +1,18 @@
 package diplomatssummit.com.diplomatssummit.databases
 
-import diplomatssummit.com.diplomatssummit.app_ui.SamplePagerActivity
-
-import android.R.attr.checked
-import android.content.Context
-import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import android.widget.ImageView
+import android.widget.Button
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
-import com.squareup.picasso.Picasso
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
-import diplomatssummit.com.diplomatssummit.*
-import diplomatssummit.com.diplomatssummit.CustomRecyclerAdapter
+import diplomatssummit.com.diplomatssummit.R
 import diplomatssummit.com.diplomatssummit.app_ui.SamplePagerAdapter
-
-import diplomatssummit.com.diplomatssummit.articles.articles
-
-import diplomatssummit.com.diplomatssummit.events.timeline_events
-import diplomatssummit.com.diplomatssummit.invest.DS_Invest
-import kotlinx.android.synthetic.main.main_display.*
-import java.io.File
-import java.util.*
-import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,6 +30,13 @@ private const val ARG_PARAM2 = "param2"
  */
 
 class PastEvents : Fragment() {
+
+    private fun openFragment(fragment: Fragment) {
+        val transaction = fragmentManager?.beginTransaction()
+        transaction?.replace(R.id.container, fragment)
+        transaction?.addToBackStack(null)
+        transaction?.commit()
+    }
 
     val tv:TextView?=null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,11 +60,19 @@ class PastEvents : Fragment() {
 
         var imageList:ArrayList<String>?=null
         imageList = populateDBimages()
-
+        val switcher: Button =view.findViewById(R.id.switcher)
         var pe="PAST EVENTS"
+        var title="UPCOMING EVENTS"
+        val tv:TextView=view.findViewById(R.id.tv)
         val tv2:TextView=view.findViewById(R.id.tv2)
         page(view, imageList!!)
-        tv2.text=pe
+        tv.text=pe
+        tv2.text=title
+
+        switcher.setOnClickListener{
+            val upc=DbFlow()
+            openFragment(upc)
+        }
     }
 
 

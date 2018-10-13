@@ -17,7 +17,12 @@ import kotlinx.android.synthetic.main.timeline_events.*
 import java.sql.DriverManager
 import java.sql.SQLException
 import java.util.*
-
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.util.Log
+import com.ryan.rv_gallery.GalleryRecyclerView
+import diplomatssummit.com.diplomatssummit.app_ui.CustomRecyclerAdapter
+import diplomatssummit.com.diplomatssummit.databases.PeMethods
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -63,7 +68,7 @@ class gallery : Fragment() {
 
     }
 
-    fun connect(){
+    /*fun connect(){
         try {
             Class.forName("com.mysql.jdbc.Driver")
 
@@ -102,27 +107,33 @@ class gallery : Fragment() {
             e.printStackTrace()
         }
 
-    }
+    }*/
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.galleryds, container, false)
-        val mWebView: WebView = view.findViewById(R.id.webviewgal)
+        val view = inflater.inflate(R.layout.gallery_rv, container, false)
+
+        val mRecyclerView:RecyclerView = view.findViewById(R.id.rv_list)
+        mRecyclerView.adapter= CustomRecyclerAdapter(context,getDatas())
+
+        mRecyclerView.setLayoutManager(LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false))
+        mRecyclerView.setAdapter(adapter)
+        /*val mWebView: WebView = view.findViewById(R.id.webviewgal)
         val url="https://diplomatssummit.com/mobile/gallery.php"
         mWebView.loadUrl(url)
         connect()
         // Enable Javascript
         val webSettings = mWebView.getSettings()
         webSettings.setDomStorageEnabled(true)
-        webSettings.setJavaScriptEnabled(true)
+        webSettings.setJavaScriptEnabled(true)*/
 
 
 
 
         // Force links and redirects to open in the WebView instead of in a browser
-        mWebView.webViewClient=object : WebViewClient(){
+        /*mWebView.webViewClient=object : WebViewClient(){
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 view?.loadUrl(request?.url.toString())
                 return super.shouldOverrideUrlLoading(view, request)
@@ -139,7 +150,7 @@ class gallery : Fragment() {
                 view?.visibility= View.VISIBLE
                 progressBar.visibility= View.INVISIBLE
             }
-        }
+        }*/
 
 
 
@@ -153,7 +164,25 @@ class gallery : Fragment() {
 
     }
 
+    fun getDatas(): MutableList<String>? {
+        val sampleObj = PeMethods()
+        val ar= sampleObj.readMediaRowsBasedOnType(1)
+        val size=sampleObj.itemsize()
+        var imagelist:MutableList<String>
+        imagelist= arrayListOf()
+        var i=0
 
+        while (i<size) {
+            var imagePath = ar[i].MediaUrl
+            imagePath?.let { imagelist.add(i, it) }
+            Log.d("test2",imagePath)
+
+            i++
+        }
+
+
+        return imagelist
+    }
 
 
     override fun onAttach(context: Context) {
