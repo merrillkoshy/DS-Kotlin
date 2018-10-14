@@ -1,10 +1,11 @@
 package diplomatssummit.com.diplomatssummit
 
+import android.app.Fragment
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,11 +18,15 @@ import kotlinx.android.synthetic.main.timeline_events.*
 import java.sql.DriverManager
 import java.sql.SQLException
 import java.util.*
+import android.widget.LinearLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.widget.RecyclerView
 import android.util.Log
-import com.ryan.rv_gallery.GalleryRecyclerView
-import diplomatssummit.com.diplomatssummit.app_ui.CustomRecyclerAdapter
+import diplomatssummit.com.diplomatssummit.app_ui.AnimManager
+import diplomatssummit.com.diplomatssummit.app_ui.GalleryRecyclerView
+import diplomatssummit.com.diplomatssummit.app_ui.RecyclerAdapter
+
 import diplomatssummit.com.diplomatssummit.databases.PeMethods
 
 
@@ -115,11 +120,34 @@ class gallery : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.gallery_rv, container, false)
 
-        val mRecyclerView:RecyclerView = view.findViewById(R.id.rv_list)
-        mRecyclerView.adapter= CustomRecyclerAdapter(context,getDatas())
 
-        mRecyclerView.setLayoutManager(LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false))
-        mRecyclerView.setAdapter(adapter)
+        val mRecyclerView:GalleryRecyclerView=view.findViewById(R.id.rv_list)
+        val RecyclerAdapter=RecyclerAdapter(context,getDatas())
+        mRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        mRecyclerView.adapter=RecyclerAdapter
+
+
+        mRecyclerView
+                // set scroll speed（pixel/s）
+                .initFlingSpeed(9000)
+                // set page distance and visible distance of the nearby.
+                .initPageParams(0, 40)
+                // set the animation factor
+                .setAnimFactor(0.1f)
+                // set animation type. you can choose AnimManager.ANIM_BOTTOM_TO_TOP or AnimManager.ANIM_TOP_TO_BOTTOM
+                .setAnimType(AnimManager.ANIM_BOTTOM_TO_TOP)
+                // set click listener
+                .setOnItemClickListener(this)
+                // set whether auto play
+                .autoPlay(false)
+                // set auto play intervel
+                .intervalTime(2000)
+                // set default position
+                .initPosition(1)
+                // finally call method
+                .setUp();
+
+
         /*val mWebView: WebView = view.findViewById(R.id.webviewgal)
         val url="https://diplomatssummit.com/mobile/gallery.php"
         mWebView.loadUrl(url)

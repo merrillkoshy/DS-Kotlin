@@ -1,5 +1,6 @@
 package diplomatssummit.com.diplomatssummit.articles
 
+import android.app.Fragment
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri

@@ -1,10 +1,10 @@
 package diplomatssummit.com.diplomatssummit.homepage
 
+import android.app.Fragment
 import android.content.Context
 import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -82,6 +82,7 @@ class Home : Fragment() {
         val bp: ImageView=view.findViewById(R.id.bp)
         val dp: ImageView=view.findViewById(R.id.dp)
         val art: ImageView=view.findViewById(R.id.art)
+
 
         Picasso.get().load("https://diplomatssummit.com/mobile/hp_assets/events.png").centerCrop().resize(1348, 555).onlyScaleDown().into(timel)
         Picasso.get().load("https://diplomatssummit.com/mobile/hp_assets/inv.png").centerCrop().resize(1000, 700).onlyScaleDown().into(invButton)
