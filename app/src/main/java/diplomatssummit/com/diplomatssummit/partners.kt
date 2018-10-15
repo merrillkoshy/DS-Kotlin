@@ -5,7 +5,9 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import android.os.Handler
+import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,10 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ProgressBar
+import diplomatssummit.com.diplomatssummit.app_ui.AnimManager
+import diplomatssummit.com.diplomatssummit.app_ui.GalleryRecyclerView
+import diplomatssummit.com.diplomatssummit.app_ui.RecyclerAdapter
+import diplomatssummit.com.diplomatssummit.databases.PartnerMethod
 import kotlinx.android.synthetic.main.partners.*
 
 
@@ -35,6 +41,7 @@ class partners : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    private val mMainThreadHandler: Handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,20 +65,54 @@ class partners : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.partners, container, false)
-        val mWebView: WebView = view.findViewById(R.id.webviewpart)
-        val url="https://diplomatssummit.com/mobile/partners.php"
-        mWebView.loadUrl(url)
+        val view = inflater.inflate(R.layout.gallery_rv, container, false)
 
+
+        val mRecyclerView: GalleryRecyclerView =view.findViewById(R.id.rv_list)
+        val recyclerAdapter: RecyclerAdapter =RecyclerAdapter(
+                context,
+                getDatas(),
+                getTitles()
+        )
+        val itemClickListener:GalleryRecyclerView.OnItemClickListener
+        mRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        mRecyclerView.adapter=recyclerAdapter
+
+
+        mRecyclerView
+                // set scroll speed（pixel/s）
+                .initFlingSpeed(9000)
+                // set page distance and visible distance of the nearby.
+                .initPageParams(0, 40)
+                // set the animation factor
+                .setAnimFactor(0.1f)
+                // set animation type. you can choose AnimManager.ANIM_BOTTOM_TO_TOP or AnimManager.ANIM_TOP_TO_BOTTOM
+                .setAnimType(AnimManager.ANIM_BOTTOM_TO_TOP)
+
+                // set whether auto play
+                .autoPlay(false)
+                // set auto play intervel
+                .intervalTime(2000)
+                // set default position
+                .initPosition(1)
+                // finally call method
+                .setUp();
+
+
+        /*val mWebView: WebView = view.findViewById(R.id.webviewgal)
+        val url="https://diplomatssummit.com/mobile/gallery.php"
+        mWebView.loadUrl(url)
+        connect()
         // Enable Javascript
         val webSettings = mWebView.getSettings()
-        webSettings.setDomStorageEnabled(true);
+        webSettings.setDomStorageEnabled(true)
+        webSettings.setJavaScriptEnabled(true)*/
 
 
-        webSettings.setJavaScriptEnabled(true)
+
 
         // Force links and redirects to open in the WebView instead of in a browser
-        mWebView.webViewClient=object : WebViewClient(){
+        /*mWebView.webViewClient=object : WebViewClient(){
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 view?.loadUrl(request?.url.toString())
                 return super.shouldOverrideUrlLoading(view, request)
@@ -88,7 +129,7 @@ class partners : Fragment() {
                 view?.visibility= View.VISIBLE
                 progressBar.visibility= View.INVISIBLE
             }
-        }
+        }*/
 
 
 
@@ -102,8 +143,44 @@ class partners : Fragment() {
 
     }
 
+    fun getDatas(): MutableList<String>? {
+
+        val ob2=PartnerMethod()
+        val ar2=ob2.readMediaRowsBasedOnType(1)
+        val s2=ob2.itemsize()
+        var imagelist:MutableList<String>
+        var titlelist:MutableList<String>
+        imagelist= arrayListOf()
+        titlelist= arrayListOf()
+        var i=0
+
+        while (i<s2) {
+            var ip2=ar2[i].MediaUrl
+            ip2?.let { imagelist.add(i, it) }
+            Log.d("testGal",ip2)
+            i++
+        }
 
 
+        return imagelist
+    }
+
+    fun getTitles(): MutableList<String>? {
+
+        val ob2=PartnerMethod()
+        val ar2=ob2.readMediaRowsBasedOnType(1)
+        val s2=ob2.itemsize()
+        var titlelist:MutableList<String>
+        titlelist= arrayListOf()
+        var i=0
+
+        while (i<s2) {
+            var title=ar2[i].Title
+            title?.let { titlelist.add(i,it) }
+            i++
+        }
+        return titlelist
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -117,6 +194,10 @@ class partners : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listener = null
+    }
+
+    fun getmMainThreadHandler(): Handler {
+        return mMainThreadHandler
     }
 
     /**

@@ -2,32 +2,22 @@ package diplomatssummit.com.diplomatssummit
 
 import android.app.Fragment
 import android.content.Context
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.ProgressBar
 import diplomatssummit.com.diplomatssummit.events.DS_Events
-import kotlinx.android.synthetic.main.timeline_events.*
-import java.sql.DriverManager
-import java.sql.SQLException
-import java.util.*
-import android.widget.LinearLayout
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.widget.RecyclerView
 import android.util.Log
 import diplomatssummit.com.diplomatssummit.app_ui.AnimManager
 import diplomatssummit.com.diplomatssummit.app_ui.GalleryRecyclerView
 import diplomatssummit.com.diplomatssummit.app_ui.RecyclerAdapter
-
-import diplomatssummit.com.diplomatssummit.databases.PeMethods
+import diplomatssummit.com.diplomatssummit.databases.GtableMethods
+import diplomatssummit.com.diplomatssummit.Gallery.Gallery_InsidePage
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -49,6 +39,7 @@ class gallery : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    private val mMainThreadHandler: Handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -122,9 +113,18 @@ class gallery : Fragment() {
 
 
         val mRecyclerView:GalleryRecyclerView=view.findViewById(R.id.rv_list)
-        val RecyclerAdapter=RecyclerAdapter(context,getDatas())
+        val recyclerAdapter:RecyclerAdapter=RecyclerAdapter(
+                context,
+                getDatas(),
+                getTitles()
+        )
+
+        val galleryInside=Gallery_InsidePage()
+        galleryInside.getContent(getContent())
+
+        val itemClickListener:GalleryRecyclerView.OnItemClickListener
         mRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        mRecyclerView.adapter=RecyclerAdapter
+        mRecyclerView.adapter=recyclerAdapter
 
 
         mRecyclerView
@@ -136,8 +136,7 @@ class gallery : Fragment() {
                 .setAnimFactor(0.1f)
                 // set animation type. you can choose AnimManager.ANIM_BOTTOM_TO_TOP or AnimManager.ANIM_TOP_TO_BOTTOM
                 .setAnimType(AnimManager.ANIM_BOTTOM_TO_TOP)
-                // set click listener
-                .setOnItemClickListener(this)
+
                 // set whether auto play
                 .autoPlay(false)
                 // set auto play intervel
@@ -193,17 +192,22 @@ class gallery : Fragment() {
     }
 
     fun getDatas(): MutableList<String>? {
-        val sampleObj = PeMethods()
-        val ar= sampleObj.readMediaRowsBasedOnType(1)
-        val size=sampleObj.itemsize()
+
+        val ob2=GtableMethods()
+        val ar2=ob2.readMediaRowsBasedOnType(1)
+        val s2=ob2.itemsize()
         var imagelist:MutableList<String>
+        var titlelist:MutableList<String>
         imagelist= arrayListOf()
+        titlelist= arrayListOf()
         var i=0
 
-        while (i<size) {
-            var imagePath = ar[i].MediaUrl
-            imagePath?.let { imagelist.add(i, it) }
-            Log.d("test2",imagePath)
+        while (i<s2) {
+            var ip2=ar2[i].GalleryThumb
+            var title=ar2[i].Title
+            title?.let { titlelist.add(i,it) }
+            ip2?.let { imagelist.add(i, it) }
+            Log.d("testGal",ip2)
 
             i++
         }
@@ -212,6 +216,45 @@ class gallery : Fragment() {
         return imagelist
     }
 
+    fun getContent(): MutableList<String> {
+        val ob=GtableMethods()
+        val ar=ob.readMediaRowsBasedOnType(1)
+        val size=ob.itemsize()
+        var contentblock:MutableList<String>
+        contentblock= arrayListOf()
+        var i=0
+
+        while (i<size) {
+            var ip2=ar[i].MediaUrl
+
+            ip2?.let { contentblock.add(i, it) }
+            Log.d("testGal",ip2)
+
+            i++
+        }
+
+
+        return contentblock
+    }
+
+    fun getTitles(): MutableList<String>? {
+
+        val ob2=GtableMethods()
+        val ar2=ob2.readMediaRowsBasedOnType(1)
+        val s2=ob2.itemsize()
+        var titlelist:MutableList<String>
+        titlelist= arrayListOf()
+        var i=0
+
+        while (i<s2) {
+            var ip2=ar2[i].GalleryThumb
+            var title=ar2[i].Title
+            title?.let { titlelist.add(i,it) }
+            Log.d("testGal",ip2)
+            i++
+        }
+        return titlelist
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -225,6 +268,10 @@ class gallery : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listener = null
+    }
+
+    fun getmMainThreadHandler(): Handler {
+        return mMainThreadHandler
     }
 
     /**

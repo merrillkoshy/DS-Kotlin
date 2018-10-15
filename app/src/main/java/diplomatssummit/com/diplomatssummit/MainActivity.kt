@@ -1,12 +1,12 @@
 package diplomatssummit.com.diplomatssummit
 
 
+import android.app.Fragment
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
-import android.support.v4.app.Fragment
 import diplomatssummit.com.diplomatssummit.events.DS_Events
 import diplomatssummit.com.diplomatssummit.homepage.Home
 import diplomatssummit.com.diplomatssummit.invest.DS_Invest
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun openFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
+        val transaction = fragmentManager.beginTransaction()
         transaction.replace(R.id.container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()

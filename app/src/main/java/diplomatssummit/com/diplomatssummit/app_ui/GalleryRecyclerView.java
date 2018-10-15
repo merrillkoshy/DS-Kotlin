@@ -24,6 +24,7 @@ import diplomatssummit.com.diplomatssummit.app_ui.ScrollManager;
 import diplomatssummit.com.diplomatssummit.app_ui.util.DLog;
 
 import diplomatssummit.com.diplomatssummit.R;
+import diplomatssummit.com.diplomatssummit.app_ui.util.ThreadUtils;
 
 
 public class GalleryRecyclerView extends RecyclerView implements View.OnTouchListener, GalleryItemDecoration.OnItemSizeMeasuredListener {
@@ -66,7 +67,7 @@ public class GalleryRecyclerView extends RecyclerView implements View.OnTouchLis
             smoothScrollToPosition(newPosition);
 
             ThreadUtils.removeCallbacks(this);
-            ThreadUtils.runOnUiThread(this, mInterval);
+            ThreadUtils.runOnUiThread(this);
         }
     };
 
@@ -232,7 +233,7 @@ public class GalleryRecyclerView extends RecyclerView implements View.OnTouchLis
     private void autoPlayGallery() {
         if (mAutoPlay) {
             ThreadUtils.removeCallbacks(mAutoPlayTask);
-            ThreadUtils.runOnUiThread(mAutoPlayTask, mInterval);
+            ThreadUtils.runOnUiThread(mAutoPlayTask);
         }
     }
 
@@ -302,10 +303,7 @@ public class GalleryRecyclerView extends RecyclerView implements View.OnTouchLis
     protected void onRestoreInstanceState(Parcelable state) {
         super.onRestoreInstanceState(state);
 
-        // 如果是横竖屏切换（Fragment销毁），不应该走smoothScrollToPosition(0)，因为这个方法会导致ScrollManager的onHorizontalScroll不断执行，而ScrollManager.mConsumeX已经重置，会导致这个值紊乱
-        // 而如果走scrollToPosition(0)方法，则不会导致ScrollManager的onHorizontalScroll执行，所以ScrollManager.mConsumeX这个值不会错误
-        scrollToPosition(0);
-        // 但是因为不走ScrollManager的onHorizontalScroll，所以不会执行切换动画，所以就调用smoothScrollBy(int dx, int dy)，让item轻微滑动，触发动画
+
         smoothScrollBy(10, 0);
         smoothScrollBy(0, 0);
 

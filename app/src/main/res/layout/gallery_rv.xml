@@ -10,10 +10,11 @@
 
     <!-- PagerSnapHelper can move just one page when scroll -->
     <!-- LinearSnapHelper can move serveral page when scroll-->
-    <com.ryan.rv_gallery.GalleryRecyclerView
+    <diplomatssummit.com.diplomatssummit.app_ui.GalleryRecyclerView
         android:id="@+id/rv_list"
         android:layout_width="match_parent"
-        android:layout_height="480dp"
-        app:helper="PagerSnapHelper/LinearSnapHelper" />
+        android:layout_height="580dp"
+        />
+
 
 </RelativeLayout>
