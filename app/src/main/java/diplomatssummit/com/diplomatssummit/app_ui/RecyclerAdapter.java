@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import diplomatssummit.com.diplomatssummit.Gallery.Gallery_InsidePage;
 import diplomatssummit.com.diplomatssummit.R;
 import diplomatssummit.com.diplomatssummit.app_ui.util.DLog;
+import diplomatssummit.com.diplomatssummit.databases.GtableMethods;
 
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
     private Context mContext;
     private List<String> mDatas;
     private List<String> mTitles;
-
+    private List<String> mContent;
 
     private OnItemPhotoChangedListener mOnItemPhotoChangedListener;
 
@@ -53,20 +55,39 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
     public void onBindViewHolder(final MyHolder holder, final int position) {
         DLog.d(TAG, "RecyclerAdapter onBindViewHolder" + "--> position = " + position);
         String imageUrl = mDatas.get(position);
-        String imageTitle=mTitles.get(position);
+        final String imageTitle=mTitles.get(position);
         Picasso.get().load(imageUrl).fit().centerCrop().into(holder.mView);
-
-
+        List getTitleonBind1=getTitle(position);
+        String getTitleonBind2=getTitleonBind1.get(0).toString();
+        final String[] getTitleonBind3=getTitleonBind2.split(",");
+        final String getTitleonBind=getTitleonBind3[2];
+        final int size=getTitleonBind3.length;
         holder.mTitles.setText(imageTitle);
         holder.mChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                int i=0;
+                while(i<size) {
+                    Log.d("clickedTitle", getTitleonBind3[i]);
+                    Gallery_InsidePage gip =new Gallery_InsidePage();
+                    gip.populateDBimages(getTitleonBind3);
+                    i++;
+                }
                /* Animation slide_up = AnimationUtils.loadAnimation(mContext,
                     R.anim.slide_up);
                 holder.itemView.startAnimation(slide_up);*/
             }
         });
+
+    }
+
+
+    public List getTitle(int pos){
+        final String imageTitle=mTitles.get(pos);
+        GtableMethods ob2=new GtableMethods();
+        List ar=ob2.readContentFromTitle(imageTitle);
+        return ar;
     }
 
 

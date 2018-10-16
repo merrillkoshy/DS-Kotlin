@@ -119,8 +119,8 @@ class gallery : Fragment() {
                 getTitles()
         )
 
-        val galleryInside=Gallery_InsidePage()
-        galleryInside.getContent(getContent())
+
+
 
         val itemClickListener:GalleryRecyclerView.OnItemClickListener
         mRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -216,26 +216,7 @@ class gallery : Fragment() {
         return imagelist
     }
 
-    fun getContent(): MutableList<String> {
-        val ob=GtableMethods()
-        val ar=ob.readMediaRowsBasedOnType(1)
-        val size=ob.itemsize()
-        var contentblock:MutableList<String>
-        contentblock= arrayListOf()
-        var i=0
 
-        while (i<size) {
-            var ip2=ar[i].MediaUrl
-
-            ip2?.let { contentblock.add(i, it) }
-            Log.d("testGal",ip2)
-
-            i++
-        }
-
-
-        return contentblock
-    }
 
     fun getTitles(): MutableList<String>? {
 

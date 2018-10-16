@@ -24,6 +24,6 @@ class GalleryTable : BaseModel() {
     var Title: String? = null
 
     override fun toString(): String {
-        return "Id - $Id,\nMediaType - $MediaType,\nMediaUrl - $MediaUrl"
+        return "$MediaUrl"
     }
 }

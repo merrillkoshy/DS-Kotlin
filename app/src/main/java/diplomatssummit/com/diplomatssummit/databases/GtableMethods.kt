@@ -33,6 +33,19 @@ class GtableMethods {
         return galleryRowList
     }
 
+    fun readContentFromTitle(Title:String): List<GalleryTable>{
+        val operatorGroup = OperatorGroup.clause()
+                .and(GalleryTable_Table.Title.eq(Title))
+
+        val contentList=SQLite.select(GalleryTable_Table.MediaUrl).
+                from(GalleryTable::class.java).
+                where(operatorGroup)
+                .queryList()
+
+        return contentList
+
+    }
+
     fun itemsize(): Int {
         val operatorGroup = OperatorGroup.clause()
                 .and(GalleryTable_Table.MediaType.eq(1.toLong()))
