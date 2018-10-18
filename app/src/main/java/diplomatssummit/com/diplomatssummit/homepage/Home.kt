@@ -16,6 +16,9 @@ import diplomatssummit.com.diplomatssummit.databases.DbFlow
 import diplomatssummit.com.diplomatssummit.gallery
 import diplomatssummit.com.diplomatssummit.invest.DS_Invest
 import diplomatssummit.com.diplomatssummit.partners
+import java.lang.reflect.AccessibleObject.setAccessible
+
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,6 +35,14 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 class Home : Fragment() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
+    }
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -43,17 +54,7 @@ class Home : Fragment() {
     val bp:ImageView?=null
     val art:ImageView?=null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-
-
-
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     fun getScreenWidth(): Int {
         return Resources.getSystem().getDisplayMetrics().widthPixels
@@ -150,7 +151,17 @@ class Home : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        listener = null
+        try {
+            val childFragmentManager = Fragment::class.java.getDeclaredField("mChildFragmentManager")
+            childFragmentManager.isAccessible = true
+            childFragmentManager.set(this, null)
+
+        } catch (e: NoSuchFieldException) {
+            throw RuntimeException(e)
+        } catch (e: IllegalAccessException) {
+            throw RuntimeException(e)
+        }
+
     }
 
     /**

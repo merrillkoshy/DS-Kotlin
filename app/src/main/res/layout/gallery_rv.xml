@@ -1,19 +1,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_container"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
 
-    android:fitsSystemWindows="true"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <!-- PagerSnapHelper can move just one page when scroll -->
     <!-- LinearSnapHelper can move serveral page when scroll-->
     <diplomatssummit.com.diplomatssummit.app_ui.GalleryRecyclerView
         android:id="@+id/rv_list"
-        android:layout_width="match_parent"
-        android:layout_height="580dp"
+        android:layout_width="fill_parent"
+        android:layout_height="700dp"
         />
 
 

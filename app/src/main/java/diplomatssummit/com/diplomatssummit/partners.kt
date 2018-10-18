@@ -17,6 +17,7 @@ import android.webkit.WebViewClient
 import android.widget.ProgressBar
 import diplomatssummit.com.diplomatssummit.app_ui.AnimManager
 import diplomatssummit.com.diplomatssummit.app_ui.GalleryRecyclerView
+import diplomatssummit.com.diplomatssummit.app_ui.PartnerRCAdapter
 import diplomatssummit.com.diplomatssummit.app_ui.RecyclerAdapter
 import diplomatssummit.com.diplomatssummit.databases.PartnerMethod
 import kotlinx.android.synthetic.main.partners.*
@@ -69,10 +70,10 @@ class partners : Fragment() {
 
 
         val mRecyclerView: GalleryRecyclerView =view.findViewById(R.id.rv_list)
-        val recyclerAdapter: RecyclerAdapter =RecyclerAdapter(
+        val recyclerAdapter: PartnerRCAdapter =PartnerRCAdapter(
                 context,
-                getDatas(),
-                getTitles()
+                getDatas()
+
         )
         val itemClickListener:GalleryRecyclerView.OnItemClickListener
         mRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -163,23 +164,6 @@ class partners : Fragment() {
 
 
         return imagelist
-    }
-
-    fun getTitles(): MutableList<String>? {
-
-        val ob2=PartnerMethod()
-        val ar2=ob2.readMediaRowsBasedOnType(1)
-        val s2=ob2.itemsize()
-        var titlelist:MutableList<String>
-        titlelist= arrayListOf()
-        var i=0
-
-        while (i<s2) {
-            var title=ar2[i].Title
-            title?.let { titlelist.add(i,it) }
-            i++
-        }
-        return titlelist
     }
 
     override fun onAttach(context: Context) {

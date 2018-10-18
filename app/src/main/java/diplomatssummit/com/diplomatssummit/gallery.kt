@@ -13,6 +13,7 @@ import android.widget.ProgressBar
 import diplomatssummit.com.diplomatssummit.events.DS_Events
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.widget.Button
 import diplomatssummit.com.diplomatssummit.app_ui.AnimManager
 import diplomatssummit.com.diplomatssummit.app_ui.GalleryRecyclerView
 import diplomatssummit.com.diplomatssummit.app_ui.RecyclerAdapter
@@ -206,7 +207,7 @@ class gallery : Fragment() {
             var ip2=ar2[i].GalleryThumb
             var title=ar2[i].Title
             title?.let { titlelist.add(i,it) }
-            ip2?.let { imagelist.add(i, it) }
+            ip2!!.replace("-225x300","").let { imagelist.add(i, it) }
             Log.d("testGal",ip2)
 
             i++
