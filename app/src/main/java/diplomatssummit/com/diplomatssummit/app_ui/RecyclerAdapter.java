@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 
+import diplomatssummit.com.diplomatssummit.Gallery.Gal_InsidePageActivity;
 import diplomatssummit.com.diplomatssummit.Gallery.Gallery_InsidePage;
 import diplomatssummit.com.diplomatssummit.R;
 import diplomatssummit.com.diplomatssummit.app_ui.util.DLog;
@@ -223,6 +225,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
                 }
                 Gallery_InsidePage gip =new Gallery_InsidePage();
                 gip.setImagelist(place);
+
+                Intent j = new Intent(mContext, Gal_InsidePageActivity.class);
+                j.putExtra("galCon",place);
+;                mContext.startActivity(j);
+
+
 
                 setclickval(holder,1,place);
                 /**/

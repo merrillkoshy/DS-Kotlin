@@ -2,6 +2,7 @@ package diplomatssummit.com.diplomatssummit.app_ui
 
 import android.content.Context
 import android.support.v4.view.PagerAdapter
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +32,7 @@ class GalleryPagerAdapter(private val mContext: Context, private val imageList: 
 
         val imageUrl = imageList!![position]
         val pagerImageView = rootView.findViewById<ImageView>(R.id.galleryinside)
-        pagerImageView.visibility = View.VISIBLE
+        Log.d("gPA_test", imageUrl)
         Picasso.get().load(imageUrl).centerCrop().fit().into(pagerImageView)
 
         viewGroup.addView(rootView)
