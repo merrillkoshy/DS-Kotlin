@@ -1,0 +1,27 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:id="@+id/rl_container"
+android:layout_width="fill_parent"
+android:layout_height="match_parent"
+android:orientation="horizontal">
+
+<!-- PagerSnapHelper can move just one page when scroll -->
+<!-- LinearSnapHelper can move serveral page when scroll-->
+<diplomatssummit.com.diplomatssummit.app_ui.GalleryRecyclerView
+    android:id="@+id/rv_list"
+    android:layout_width="fill_parent"
+    android:layout_height="625dp"
+    />
+
+<SeekBar
+    android:id="@+id/seekBar"
+    style="@style/Base.Widget.AppCompat.SeekBar"
+    android:background="#80FFFFFF"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_marginBottom="60dp"
+    android:progress="1" />
+
+
+</RelativeLayout>

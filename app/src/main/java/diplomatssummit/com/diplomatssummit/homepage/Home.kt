@@ -2,6 +2,7 @@ package diplomatssummit.com.diplomatssummit.homepage
 
 import android.app.Fragment
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
@@ -13,11 +14,10 @@ import com.squareup.picasso.Picasso
 import diplomatssummit.com.diplomatssummit.R
 import diplomatssummit.com.diplomatssummit.articles.articles
 import diplomatssummit.com.diplomatssummit.databases.DbFlow
-import diplomatssummit.com.diplomatssummit.gallery
+import diplomatssummit.com.diplomatssummit.Gallery.gallery
 import diplomatssummit.com.diplomatssummit.invest.DS_Invest
+import diplomatssummit.com.diplomatssummit.invest.InvestActivity
 import diplomatssummit.com.diplomatssummit.partners
-import java.lang.reflect.AccessibleObject.setAccessible
-
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -98,8 +98,8 @@ class Home : Fragment() {
 //            openFragment(eveFragment)
 //        }
         invButton.setOnClickListener(){
-            val invFragment=DS_Invest.newInstance()
-            openFragment(invFragment)
+           val intent:Intent= Intent(context, InvestActivity::class.java)
+            startActivity(intent)
         }
         timel.setOnClickListener(){
             /*val tlFragment=timeline_events.newInstance()
@@ -109,7 +109,7 @@ class Home : Fragment() {
             openFragment(dbflow)
         }
         galbutton.setOnClickListener(){
-            val galFragment=gallery.newInstance()
+            val galFragment= gallery.newInstance()
             openFragment(galFragment)
         }
         bp.setOnClickListener(){

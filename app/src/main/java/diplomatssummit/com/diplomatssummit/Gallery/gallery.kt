@@ -1,4 +1,4 @@
-package diplomatssummit.com.diplomatssummit
+package diplomatssummit.com.diplomatssummit.Gallery
 
 import android.app.Fragment
 import android.content.Context
@@ -12,13 +12,15 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import diplomatssummit.com.diplomatssummit.events.DS_Events
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.widget.Button
+import android.widget.SeekBar
+import diplomatssummit.com.diplomatssummit.R
 import diplomatssummit.com.diplomatssummit.app_ui.AnimManager
 import diplomatssummit.com.diplomatssummit.app_ui.GalleryRecyclerView
 import diplomatssummit.com.diplomatssummit.app_ui.RecyclerAdapter
 import diplomatssummit.com.diplomatssummit.databases.GtableMethods
-import diplomatssummit.com.diplomatssummit.Gallery.Gallery_InsidePage
+
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -41,6 +43,8 @@ class gallery : Fragment() {
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
     private val mMainThreadHandler: Handler = Handler()
+    private var mSeekbar: SeekBar? = null
+    private val mRecyclerView: GalleryRecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +53,6 @@ class gallery : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
         initializeWidgets()
-
     }
 
 
@@ -65,53 +68,13 @@ class gallery : Fragment() {
 
     }
 
-    /*fun connect(){
-        try {
-            Class.forName("com.mysql.jdbc.Driver")
-
-            // connect way #1
-            val url1 = "jdbc:mysql://103.252.236.42/timeline_events.db"
-            val user = "diplomatsadmin"
-            val password = "5reaK!@#"
-
-            val conn1 = DriverManager.getConnection(url1, user, password)
-            if (conn1 != null) {
-                println("Connected to the database test1")
-            }
-
-            // connect way #2
-            val url2 = "jdbc:mysql://103.252.236.42/timeline_events.db?user=diplomatsadmin&password=5reaK!@#"
-            val conn2 = DriverManager.getConnection(url2)
-            if (conn2 != null) {
-                println("Connected to the database test2")
-            }
-
-            // connect way #3
-            val url3 = "jdbc:mysql://103.252.236.42/timeline_events.db"
-            val info = Properties()
-            info["user"] = "diplomatsadmin"
-            info["password"] = "5reaK!@#"
-
-            val conn3 = DriverManager.getConnection(url3, info)
-            if (conn3 != null) {
-                println("Connected to the database test3")
-            }
-        } catch (ex: SQLException) {
-            println("An error occurred. Maybe user/password is invalid")
-            ex.printStackTrace()
-        } catch (e: ClassNotFoundException) {
-            // TODO Auto-generated catch block
-            e.printStackTrace()
-        }
-
-    }*/
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.gallery_rv, container, false)
-
+        mSeekbar = view.findViewById(R.id.seekBar);
+        mSeekbar?.max=getDatas()!!.size-1
 
         val mRecyclerView:GalleryRecyclerView=view.findViewById(R.id.rv_list)
         val recyclerAdapter:RecyclerAdapter=RecyclerAdapter(
@@ -138,47 +101,31 @@ class gallery : Fragment() {
                 // set animation type. you can choose AnimManager.ANIM_BOTTOM_TO_TOP or AnimManager.ANIM_TOP_TO_BOTTOM
                 .setAnimType(AnimManager.ANIM_BOTTOM_TO_TOP)
 
-                // set whether auto play
-                .autoPlay(false)
-                // set auto play intervel
-                .intervalTime(2000)
                 // set default position
-                .initPosition(1)
+                .initPosition(0)
                 // finally call method
                 .setUp();
 
 
-        /*val mWebView: WebView = view.findViewById(R.id.webviewgal)
-        val url="https://diplomatssummit.com/mobile/gallery.php"
-        mWebView.loadUrl(url)
-        connect()
-        // Enable Javascript
-        val webSettings = mWebView.getSettings()
-        webSettings.setDomStorageEnabled(true)
-        webSettings.setJavaScriptEnabled(true)*/
+        mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                mSeekbar?.setProgress(mRecyclerView.getScrolledPosition());
+            }
+        })
 
-
-
-
-        // Force links and redirects to open in the WebView instead of in a browser
-        /*mWebView.webViewClient=object : WebViewClient(){
-            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-                view?.loadUrl(request?.url.toString())
-                return super.shouldOverrideUrlLoading(view, request)
+        mSeekbar?.setOnSeekBarChangeListener(object:SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                mRecyclerView.smoothScrollToPosition(progress);
             }
 
-            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                super.onPageStarted(view, url, favicon)
-                view?.visibility= View.INVISIBLE
-                progressBar.visibility= View.VISIBLE
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
             }
 
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-                view?.visibility= View.VISIBLE
-                progressBar.visibility= View.INVISIBLE
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
             }
-        }*/
+        })
 
 
 

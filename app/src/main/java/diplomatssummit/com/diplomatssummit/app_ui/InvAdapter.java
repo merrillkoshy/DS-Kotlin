@@ -24,6 +24,7 @@ import com.squareup.picasso.Picasso;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 
 import diplomatssummit.com.diplomatssummit.Gallery.Gal_InsidePageActivity;
+
 import diplomatssummit.com.diplomatssummit.R;
 import diplomatssummit.com.diplomatssummit.app_ui.util.DLog;
 import diplomatssummit.com.diplomatssummit.databases.DbFlow;
@@ -36,19 +37,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHolder> {
+public class InvAdapter extends RecyclerView.Adapter<InvAdapter.MyHolder> {
 
-    private final String TAG =this.getClass().getSimpleName(); ;
+    private final String TAG =this.getClass().getSimpleName();
     private Context mContext;
     private List<String> mDatas;
     private List<String> mTitles;
     private List<String> mContent;
-    private int flag=0;
+
 
     private OnItemPhotoChangedListener mOnItemPhotoChangedListener;
 
 
-    public RecyclerAdapter(Context mContext, List<String> mDatas,List<String> mTitles) {
+    public InvAdapter(Context mContext, List<String> mDatas,List<String> mTitles) {
         this.mContext = mContext;
         this.mDatas = mDatas;
         this.mTitles=mTitles;
@@ -77,33 +78,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
         String imageUrl = mDatas.get(position);
         final String imageTitle=mTitles.get(position);
         Picasso.get().load(imageUrl).fit().centerCrop().into(holder.mView);
-        List getTitleonBind1=getTitle(position);
-        String getTitleonBind2=getTitleonBind1.get(0).toString();
-        final String[] getTitleonBind3=getTitleonBind2.replaceAll("-225x300","").split(",");
-        final String getTitleonBind=getTitleonBind3[2];
-        final int size=getTitleonBind3.length;
+
         holder.mTitles.setText(imageTitle);
+
+        Animation animation,imageanim;
+        animation = AnimationUtils.loadAnimation(mContext,R.anim.slide_up);
+        imageanim = AnimationUtils.loadAnimation(mContext,R.anim.image_slideup);
+        holder.mTitles.startAnimation(animation);
+        holder.mView.startAnimation(imageanim);
         final ArrayList<String> place=new ArrayList<>();
 
-        holder.mChange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                place.clear();
-                int i=0;
-                while(i<size) {
-                    Log.d("clickedTitle", getTitleonBind3[i]);
-                    place.add(getTitleonBind3[i]);
-                    i++;
-                }
-
-                Intent j = new Intent(mContext, Gal_InsidePageActivity.class);
-                j.putExtra("galCon",place);
-                j.putExtra("titleGal",imageTitle)
-;                mContext.startActivity(j);
-            }
-        });
     }
-
 
 
 

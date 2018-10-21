@@ -29,7 +29,8 @@
             android:name=".MainActivity"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher_round" />
-        <activity android:name=".Gallery.Gal_InsidePageActivity"></activity>
+        <activity android:name=".Gallery.Gal_InsidePageActivity" />
+        <activity android:name=".invest.InvestActivity"></activity>
     </application>
 
 </manifest>

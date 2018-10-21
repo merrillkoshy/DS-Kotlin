@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,9 @@ import diplomatssummit.com.diplomatssummit.app_ui.PartnerRCAdapter
 import diplomatssummit.com.diplomatssummit.app_ui.RecyclerAdapter
 import diplomatssummit.com.diplomatssummit.databases.PartnerMethod
 import kotlinx.android.synthetic.main.partners.*
+import android.widget.SeekBar
+
+
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,12 +41,14 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class partners : Fragment() {
+class partners : Fragment(){
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
     private val mMainThreadHandler: Handler = Handler()
+    private var mSeekbar: SeekBar? = null
+    private val mRecyclerView: GalleryRecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,10 +72,11 @@ class partners : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.gallery_rv, container, false)
+        val view = inflater.inflate(R.layout.partner_rv, container, false)
+        mSeekbar = view.findViewById(R.id.seekBar);
+        mSeekbar?.max=getDatas()!!.size-1
 
-
-        val mRecyclerView: GalleryRecyclerView =view.findViewById(R.id.rv_list)
+        val mRecyclerView: GalleryRecyclerView =view.findViewById(R.id.rv_partnerlist)
         val recyclerAdapter: PartnerRCAdapter =PartnerRCAdapter(
                 context,
                 getDatas()
@@ -90,47 +97,33 @@ class partners : Fragment() {
                 // set animation type. you can choose AnimManager.ANIM_BOTTOM_TO_TOP or AnimManager.ANIM_TOP_TO_BOTTOM
                 .setAnimType(AnimManager.ANIM_BOTTOM_TO_TOP)
 
-                // set whether auto play
-                .autoPlay(false)
-                // set auto play intervel
-                .intervalTime(2000)
                 // set default position
-                .initPosition(1)
+                .initPosition(0)
                 // finally call method
                 .setUp();
 
 
-        /*val mWebView: WebView = view.findViewById(R.id.webviewgal)
-        val url="https://diplomatssummit.com/mobile/gallery.php"
-        mWebView.loadUrl(url)
-        connect()
-        // Enable Javascript
-        val webSettings = mWebView.getSettings()
-        webSettings.setDomStorageEnabled(true)
-        webSettings.setJavaScriptEnabled(true)*/
+        mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                mSeekbar?.setProgress(mRecyclerView.getScrolledPosition());
+            }
+        })
 
-
-
-
-        // Force links and redirects to open in the WebView instead of in a browser
-        /*mWebView.webViewClient=object : WebViewClient(){
-            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-                view?.loadUrl(request?.url.toString())
-                return super.shouldOverrideUrlLoading(view, request)
+        mSeekbar?.setOnSeekBarChangeListener(object:SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                mRecyclerView.smoothScrollToPosition(progress);
             }
 
-            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                super.onPageStarted(view, url, favicon)
-                view?.visibility= View.INVISIBLE
-                progressBar.visibility= View.VISIBLE
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
             }
 
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-                view?.visibility= View.VISIBLE
-                progressBar.visibility= View.INVISIBLE
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
             }
-        }*/
+        })
+
+
 
 
 
@@ -143,6 +136,9 @@ class partners : Fragment() {
 
 
     }
+
+
+
 
     fun getDatas(): MutableList<String>? {
 
@@ -165,6 +161,9 @@ class partners : Fragment() {
 
         return imagelist
     }
+
+
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

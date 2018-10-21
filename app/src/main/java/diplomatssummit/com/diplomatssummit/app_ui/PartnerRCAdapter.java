@@ -43,7 +43,7 @@ public class PartnerRCAdapter extends RecyclerView.Adapter<PartnerRCAdapter.MyHo
     @Override
     public MyHolderP onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View itemView = LayoutInflater.from(mContext).inflate(R.layout.main_item, parent, false);
+        View itemView = LayoutInflater.from(mContext).inflate(R.layout.partner_item, parent, false);
         return new MyHolderP(itemView);
     }
 

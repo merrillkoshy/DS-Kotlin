@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import diplomatssummit.com.diplomatssummit.gallery;
+import diplomatssummit.com.diplomatssummit.Gallery.gallery;
 
 
 public class ThreadUtils {
