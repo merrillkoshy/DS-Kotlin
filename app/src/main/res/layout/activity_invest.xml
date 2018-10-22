@@ -7,10 +7,19 @@ android:orientation="horizontal">
 
 <!-- PagerSnapHelper can move just one page when scroll -->
 <!-- LinearSnapHelper can move serveral page when scroll-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_height="150dp"
+        android:text="Why do you invest? Because you want greater returns? No. that’s not all. It’s because you are a ‘Future-Person’. You’re a visionary who believes in taking every small step towards achieving a greater goal. While your assets grow by each passing day, your value and goodwill are built on their own. For possessing such an invaluable asset - wisdom, investment opportunities are nowhere to go. They are all here for you. Explore!"
+        android:padding="10dp"
+        android:textColor="#9f7d3a"/>
+
 <diplomatssummit.com.diplomatssummit.app_ui.GalleryRecyclerView
     android:id="@+id/rv_list"
+    android:layout_marginTop="200dp"
     android:layout_width="fill_parent"
-    android:layout_height="625dp"
+    android:layout_height="425dp"
     />
 
 <SeekBar
@@ -20,8 +29,30 @@ android:orientation="horizontal">
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:layout_marginBottom="60dp"
+    android:layout_marginBottom="100dp"
     android:progress="1" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/loginBtn"
+        android:layout_width="match_parent"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:background="#FF3D2E"
+        android:textColor="#FFF"
+        android:text="LOGIN"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="Login to view investment opportunities"
+        android:layout_alignParentBottom="true"
+
+        android:textColor="#9f7d3a"/>
+
 
 
 </RelativeLayout>

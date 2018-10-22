@@ -49,10 +49,11 @@ public class InvAdapter extends RecyclerView.Adapter<InvAdapter.MyHolder> {
     private OnItemPhotoChangedListener mOnItemPhotoChangedListener;
 
 
-    public InvAdapter(Context mContext, List<String> mDatas,List<String> mTitles) {
+    public InvAdapter(Context mContext, List<String> mDatas,List<String> mTitles,List<String> mContent) {
         this.mContext = mContext;
         this.mDatas = mDatas;
         this.mTitles=mTitles;
+        this.mContent=mContent;
     }
 
 
@@ -81,12 +82,24 @@ public class InvAdapter extends RecyclerView.Adapter<InvAdapter.MyHolder> {
 
         holder.mTitles.setText(imageTitle);
 
-        Animation animation,imageanim;
+        /*Animation animation,imageanim;
         animation = AnimationUtils.loadAnimation(mContext,R.anim.slide_up);
         imageanim = AnimationUtils.loadAnimation(mContext,R.anim.image_slideup);
         holder.mTitles.startAnimation(animation);
-        holder.mView.startAnimation(imageanim);
+        holder.mView.startAnimation(imageanim);*/
         final ArrayList<String> place=new ArrayList<>();
+        holder.mChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Animation animation,animat2;
+                animation = AnimationUtils.loadAnimation(mContext,R.anim.slide_up);
+                animat2= AnimationUtils.loadAnimation(mContext,R.anim.image_slideup);
+                holder.mTitles.startAnimation(animat2);
+                holder.inDesc.setVisibility(View.VISIBLE);
+                holder.inDesc.setText(mContent.get(position));
+                holder.inDesc.startAnimation(animation);
+            }
+        });
 
     }
 
@@ -108,6 +121,8 @@ public class InvAdapter extends RecyclerView.Adapter<InvAdapter.MyHolder> {
     static class MyHolder extends RecyclerView.ViewHolder {
         final ImageView mView;
         final TextView mTitles;
+        final TextView inDesc;
+
         Button mChange;
 
         MyHolder(View itemView) {
@@ -115,6 +130,8 @@ public class InvAdapter extends RecyclerView.Adapter<InvAdapter.MyHolder> {
             mView = itemView.findViewById(R.id.iv_photo);
             mTitles=itemView.findViewById(R.id.gallery_titles);
             mChange = itemView.findViewById(R.id.fab_change);
+            inDesc=itemView.findViewById(R.id.inDesc);
+
         }
     }
 

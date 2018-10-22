@@ -1,42 +1,43 @@
 package diplomatssummit.com.diplomatssummit.invest
 
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.widget.Button
 import android.widget.SeekBar
+import android.widget.TextView
 import diplomatssummit.com.diplomatssummit.R
-import diplomatssummit.com.diplomatssummit.app_ui.AnimManager
-import diplomatssummit.com.diplomatssummit.app_ui.GalleryRecyclerView
-import diplomatssummit.com.diplomatssummit.app_ui.InvAdapter
-import diplomatssummit.com.diplomatssummit.app_ui.RecyclerAdapter
+import diplomatssummit.com.diplomatssummit.app_ui.*
+import diplomatssummit.com.diplomatssummit.databases.CtyInvMethod
 import diplomatssummit.com.diplomatssummit.databases.InvestMethod
 
-class InvestActivity : AppCompatActivity() {
+class Authorised : AppCompatActivity() {
     private var mSeekbar: SeekBar? = null
     private val mRecyclerView: GalleryRecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_invest)
+        setContentView(R.layout.activity_authorised)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         title = "Investment Opportunities"
 
+        val userName=intent.getStringExtra("userName")
+        val passWord=intent.getStringExtra("passWord")
 
+        val loggedInAs:TextView=findViewById(R.id.loggedInAs)
+        loggedInAs.setText("Logged in DS ID: "+userName)
 
         mSeekbar =findViewById(R.id.seekBar);
         mSeekbar?.max=getDatas()!!.size-1
 
-        val loginBtn:Button=findViewById(R.id.loginBtn)
+
 
         val mRecyclerView:GalleryRecyclerView=findViewById(R.id.rv_list)
-        val recyclerAdapter: InvAdapter = InvAdapter(
+        val recyclerAdapter: InvAuthdapter = InvAuthdapter(
                 this,
                 getDatas(),
                 getCountry(),
@@ -44,10 +45,6 @@ class InvestActivity : AppCompatActivity() {
         )
 
 
-        loginBtn.setOnClickListener {
-            val intent:Intent=Intent(this,LoginActivity::class.java)
-            startActivity(intent)
-        }
 
         val itemClickListener:GalleryRecyclerView.OnItemClickListener
         mRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -93,7 +90,7 @@ class InvestActivity : AppCompatActivity() {
 
     fun getDatas(): MutableList<String>? {
 
-        val ob2=InvestMethod()
+        val ob2=CtyInvMethod()
         val ar2=ob2.readMediaRowsBasedOnType(1)
         val s2=ob2.itemsize()
         var imagelist:MutableList<String>

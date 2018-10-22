@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_container"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <!-- PagerSnapHelper can move just one page when scroll -->
+    <!-- LinearSnapHelper can move serveral page when scroll-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_height="150dp"
+        android:text="Why do you invest? Because you want greater returns? No. that’s not all. It’s because you are a ‘Future-Person’. You’re a visionary who believes in taking every small step towards achieving a greater goal. While your assets grow by each passing day, your value and goodwill are built on their own. For possessing such an invaluable asset - wisdom, investment opportunities are nowhere to go. They are all here for you. Explore!"
+        android:padding="10dp"
+        android:textColor="#9f7d3a"/>
+
+    <diplomatssummit.com.diplomatssummit.app_ui.GalleryRecyclerView
+        android:id="@+id/rv_list"
+        android:layout_marginTop="200dp"
+        android:layout_width="fill_parent"
+        android:layout_height="425dp"
+        />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        style="@style/Base.Widget.AppCompat.SeekBar"
+        android:background="#80FFFFFF"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:progress="1" />
+
+    <TextView
+        android:id="@+id/loggedInAs"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:textColor="#FFF"
+        android:layout_width="match_parent"/>
+
+
+
+</RelativeLayout>

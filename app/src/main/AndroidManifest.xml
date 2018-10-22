@@ -4,6 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:name=".DiplomatApp"
         android:allowBackup="true"
@@ -30,7 +35,12 @@
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher_round" />
         <activity android:name=".Gallery.Gal_InsidePageActivity" />
-        <activity android:name=".invest.InvestActivity"></activity>
+        <activity android:name=".invest.InvestActivity" />
+        <activity
+            android:name=".invest.LoginActivity"
+            android:label="@string/title_activity_login" />
+        <activity android:name=".invest.Authorised" />
+        <activity android:name=".invest.OpportunityActivity"></activity>
     </application>
 
 </manifest>
