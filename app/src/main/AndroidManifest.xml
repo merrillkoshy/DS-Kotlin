@@ -40,7 +40,8 @@
             android:name=".invest.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity android:name=".invest.Authorised" />
-        <activity android:name=".invest.OpportunityActivity"></activity>
+        <activity android:name=".invest.OpportunityActivity" />
+        <activity android:name=".invest.FinalSkin"></activity>
     </application>
 
 </manifest>

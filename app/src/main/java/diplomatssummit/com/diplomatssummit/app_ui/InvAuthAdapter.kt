@@ -58,8 +58,6 @@ class InvAuthdapter(private val mContext: Context, private val mDatas: List<Stri
         val place = ArrayList<String>()
         holder.mChange.setOnClickListener {
             intent.putExtra("Country",imageTitle)
-            intent.putExtra("MediaBLOB",imageUrl)
-            intent.putExtra("DescBLOB",contents)
             mContext.startActivity(intent)
         }
 

@@ -91,15 +91,18 @@ class Authorised : AppCompatActivity() {
     fun getDatas(): MutableList<String>? {
 
         val ob2=CtyInvMethod()
+        val invmethod=InvestMethod()
+        val ar=invmethod.readMediaRowsBasedOnType(1)
         val ar2=ob2.readMediaRowsBasedOnType(1)
+        val size=ar.size
         val s2=ob2.itemsize()
         var imagelist:MutableList<String>
         imagelist= arrayListOf()
 
         var i=0
 
-        while (i<s2) {
-            var ip2=ar2[i].MediaUrl
+        while (i<size) {
+            var ip2=ar[i].MediaUrl
             ip2!!.replace("-225x300","").let { imagelist.add(i, it) }
             Log.d("testGal",ip2)
             i++
