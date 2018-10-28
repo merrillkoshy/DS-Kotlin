@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import diplomatssummit.com.diplomatssummit.R
+import diplomatssummit.com.diplomatssummit.databases.CtyInvMethod
 
 class FinalSkin : AppCompatActivity() {
 
@@ -18,18 +19,48 @@ class FinalSkin : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val region=intent.getStringExtra("RegionName")
+        title=region
         val regionurl=intent.getStringExtra("RegionUrl")
-        val inDesc=intent.getStringExtra("inDescription")
-        Log.d("testinDesc",inDesc)
+        val country=intent.getStringExtra("country")
+        val position=intent.getIntExtra("position",0)
+        val regionDescr=populateRegionDescription(country)
 
+        val splitContentinit=regionDescr[0].split('}')
+        val splitContent=splitContentinit[position].split('{')
+        Log.d("regionNamefromSplit",splitContent[0])
+        Log.d("splitContent",splitContent[1])
         val iv:ImageView=findViewById(R.id.finalSkinImage)
         val tv:TextView=findViewById(R.id.finalSkinContent)
+        val posthead:TextView=findViewById(R.id.postheading)
         Picasso.get().load(regionurl).resize(400,200).centerCrop().into(iv)
-        tv.setText(region)
+
+        val postheading=splitContent[1].split('^')[0]
+        val postExtract=splitContent[1].split('^')[1]
+        if(splitContent[0]==region) {
+            posthead.setText(postheading)
+            tv.setText(postExtract)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    fun populateRegionDescription(region: String): MutableList<String> {
+        val ctob= CtyInvMethod()
+        val inDescr=ctob.readDescriptionFromTitle(region)
+        val size=inDescr.size
+        val imlist:MutableList<String>
+        imlist= arrayListOf()
+        var i=0
+        while(i<size)
+        {
+            var imageBlob= inDescr[i].InDescription!!
+            Log.d("FinalRegionDescrTest",imageBlob)
+            imageBlob.let { imlist.add(i,it) }
+            i++
+        }
+        return imlist
     }
 }

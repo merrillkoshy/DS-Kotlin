@@ -15,7 +15,7 @@ var regionsWithImageUrls: MutableList<String>? = null
 var regionsPlusUrl: ArrayList<String>? = null
 var regionList: ArrayList<String>? = null
 var urlsList: ArrayList<String>? = null
-var inDescription: ArrayList<String>? = null
+
 
     private var buffer: List<String>?=null
     private var buffer2: List<String>?=null
@@ -33,8 +33,9 @@ var inDescription: ArrayList<String>? = null
 
         regionsWithImageUrls=populateContent(country)
 
+
         //Region-wise split(blobLevel)
-        var re1=regionsWithImageUrls!![0].split(')')
+        val re1=regionsWithImageUrls!![0].split(')')
         val size= re1.size-1
         var i=0
         regionsPlusUrl= arrayListOf()
@@ -80,14 +81,12 @@ var inDescription: ArrayList<String>? = null
         heading.setText(country)
 
 
-        Log.d("oA4", urlsList!![0].split(',')[0])
-
         //RecycleView
         val rv:RecyclerView = findViewById(R.id.recyclerView)
         rv.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
 
 
-        var adapter = OpportunityAdapter(this,regionList,urlsList,inDescription)
+        val adapter = OpportunityAdapter(this,regionList,urlsList,country)
         rv.adapter = adapter
     }
 
@@ -102,30 +101,16 @@ fun populateContent(country:String): MutableList<String> {
     val ciMethod=CtyInvMethod()
     val ciLocal=ciMethod.readContentFromTitle(country)
     val size=ciLocal.size
-    var imlist:MutableList<String>
+    val imlist:MutableList<String>
     imlist= arrayListOf()
     var i=0
     while(i<size)
     {
-        var imageBlob= ciLocal[i].MediaUrl!!
+        val imageBlob= ciLocal[i].MediaUrl!!
         imageBlob.let { imlist.add(i,it) }
         i++
     }
     return imlist
 }
 
-fun populateTextData(country:String): MutableList<String> {
-    val ciMethod=CtyInvMethod()
-    val ciLocal=ciMethod.readContentFromTitle(country)
-    val size=ciLocal.size
-    var imlist:MutableList<String>
-    imlist= arrayListOf()
-    var i=0
-    while(i<size)
-    {
-        var imageBlob= ciLocal[i].InDescription!!
-        imageBlob.let { imlist.add(i,it) }
-        i++
-    }
-    return imlist
-}
+

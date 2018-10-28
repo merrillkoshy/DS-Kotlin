@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +14,8 @@ import com.squareup.picasso.Picasso
 
 import diplomatssummit.com.diplomatssummit.R
 
-import kotlin.collections.ArrayList
 
-
-class OpportunityAdapter(private val mContext: Context, private val mRegion: List<String>?, private val mRegionImage: MutableList<String>?, private val inDescription: ArrayList<String>?) : RecyclerView.Adapter<OpportunityAdapter.MyHolder>() {
+class OpportunityAdapter(private val mContext: Context, private val mRegion: List<String>?, private val mRegionImage: MutableList<String>?, private val country: String) : RecyclerView.Adapter<OpportunityAdapter.MyHolder>() {
 
 
 
@@ -41,17 +38,19 @@ class OpportunityAdapter(private val mContext: Context, private val mRegion: Lis
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
 
-
+        val intent=Intent(mContext,FinalSkin::class.java)
         val imageTitle = mRegion!![position]
         val imageUrl = mRegionImage!![position]
-        Log.d("imageUrlinAdapter",imageUrl)
+
+
+        intent.putExtra("RegionName",imageTitle)
+        intent.putExtra("RegionUrl",imageUrl)
+        intent.putExtra("country",country)
+        intent.putExtra("position",position)
+
         Picasso.get().load(imageUrl).fit().centerCrop().into(holder.mView)
         holder.mTitles.text = imageTitle
         holder.mCardView.setOnClickListener{
-            val intent=Intent(mContext,FinalSkin::class.java)
-            intent.putExtra("RegionName",mRegion[position])
-            intent.putExtra("RegionUrl",mRegionImage[position])
-            intent.putExtra("InDescription",inDescription)
             mContext.startActivity(intent)
         }
 

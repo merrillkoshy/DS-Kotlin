@@ -46,6 +46,19 @@ class CtyInvMethod {
 
     }
 
+    fun readDescriptionFromTitle(Title:String): List<CtyInvTable>{
+        val operatorGroup = OperatorGroup.clause()
+                .and(CtyInvTable_Table.Country.eq(Title))
+
+        val contentList=SQLite.select(CtyInvTable_Table.InDescription).
+                from(CtyInvTable::class.java).
+                where(operatorGroup)
+                .queryList()
+
+        return contentList
+
+    }
+
     fun itemsize(): Int {
         val operatorGroup = OperatorGroup.clause()
                 .and(CtyInvTable_Table.MediaType.eq(1.toLong()))
