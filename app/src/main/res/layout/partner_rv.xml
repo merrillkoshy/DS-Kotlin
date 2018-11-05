@@ -56,8 +56,8 @@
         android:layout_gravity="center"
         app:dotColor="@color/colorPrimary"
         app:selectedDotColor="@color/gold"
-        app:dotRadius="10dp"
-        app:selectedDotRadius="20dp"
+        app:dotRadius="5dp"
+        app:selectedDotRadius="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -83,15 +83,9 @@
             android:layout_marginTop="20dp"
             android:id="@+id/rv_achievelist"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="550dp"
             app:helper="LinearSnapHelper" />
-        <TextView
-            android:id="@+id/shortdesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="25sp"
 
-            />
 
         <diplomatssummit.com.diplomatssummit.app_ui.Indicators.IndefinitePagerIndicator
             android:id="@+id/rv_achieveIndicator"
@@ -99,8 +93,8 @@
             android:layout_gravity="center"
             app:dotColor="@color/colorPrimary"
             app:selectedDotColor="@color/gold"
-            app:dotRadius="10dp"
-            app:selectedDotRadius="20dp"
+            app:dotRadius="5dp"
+            app:selectedDotRadius="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>

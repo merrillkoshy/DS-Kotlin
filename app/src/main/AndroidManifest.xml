@@ -43,6 +43,7 @@
         <activity android:name=".invest.OpportunityActivity" />
         <activity android:name=".invest.FinalSkin" />
         <activity android:name=".invest.FinalsknImages" />
+        <activity android:name=".app_ui.stories.DetailedStory" />
         <activity android:name=".PartnerActivity"></activity>
     </application>
 

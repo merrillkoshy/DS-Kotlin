@@ -1,6 +1,7 @@
 package diplomatssummit.com.diplomatssummit.app_ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import diplomatssummit.com.diplomatssummit.PartnerActivity;
 import diplomatssummit.com.diplomatssummit.R;
 import diplomatssummit.com.diplomatssummit.app_ui.util.DLog;
 
@@ -33,6 +35,7 @@ public class PartnerRCAdapter extends RecyclerView.Adapter<PartnerRCAdapter.MyHo
         this.mContext = mContext;
         this.mDatas = mDatas;
     }
+
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
@@ -57,6 +60,9 @@ public class PartnerRCAdapter extends RecyclerView.Adapter<PartnerRCAdapter.MyHo
         Picasso.get().load(imageUrl).fit().centerCrop().into(holder.mView);
         }
 
+     public int getPos(final int position){
+        return position;
+     }
     @Override
     public int getItemCount() {
         return mDatas.size();

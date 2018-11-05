@@ -33,17 +33,11 @@ public class GalleryRecyclerView extends RecyclerView implements View.OnTouchLis
 
     public static final int LINEAR_SNAP_HELPER = 0;
     public static final int PAGER_SNAP_HELPER = 1;
-    /**
-     * 滑动速度
-     */
+
     private int mFlingSpeed = 1000;
-    /**
-     * 是否自动播放
-     */
+
     private boolean mAutoPlay = false;
-    /**
-     * 自动播放间隔时间
-     */
+
     private int mInterval = 1000;
 
     private int mInitPos = -1;
@@ -52,6 +46,7 @@ public class GalleryRecyclerView extends RecyclerView implements View.OnTouchLis
     private AnimManager mAnimManager;
     private ScrollManager mScrollManager;
     private GalleryItemDecoration mDecoration;
+
 
     private Runnable mAutoPlayTask = new Runnable() {
         @Override
@@ -100,7 +95,6 @@ public class GalleryRecyclerView extends RecyclerView implements View.OnTouchLis
         attachDecoration();
         attachToRecyclerHelper(helper);
 
-        //设置触碰监听
         setOnTouchListener(this);
     }
 
@@ -131,12 +125,7 @@ public class GalleryRecyclerView extends RecyclerView implements View.OnTouchLis
         return super.fling(velocityX, velocityY);
     }
 
-    /**
-     * 返回滑动速度值
-     *
-     * @param velocity int
-     * @return int
-     */
+
     private int balanceVelocity(int velocity) {
         if (velocity > 0) {
             return Math.min(velocity, mFlingSpeed);
@@ -145,11 +134,6 @@ public class GalleryRecyclerView extends RecyclerView implements View.OnTouchLis
         }
     }
 
-    /**
-     * 连接RecyclerHelper
-     *
-     * @param helper int
-     */
     private void attachToRecyclerHelper(int helper) {
         DLog.d(TAG, "GalleryRecyclerView attachToRecyclerHelper");
 
@@ -158,57 +142,31 @@ public class GalleryRecyclerView extends RecyclerView implements View.OnTouchLis
         mScrollManager.initSnapHelper(helper);
     }
 
-    /**
-     * 设置页面参数，单位dp
-     *
-     * @param pageMargin           默认：0dp
-     * @param leftPageVisibleWidth 默认：50dp
-     * @return GalleryRecyclerView
-     */
+
     public GalleryRecyclerView initPageParams(int pageMargin, int leftPageVisibleWidth) {
         mDecoration.mPageMargin = pageMargin;
         mDecoration.mLeftPageVisibleWidth = leftPageVisibleWidth;
         return this;
     }
 
-    /**
-     * 设置滑动速度（像素/s）
-     *
-     * @param speed int
-     * @return GalleryRecyclerView
-     */
+
     public GalleryRecyclerView initFlingSpeed(@IntRange(from = 0) int speed) {
         this.mFlingSpeed = speed;
         return this;
     }
 
-    /**
-     * 设置动画因子
-     *
-     * @param factor float
-     * @return GalleryRecyclerView
-     */
+
     public GalleryRecyclerView setAnimFactor(@FloatRange(from = 0f) float factor) {
         mAnimManager.setAnimFactor(factor);
         return this;
     }
 
-    /**
-     * 设置动画类型
-     *
-     * @param type int
-     * @return GalleryRecyclerView
-     */
+
     public GalleryRecyclerView setAnimType(int type) {
         mAnimManager.setAnimType(type);
         return this;
     }
 
-    /**
-     * 设置点击事件
-     *
-     * @param mListener OnItemClickListener
-     */
     public GalleryRecyclerView setOnItemClickListener(OnItemClickListener mListener) {
         if (mDecoration != null) {
             mDecoration.setOnItemClickListener(mListener);
@@ -216,20 +174,13 @@ public class GalleryRecyclerView extends RecyclerView implements View.OnTouchLis
         return this;
     }
 
-    /**
-     * 是否自动滚动
-     *
-     * @param auto boolean
-     * @return GalleryRecyclerView
-     */
+
     public GalleryRecyclerView autoPlay(boolean auto) {
         this.mAutoPlay = auto;
         return this;
     }
 
-    /**
-     * 自动播放
-     */
+
     private void autoPlayGallery() {
         if (mAutoPlay) {
             ThreadUtils.removeCallbacks(mAutoPlayTask);
@@ -237,20 +188,14 @@ public class GalleryRecyclerView extends RecyclerView implements View.OnTouchLis
         }
     }
 
-    /**
-     * 移除自动播放Runnable
-     */
+
     private void removeAutoPlayTask() {
         if (mAutoPlay) {
             ThreadUtils.removeCallbacks(mAutoPlayTask);
         }
     }
 
-    /**
-     * 装载
-     *
-     * @return GalleryRecyclerView
-     */
+
     public GalleryRecyclerView setUp() {
         if (getAdapter().getItemCount() <= 0) {
             return this;
@@ -264,9 +209,7 @@ public class GalleryRecyclerView extends RecyclerView implements View.OnTouchLis
         return this;
     }
 
-    /**
-     * 释放资源
-     */
+
     public void release() {
         removeAutoPlayTask();
     }
@@ -373,12 +316,7 @@ public class GalleryRecyclerView extends RecyclerView implements View.OnTouchLis
     }
 
     public interface OnItemClickListener {
-        /**
-         * 点击事件
-         *
-         * @param view     View
-         * @param position int
-         */
+
         void onItemClick(View view, int position);
     }
 }

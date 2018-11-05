@@ -324,6 +324,7 @@ class IndefinitePagerIndicator @JvmOverloads constructor(
         invalidate()
     }
 
+
     override fun onPageScrollStateChanged(state: Int) {
         // Not implemented
     }

@@ -20,7 +20,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import diplomatssummit.com.diplomatssummit.R.id.recyclerView
 import diplomatssummit.com.diplomatssummit.app_ui.Indicators.IndefinitePagerIndicator
+import diplomatssummit.com.diplomatssummit.app_ui.stories.Viewstory
 import diplomatssummit.com.diplomatssummit.databases.AchievementsMethod
+import kotlinx.android.synthetic.main.partner_rv.*
 
 
 class PartnerActivity : AppCompatActivity() {
@@ -72,22 +74,21 @@ class PartnerActivity : AppCompatActivity() {
             val achieveTv:TextView=findViewById(R.id.achievements)
             achieveIv.startAnimation(animleft)
             achieveTv.startAnimation(animleft)
+            associations_icon.startAnimation(animleft)
+            associations.startAnimation(animleft)
 
             val achieveRv: GalleryRecyclerView =findViewById(R.id.rv_achievelist)
-            val rcyad2: PartnerRCAdapter =PartnerRCAdapter(
+            val rcyad2: Viewstory = Viewstory(
                     this,
-                    getAchievementsImage()
-
+                    getAchievementsImage(),getAchievementsDescriptionShort(),getAchievementsDescriptionLong()
             )
 
-            val shortdescription=getAchievementsDescriptionShort()
-            val currentDescription=shortdescription[achieveRv.scrolledPosition]
 
-            val shortdesc:TextView=findViewById(R.id.shortdesc)
-            shortdesc.text=currentDescription
+            val indicator2:IndefinitePagerIndicator=findViewById(R.id.rv_achieveIndicator)
+
             achieveRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             achieveRv.adapter=rcyad2
-            val indicator2:IndefinitePagerIndicator=findViewById(R.id.rv_achieveIndicator)
+
             indicator2.attachToRecyclerView(achieveRv)
 
         } catch (e: Exception) {
