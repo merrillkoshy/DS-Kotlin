@@ -31,10 +31,17 @@ class GalleryPagerAdapter(private val mContext: Context, private val imageList: 
         val rootView = LayoutInflater.from(mContext).inflate(R.layout.gallery_inside_page, null, false)
 
         val imageUrl = imageList!![position]
-        val pagerImageView = rootView.findViewById<ImageView>(R.id.galleryinside)
-        Log.d("gPA_test", imageUrl)
-        Picasso.get().load(imageUrl).centerCrop().fit().into(pagerImageView)
-
+        if(imageUrl=="")
+        {
+            val strin: String = "https://diplomatssummit.com/mobile/hp_assets/placeholder.jpg"
+            val pagerImageView = rootView.findViewById<ImageView>(R.id.galleryinside)
+            Log.d("gPA_test", strin)
+            Picasso.get().load(strin).centerCrop().fit().into(pagerImageView)
+        }else {
+            val pagerImageView = rootView.findViewById<ImageView>(R.id.galleryinside)
+            Log.d("gPA_test", imageUrl)
+            Picasso.get().load(imageUrl).centerCrop().fit().into(pagerImageView)
+        }
         viewGroup.addView(rootView)
 
 

@@ -3,4 +3,7 @@
     <color name="colorPrimary">#ff3d2e</color>
     <color name="colorPrimaryDark">#b90f01</color>
     <color name="colorAccent">#b90f01</color>
+    <color name="gold">#D6BC32</color>
+    <color name="default_selected_dot_color">#ffffff</color>
+    <color name="default_dot_color">#e8e8e8</color>
 </resources>

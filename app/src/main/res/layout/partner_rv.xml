@@ -1,29 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:fitsSystemWindows="true"
-    android:gravity="center"
-    android:orientation="vertical">
 
+    android:orientation="vertical">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/associations_icon"
+
+            android:layout_marginTop="20dp"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_assoc" />
+
+        <TextView
+            android:id="@+id/associations"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:text="ASSOCIATIONS"
+            android:textSize="25sp" />
+        <TextView
+            android:id="@+id/associations_into"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginBottom="20dp"
+            android:text="Being a global consortium, the onus is on us to pull sources together across local and international establishments. Every association by Diplomats Summit adds to the strength of its network, providing multiple growth opportunities and opening the doors for infinite possibilities."
+            android:textSize="18sp"
+            android:paddingStart="20dp"
+            android:textAlignment="textStart"
+            android:paddingEnd="20dp"/>
     <diplomatssummit.com.diplomatssummit.app_ui.GalleryRecyclerView
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/rv_partnerlist"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         app:helper="LinearSnapHelper" />
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        style="@style/Base.Widget.AppCompat.SeekBar"
+    <diplomatssummit.com.diplomatssummit.app_ui.Indicators.IndefinitePagerIndicator
+        android:id="@+id/recyclerview_pager_indicator"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        app:dotColor="@color/colorPrimary"
+        app:selectedDotColor="@color/gold"
+        app:dotRadius="10dp"
+        app:selectedDotRadius="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="130dp"
+        android:layout_height="wrap_content"/>
 
-        android:progress="1" />
+    <ImageView
+        android:id="@+id/achievements_icon"
 
+        android:layout_marginTop="20dp"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_award" />
+
+        <TextView
+            android:id="@+id/achievements"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:text="ACHIEVEMENTS"
+            android:textSize="25sp" />
+
+        <diplomatssummit.com.diplomatssummit.app_ui.GalleryRecyclerView
+            android:layout_marginTop="20dp"
+            android:id="@+id/rv_achievelist"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:helper="LinearSnapHelper" />
+        <TextView
+            android:id="@+id/shortdesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+
+            />
+
+        <diplomatssummit.com.diplomatssummit.app_ui.Indicators.IndefinitePagerIndicator
+            android:id="@+id/rv_achieveIndicator"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            app:dotColor="@color/colorPrimary"
+            app:selectedDotColor="@color/gold"
+            app:dotRadius="10dp"
+            app:selectedDotRadius="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</ScrollView>
 </RelativeLayout>

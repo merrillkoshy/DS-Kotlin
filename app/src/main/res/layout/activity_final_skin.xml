@@ -36,5 +36,19 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_finalskin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:alpha="0.8"
+        app:fabCustomSize="80dp"
+        app:backgroundTint="@color/gold"
+        android:src="@drawable/ic_gallery_icon"
+        android:clickable="true"
+        android:focusable="true"/>
 
 </android.support.constraint.ConstraintLayout>

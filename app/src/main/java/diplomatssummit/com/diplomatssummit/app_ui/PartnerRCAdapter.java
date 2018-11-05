@@ -47,6 +47,8 @@ public class PartnerRCAdapter extends RecyclerView.Adapter<PartnerRCAdapter.MyHo
         return new MyHolderP(itemView);
     }
 
+
+
     @Override
     public void onBindViewHolder(final MyHolderP holder, final int position) {
 
@@ -59,6 +61,8 @@ public class PartnerRCAdapter extends RecyclerView.Adapter<PartnerRCAdapter.MyHo
     public int getItemCount() {
         return mDatas.size();
     }
+
+
 
     static class MyHolderP extends RecyclerView.ViewHolder {
         final ImageView mView;

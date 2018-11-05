@@ -6,27 +6,19 @@ import com.raizlabs.android.dbflow.annotation.Table
 import com.raizlabs.android.dbflow.structure.BaseModel
 
 @Table(database = AppDatabase::class)
-class CtyInvTable : BaseModel() {
+class AchieveTable : BaseModel() {
 
     @PrimaryKey
     var Id: Long? = null
 
     @Column
-    var MediaType: Long? = null
+    var Thumb: String? = null
 
     @Column
-    var MediaUrl: String? = null
+    var Shortdesc: String? = null
 
     @Column
-    var Country: String? = null
+    var Longdesc: String? = null
 
-    @Column
-    var InDescription: String? = null
 
-    @Column
-    var InMedia: String? = null
-
-    override fun toString(): String {
-        return "$MediaUrl"
-    }
 }

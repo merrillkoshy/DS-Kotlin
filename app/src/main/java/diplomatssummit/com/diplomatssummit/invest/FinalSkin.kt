@@ -1,7 +1,9 @@
 package diplomatssummit.com.diplomatssummit.invest
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
@@ -33,6 +35,15 @@ class FinalSkin : AppCompatActivity() {
         val tv:TextView=findViewById(R.id.finalSkinContent)
         val posthead:TextView=findViewById(R.id.postheading)
         Picasso.get().load(regionurl).resize(400,200).centerCrop().into(iv)
+
+        val fab:FloatingActionButton=findViewById(R.id.fab_finalskin)
+        fab.setOnClickListener{
+            val intent:Intent=Intent(this,FinalsknImages::class.java)
+            intent.putExtra("country",country)
+            intent.putExtra("region",region)
+            startActivity(intent)
+
+        }
 
         val postheading=splitContent[1].split('^')[0]
         val postExtract=splitContent[1].split('^')[1]

@@ -56,6 +56,7 @@ class partners : Fragment(){
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
         initializeWidgets()
     }
 
@@ -73,7 +74,7 @@ class partners : Fragment(){
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.partner_rv, container, false)
-        mSeekbar = view.findViewById(R.id.seekBar);
+        mSeekbar = view.findViewById(R.id.seekBar)
         mSeekbar?.max=getDatas()!!.size-1
 
         val mRecyclerView: GalleryRecyclerView =view.findViewById(R.id.rv_partnerlist)

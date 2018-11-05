@@ -15,6 +15,7 @@ import diplomatssummit.com.diplomatssummit.R
 import diplomatssummit.com.diplomatssummit.articles.articles
 import diplomatssummit.com.diplomatssummit.databases.DbFlow
 import diplomatssummit.com.diplomatssummit.Gallery.gallery
+import diplomatssummit.com.diplomatssummit.PartnerActivity
 import diplomatssummit.com.diplomatssummit.invest.DS_Invest
 import diplomatssummit.com.diplomatssummit.invest.InvestActivity
 import diplomatssummit.com.diplomatssummit.partners
@@ -113,8 +114,8 @@ class Home : Fragment() {
             openFragment(galFragment)
         }
         bp.setOnClickListener(){
-            val bpFragment= partners.newInstance()
-            openFragment(bpFragment)
+            val intent:Intent=Intent(context,PartnerActivity::class.java)
+            startActivity(intent)
         }
         art.setOnClickListener(){
             val artFragment=articles.newInstance()
