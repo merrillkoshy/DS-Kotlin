@@ -18,6 +18,7 @@ import android.widget.SeekBar
 import diplomatssummit.com.diplomatssummit.R
 import diplomatssummit.com.diplomatssummit.app_ui.AnimManager
 import diplomatssummit.com.diplomatssummit.app_ui.GalleryRecyclerView
+import diplomatssummit.com.diplomatssummit.app_ui.Indicators.IndefinitePagerIndicator
 import diplomatssummit.com.diplomatssummit.app_ui.RecyclerAdapter
 import diplomatssummit.com.diplomatssummit.databases.GtableMethods
 
@@ -73,8 +74,7 @@ class gallery : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.gallery_rv, container, false)
-        mSeekbar = view.findViewById(R.id.seekBar);
-        mSeekbar?.max=getDatas()!!.size-1
+
 
         val mRecyclerView:GalleryRecyclerView=view.findViewById(R.id.rv_list)
         val recyclerAdapter:RecyclerAdapter=RecyclerAdapter(
@@ -89,8 +89,8 @@ class gallery : Fragment() {
         val itemClickListener:GalleryRecyclerView.OnItemClickListener
         mRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         mRecyclerView.adapter=recyclerAdapter
-
-
+        val indicator2: IndefinitePagerIndicator =view.findViewById(R.id.rv_achieveIndicator)
+        indicator2.attachToRecyclerView(mRecyclerView)
         mRecyclerView
                 // set scroll speed（pixel/s）
                 .initFlingSpeed(9000)

@@ -45,6 +45,7 @@
         <activity android:name=".invest.FinalsknImages" />
         <activity android:name=".app_ui.stories.DetailedStory" />
         <activity android:name=".PartnerActivity"></activity>
+        <activity android:name=".articles.ArticleReaderActivity" />
     </application>
 
 </manifest>

@@ -16,6 +16,7 @@ import diplomatssummit.com.diplomatssummit.articles.articles
 import diplomatssummit.com.diplomatssummit.databases.DbFlow
 import diplomatssummit.com.diplomatssummit.Gallery.gallery
 import diplomatssummit.com.diplomatssummit.PartnerActivity
+import diplomatssummit.com.diplomatssummit.articles.ArticleReaderActivity
 import diplomatssummit.com.diplomatssummit.invest.DS_Invest
 import diplomatssummit.com.diplomatssummit.invest.InvestActivity
 import diplomatssummit.com.diplomatssummit.partners
@@ -118,8 +119,8 @@ class Home : Fragment() {
             startActivity(intent)
         }
         art.setOnClickListener(){
-            val artFragment=articles.newInstance()
-            openFragment(artFragment)
+            val intent:Intent= Intent(context, ArticleReaderActivity::class.java)
+            startActivity(intent)
         }
 //        val mWebView: WebView = view.findViewById(R.id.webview)
 //        mWebView.loadUrl("http://diplomatssummit.com/mobile/index.php")
