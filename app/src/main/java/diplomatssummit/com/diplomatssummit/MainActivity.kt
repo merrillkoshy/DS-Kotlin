@@ -2,12 +2,14 @@ package diplomatssummit.com.diplomatssummit
 
 
 import android.app.Fragment
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import diplomatssummit.com.diplomatssummit.Gallery.gallery
+import diplomatssummit.com.diplomatssummit.app_ui.SampleActivity
 import diplomatssummit.com.diplomatssummit.events.DS_Events
 import diplomatssummit.com.diplomatssummit.homepage.Home
 import diplomatssummit.com.diplomatssummit.invest.DS_Invest
@@ -50,6 +52,8 @@ class MainActivity : AppCompatActivity(),
             }
             R.id.navigation_notifications -> {
                 title = ""
+                val intent:Intent= Intent(this,SampleActivity::class.java)
+                startActivity(intent)
                 return@OnNavigationItemSelectedListener true
             }
         }

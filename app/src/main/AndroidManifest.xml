@@ -49,6 +49,9 @@
         <activity android:name=".app_ui.OnSwipeTouchListener" />
         <activity android:name=".articles.ReadSelectedArticle" />
         <activity android:name=".events.ActivityEvents" />
+        <activity android:name=".BetaActivity" />
+        <activity android:name=".app_ui.SampleActivity" />
+
     </application>
 
 </manifest>
