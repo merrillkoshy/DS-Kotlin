@@ -1,3 +1,4 @@
+/*
 package diplomatssummit.com.diplomatssummit.databases
 
 import android.app.Fragment
@@ -19,6 +20,7 @@ import diplomatssummit.com.diplomatssummit.app_ui.SamplePagerAdapter
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
+*/
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
@@ -27,7 +29,8 @@ private const val ARG_PARAM2 = "param2"
  * Use the [Home.newInstance] factory method to
  * create an instance of this fragment.
  *
- */
+ *//*
+
 
 class PastEvents : Fragment() {
 
@@ -46,7 +49,7 @@ class PastEvents : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.activity_sample_pager, container, false)
+        return inflater.inflate(R.layout.activity_events, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,7 +58,9 @@ class PastEvents : Fragment() {
         initializeWidgets(view);
     }
 
-    /*Populate images from DB onto the view*/
+    */
+/*Populate images from DB onto the view*//*
+
     private fun initializeWidgets(view: View) {
 
         var imageList:ArrayList<String>?=null
@@ -81,7 +86,9 @@ class PastEvents : Fragment() {
         fun onFragmentInteraction(uri: Uri)
     }
 
-    /*Populate adapter with the necessary DB input*/
+    */
+/*Populate adapter with the necessary DB input*//*
+
     fun page(view: View,imageList:ArrayList<String>){
         val viewpager:ViewPager = view.findViewById(R.id.sample_pager)
         val pagerAdapter = SamplePagerAdapter(context, imageList)
@@ -113,4 +120,4 @@ class PastEvents : Fragment() {
 
 
 
-}
+}*/

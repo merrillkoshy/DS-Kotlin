@@ -89,7 +89,7 @@ class gallery : Fragment() {
         val itemClickListener:GalleryRecyclerView.OnItemClickListener
         mRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         mRecyclerView.adapter=recyclerAdapter
-        val indicator2: IndefinitePagerIndicator =view.findViewById(R.id.rv_achieveIndicator)
+        val indicator2: IndefinitePagerIndicator =view.findViewById(R.id.rv_Indicator)
         indicator2.attachToRecyclerView(mRecyclerView)
         mRecyclerView
                 // set scroll speed（pixel/s）

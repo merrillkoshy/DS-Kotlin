@@ -73,6 +73,8 @@ dependencies {
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:2.0.3'
     implementation 'com.ryan.rv_gallery:rv-gallery:1.1.2'
 
+
+
 }
 repositories {
     mavenCentral()

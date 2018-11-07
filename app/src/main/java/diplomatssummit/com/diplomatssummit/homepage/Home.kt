@@ -12,11 +12,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import diplomatssummit.com.diplomatssummit.R
-import diplomatssummit.com.diplomatssummit.articles.articles
-import diplomatssummit.com.diplomatssummit.databases.DbFlow
 import diplomatssummit.com.diplomatssummit.Gallery.gallery
 import diplomatssummit.com.diplomatssummit.PartnerActivity
 import diplomatssummit.com.diplomatssummit.articles.ArticleReaderActivity
+import diplomatssummit.com.diplomatssummit.events.ActivityEvents
 import diplomatssummit.com.diplomatssummit.invest.DS_Invest
 import diplomatssummit.com.diplomatssummit.invest.InvestActivity
 import diplomatssummit.com.diplomatssummit.partners
@@ -106,9 +105,8 @@ class Home : Fragment() {
         timel.setOnClickListener(){
             /*val tlFragment=timeline_events.newInstance()
             openFragment(tlFragment)*/
-            val dbflow = DbFlow()
-
-            openFragment(dbflow)
+            val intent:Intent= Intent(context, ActivityEvents::class.java)
+            startActivity(intent)
         }
         galbutton.setOnClickListener(){
             val galFragment= gallery.newInstance()

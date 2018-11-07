@@ -1,3 +1,4 @@
+/*
 package diplomatssummit.com.diplomatssummit.databases
 
 import android.app.Fragment
@@ -19,6 +20,7 @@ import diplomatssummit.com.diplomatssummit.app_ui.SamplePagerAdapter
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
+*/
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
@@ -27,7 +29,8 @@ private const val ARG_PARAM2 = "param2"
  * Use the [Home.newInstance] factory method to
  * create an instance of this fragment.
  *
- */
+ *//*
+
 
 class DbFlow : Fragment(),PastEvents.OnFragmentInteractionListener{
 
@@ -54,7 +57,7 @@ class DbFlow : Fragment(),PastEvents.OnFragmentInteractionListener{
                               savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
 
-        return inflater.inflate(R.layout.activity_sample_pager, container, false)
+        return inflater.inflate(R.layout.activity_events, container, false)
 
     }
 
@@ -66,7 +69,9 @@ class DbFlow : Fragment(),PastEvents.OnFragmentInteractionListener{
 
     }
 
-    /*Populate images from DB onto the view*/
+    */
+/*Populate images from DB onto the view*//*
+
     private fun initializeWidgets(view: View) {
 
         var title="UPCOMING EVENTS"
@@ -100,7 +105,9 @@ class DbFlow : Fragment(),PastEvents.OnFragmentInteractionListener{
         fun onFragmentInteraction(uri: Uri)
     }
 
-/*Populate adapter with the necessary DB input*/
+*/
+/*Populate adapter with the necessary DB input*//*
+
     fun page(view: View,imageList:ArrayList<String>){
         val viewpager:ViewPager = view.findViewById(R.id.sample_pager)
         val pagerAdapter = SamplePagerAdapter(context, imageList)
@@ -158,3 +165,4 @@ class DbFlow : Fragment(),PastEvents.OnFragmentInteractionListener{
 
 
 
+*/

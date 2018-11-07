@@ -46,6 +46,9 @@
         <activity android:name=".app_ui.stories.DetailedStory" />
         <activity android:name=".PartnerActivity"></activity>
         <activity android:name=".articles.ArticleReaderActivity" />
+        <activity android:name=".app_ui.OnSwipeTouchListener" />
+        <activity android:name=".articles.ReadSelectedArticle" />
+        <activity android:name=".events.ActivityEvents" />
     </application>
 
 </manifest>

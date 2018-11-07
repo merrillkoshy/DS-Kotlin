@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import diplomatssummit.com.diplomatssummit.R;
 
 public class SamplePagerActivity extends AppCompatActivity {
@@ -25,7 +23,7 @@ public class SamplePagerActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sample_pager);
+        setContentView(R.layout.activity_events);
 
         initialSettings();
 
@@ -43,7 +41,7 @@ public class SamplePagerActivity extends AppCompatActivity {
     private void initialSettings() {
 
 //        ButterKnife.bind(this);
-        samplePager=findViewById(R.id.sample_pager);
+
         String imageUrl = "https://raw.githubusercontent.com/JakeWharton/butterknife/master/website/static/logo.png";
         imageList = new ArrayList<>(Arrays.asList(imageUrl, imageUrl, imageUrl, imageUrl, imageUrl));
 
@@ -51,7 +49,7 @@ public class SamplePagerActivity extends AppCompatActivity {
 
     private void initializeWidgets() {
 
-        samplePager=findViewById(R.id.sample_pager);
+
         SamplePagerAdapter pagerAdapter = new SamplePagerAdapter(this, imageList);
         samplePager.setAdapter(pagerAdapter);
 

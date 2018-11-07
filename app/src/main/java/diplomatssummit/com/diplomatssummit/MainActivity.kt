@@ -13,7 +13,6 @@ import diplomatssummit.com.diplomatssummit.homepage.Home
 import diplomatssummit.com.diplomatssummit.invest.DS_Invest
 import diplomatssummit.com.diplomatssummit.events.timeline_events
 import diplomatssummit.com.diplomatssummit.articles.articles
-import diplomatssummit.com.diplomatssummit.databases.DbFlow
 
 
 class MainActivity : AppCompatActivity(),
@@ -50,11 +49,7 @@ class MainActivity : AppCompatActivity(),
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
-                title = "DB_Test"
-
-                val dbflow = DbFlow()
-
-                openFragment(dbflow)
+                title = ""
                 return@OnNavigationItemSelectedListener true
             }
         }

@@ -26,7 +26,6 @@ import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 import diplomatssummit.com.diplomatssummit.Gallery.Gal_InsidePageActivity;
 import diplomatssummit.com.diplomatssummit.R;
 import diplomatssummit.com.diplomatssummit.app_ui.util.DLog;
-import diplomatssummit.com.diplomatssummit.databases.DbFlow;
 import diplomatssummit.com.diplomatssummit.databases.GtableMethods;
 import diplomatssummit.com.diplomatssummit.homepage.Home;
 
