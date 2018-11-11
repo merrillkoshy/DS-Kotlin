@@ -52,8 +52,8 @@ class MainActivity : AppCompatActivity(),
             }
             R.id.navigation_notifications -> {
                 title = ""
-                val intent:Intent= Intent(this,SampleActivity::class.java)
-                startActivity(intent)
+                /*val intent:Intent= Intent(this,BetaActivity::class.java)
+                startActivity(intent)*/
                 return@OnNavigationItemSelectedListener true
             }
         }

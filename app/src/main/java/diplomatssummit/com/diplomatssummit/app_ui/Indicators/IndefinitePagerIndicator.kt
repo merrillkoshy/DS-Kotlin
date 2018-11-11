@@ -256,11 +256,11 @@ class IndefinitePagerIndicator @JvmOverloads constructor(
         viewPager?.removeOnPageChangeListener(this)
         viewPager = null
 
-        this.recyclerView?.removeOnScrollListener(internalRecyclerScrollListener)
+        this.recyclerView?.removeOnScrollListener(internalRecyclerScrollListener!!)
 
         this.recyclerView = recyclerView
         internalRecyclerScrollListener = InternalRecyclerScrollListener()
-        this.recyclerView?.addOnScrollListener(internalRecyclerScrollListener)
+        this.recyclerView?.addOnScrollListener(internalRecyclerScrollListener!!)
     }
 
     /**
@@ -270,7 +270,7 @@ class IndefinitePagerIndicator @JvmOverloads constructor(
      * If other ViewPager previously attached, remove reference to this class (page change listener).
      */
     fun attachToViewPager(viewPager: ViewPager?) {
-        recyclerView?.removeOnScrollListener(internalRecyclerScrollListener)
+        recyclerView?.removeOnScrollListener(internalRecyclerScrollListener!!)
         recyclerView = null
 
         this.viewPager?.removeOnPageChangeListener(this)
@@ -349,7 +349,7 @@ class IndefinitePagerIndicator @JvmOverloads constructor(
          * Use this percentage to also calculate the offsetPercentage
          * used to scale dots.
          */
-        override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
 
             val view = getMostVisibleChild()
 
@@ -407,7 +407,7 @@ class IndefinitePagerIndicator @JvmOverloads constructor(
         }
 
         private fun setIntermediateSelectedItemPosition(mostVisibleChild: View?) {
-            with(recyclerView?.findContainingViewHolder(mostVisibleChild)?.adapterPosition!!) {
+            with(recyclerView?.findContainingViewHolder(mostVisibleChild!!)?.adapterPosition!!) {
                 intermediateSelectedItemPosition = if (isRtl() && !verticalSupport) {
                     getRTLPosition(this)
                 } else {

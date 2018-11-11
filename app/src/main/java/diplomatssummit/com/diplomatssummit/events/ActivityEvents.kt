@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.widget.TextView
+import diplomatssummit.com.diplomatssummit.BetaActivity
 import diplomatssummit.com.diplomatssummit.R
 import diplomatssummit.com.diplomatssummit.app_ui.Indicators.IndefinitePagerIndicator
 import diplomatssummit.com.diplomatssummit.app_ui.PartnerRCAdapter
+import diplomatssummit.com.diplomatssummit.app_ui.SampleActivity
 import diplomatssummit.com.diplomatssummit.databases.PeMethods
 import diplomatssummit.com.diplomatssummit.databases.SampleMethods
 import kotlinx.android.synthetic.main.activity_events.*
@@ -78,6 +81,13 @@ class ActivityEvents:AppCompatActivity(){
 
 
     fun pastlist():MutableList<String>{
+
+        val resp=BetaActivity()
+        val responseArray=resp.getArray()
+        var z=0
+        while(z<responseArray.size) {
+            Log.d("responsearray",responseArray[z])
+        }
         val sampleObj = PeMethods()
         val ar= sampleObj.readMediaRowsBasedOnType(1)
         val size=sampleObj.itemsize()

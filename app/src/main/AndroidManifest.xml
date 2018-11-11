@@ -16,6 +16,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".SplashActivity"
@@ -49,8 +50,9 @@
         <activity android:name=".app_ui.OnSwipeTouchListener" />
         <activity android:name=".articles.ReadSelectedArticle" />
         <activity android:name=".events.ActivityEvents" />
-        <activity android:name=".BetaActivity" />
         <activity android:name=".app_ui.SampleActivity" />
+        <activity android:name=".BetaActivity" />
+        <activity android:name=".Dataclasses.DCResponse" />
 
     </application>
 

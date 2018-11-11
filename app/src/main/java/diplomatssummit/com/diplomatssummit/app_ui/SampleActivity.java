@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -16,9 +18,12 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import diplomatssummit.com.diplomatssummit.R;
+
 public class SampleActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getSimpleName();
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,7 +31,15 @@ public class SampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         new RestTask().execute("GET");
-        new RestTask().execute("PUT");
+        /*new RestTask().execute("PUT");*/
+        setContentView(R.layout.betatest);
+        initialiseWidgets();
+    }
+
+    public void initialiseWidgets(){
+        Button button=findViewById(R.id.button);
+        button.setText("GET");
+        TextView tv=findViewById(R.id.tv);
     }
 
     private class RestTask extends AsyncTask<String, Boolean, String> {
@@ -42,7 +55,7 @@ public class SampleActivity extends AppCompatActivity {
 
                 actionType = strings[0];
 
-                URL obj = new URL("https://api.myjson.com/bins/mq8we");
+                URL obj = new URL("https://diplomatssummit.com/volley/restactivity.php");
                 HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
                 con.setRequestMethod(actionType);
@@ -90,6 +103,8 @@ public class SampleActivity extends AppCompatActivity {
         protected void onPostExecute(String response) {
 
             Log.d(TAG, "web response - " + actionType + ": " + response);
+            TextView tv=findViewById(R.id.tv);
+            tv.setText(response);
         }
     }
 }
