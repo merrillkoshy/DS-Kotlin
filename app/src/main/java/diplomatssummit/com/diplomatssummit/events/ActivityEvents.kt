@@ -14,20 +14,31 @@ import diplomatssummit.com.diplomatssummit.app_ui.SampleActivity
 import diplomatssummit.com.diplomatssummit.databases.PeMethods
 import diplomatssummit.com.diplomatssummit.databases.SampleMethods
 import kotlinx.android.synthetic.main.activity_events.*
+import okhttp3.*
+import java.io.IOException
+import diplomatssummit.com.diplomatssummit.MainActivity
+
+
 
 class ActivityEvents:AppCompatActivity(){
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initiateWidgets()
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
     }
+
+
 
     fun initiateWidgets(){
         setContentView(R.layout.activity_events)
         imageviews()
         rvlists()
         indicators()
+
+
         title="Business and Trade Events"
     }
     fun imageviews(){
@@ -39,12 +50,14 @@ class ActivityEvents:AppCompatActivity(){
         ttimes.text="Events from 10times"
     }
     fun rvlists(){
-        val upcomingAdapter:PartnerRCAdapter= PartnerRCAdapter(this,upcominglist())
+        val upcData=intent.getStringArrayListExtra("upcoming")
+        val upcomingAdapter:PartnerRCAdapter= PartnerRCAdapter(this,upcData)
         val upcoming:RecyclerView=findViewById(R.id.upcomingRv)
         upcoming.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         upcoming.adapter=upcomingAdapter
 
-        val pastAdapter:PartnerRCAdapter= PartnerRCAdapter(this,pastlist())
+        val data=intent.getStringArrayListExtra("datadoc")
+        val pastAdapter:PartnerRCAdapter= PartnerRCAdapter(this,data)
         val past:RecyclerView=findViewById(R.id.pastRv)
         past.layoutManager=LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
         past.adapter=pastAdapter
@@ -64,43 +77,7 @@ class ActivityEvents:AppCompatActivity(){
     }
 
 
-    fun upcominglist():MutableList<String>{
-        val sampleObj = SampleMethods()
-        val ar= sampleObj.readMediaRowsBasedOnType(1)
-        val size=sampleObj.itemsize()
-        var imagelist= arrayListOf<String>()
-        var i=0
 
-        while (i<size) {
-            var imagePath = ar[i].MediaUrl
-            imagelist.add(i,imagePath)
-            i++
-        }
-        return imagelist
-    }
-
-
-    fun pastlist():MutableList<String>{
-
-        val resp=BetaActivity()
-        val responseArray=resp.getArray()
-        var z=0
-        while(z<responseArray.size) {
-            Log.d("responsearray",responseArray[z])
-        }
-        val sampleObj = PeMethods()
-        val ar= sampleObj.readMediaRowsBasedOnType(1)
-        val size=sampleObj.itemsize()
-        var imagelist= arrayListOf<String>()
-        var i=0
-
-        while (i<size) {
-            var imagePath = ar[i].MediaUrl
-            imagePath?.let { imagelist.add(i, it) }
-            i++
-        }
-        return imagelist
-    }
     fun ttimeslist():MutableList<String>{
         val sampleObj = PeMethods()
         val ar= sampleObj.readMediaRowsBasedOnType(1)

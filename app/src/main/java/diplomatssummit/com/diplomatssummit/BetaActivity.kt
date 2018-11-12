@@ -1,18 +1,25 @@
 package diplomatssummit.com.diplomatssummit
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import diplomatssummit.com.diplomatssummit.Dataclasses.DCResponse
+import diplomatssummit.com.diplomatssummit.app_ui.Indicators.IndefinitePagerIndicator
+import diplomatssummit.com.diplomatssummit.app_ui.PartnerRCAdapter
+import kotlinx.android.synthetic.main.activity_events.*
 import okhttp3.*
 import java.io.IOException
 
 
-class BetaActivity:AppCompatActivity(){
+class BetaActivity:AppCompatActivity() {
 
-    private var targetText=String()
-    private var resultArray=ArrayList<String>()
+    private var targetText = String()
+    private var resultArray = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,19 +30,19 @@ class BetaActivity:AppCompatActivity(){
 
     }
 
-    fun fetchJson(){
+    fun fetchJson() {
 
-        val url="https://diplomatssummit.com/volley/restactivity.php"
+        val url = "https://diplomatssummit.com/volley/restactivity.php"
 
-        val client=OkHttpClient()
-        val request=Request.Builder().url(url).build()
+        val client = OkHttpClient()
+        val request = Request.Builder().url(url).build()
 
-        client.newCall(request).enqueue(object:Callback{
+        client.newCall(request).enqueue(object : Callback {
             override fun onResponse(call: Call, response: Response) {
-                val body= response.body()?.string()
+                val body = response.body()?.string()
 
                 //Slicing the response
-                targetText=body.toString()
+                targetText = body.toString()
 
             }
 
@@ -45,39 +52,49 @@ class BetaActivity:AppCompatActivity(){
         })
     }
 
-    fun initialiseWidgets(){
-        val button:Button=findViewById(R.id.button)
-        button.text="GET"
-        val tv:TextView=findViewById(R.id.tv)
-        tv.text="Waiting for request"
-        button.setOnClickListener{
-            val newTarget=targetText.replace("[","").replace("]","")
-            splitvalues(newTarget)
-            tv.text=newTarget
+    fun initialiseWidgets() {
+        val button: Button = findViewById(R.id.button)
+        button.text = "GET"
+        val tv: TextView = findViewById(R.id.tv)
+        tv.text = "Waiting for request"
+        button.setOnClickListener {
+            val newTarget = targetText.replace("[", "").replace("]", "")
+            targetText = targetText.replace("[", "").replace("]", "")
+            val splitted=splitText(targetText)
+            tv.text = splitted[0]
+
+            val intent=Intent(this,DCResponse::class.java)
+            intent.putExtra("datadoc",splitted)
+            startActivity(intent)
+            val pastAdapter: PartnerRCAdapter = PartnerRCAdapter(this,splitted)
+            val past: RecyclerView =findViewById(R.id.pastRv)
+            past.layoutManager= LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false)
+            past.adapter=pastAdapter
+            val pastin: IndefinitePagerIndicator =findViewById(R.id.pastIndicator)
+            pastin.attachToRecyclerView(pastRv)
         }
 
     }
-    fun splitvalues(newTarget: String){
-        var targetArray:List<String>
-            targetArray= arrayListOf()
-            resultArray= arrayListOf()
-            targetArray=newTarget.split(",")
-            val size=targetArray.size
-        var i=0
-        while(i<size)
-        {
-            val buffer=targetArray[i].replace("\"","").replace("\\","")
+
+    fun splitText(targetText: String): ArrayList<String> {
+        var targetArray = targetText.split(",")
+        val size = targetArray.size
+        var i = 0
+        while (i < size) {
+            val buffer = "https://diplomatssummit.com/" + targetArray[i].replace("\"", "").replace("\\", "").replace(" ", "")
             resultArray.add(buffer)
-            Log.d("arraytarget",targetArray[i].replace("\"","").replace("\\",""))
             i++
-
         }
+        val result_size = resultArray.size
+        var k = 0
+        while (k < result_size) {
+            Log.d("RA", resultArray[k])
+            k++
+        }
+        return resultArray
 
     }
-        fun getArray(): ArrayList<String> {
-            return resultArray
-        }
-    }
+}
 
 
 

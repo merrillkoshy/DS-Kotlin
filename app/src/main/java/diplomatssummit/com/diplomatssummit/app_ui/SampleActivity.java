@@ -37,8 +37,7 @@ public class SampleActivity extends AppCompatActivity {
     }
 
     public void initialiseWidgets(){
-        Button button=findViewById(R.id.button);
-        button.setText("GET");
+
         TextView tv=findViewById(R.id.tv);
     }
 

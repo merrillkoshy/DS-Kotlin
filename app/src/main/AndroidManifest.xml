@@ -53,6 +53,8 @@
         <activity android:name=".app_ui.SampleActivity" />
         <activity android:name=".BetaActivity" />
         <activity android:name=".Dataclasses.DCResponse" />
+        <activity android:name=".homepage.HomeActivity" />
+        <activity android:name=".Gallery.GalleryActivity" />
 
     </application>
 

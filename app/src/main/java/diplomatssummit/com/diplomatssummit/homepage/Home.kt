@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,8 @@ import diplomatssummit.com.diplomatssummit.events.ActivityEvents
 import diplomatssummit.com.diplomatssummit.invest.DS_Invest
 import diplomatssummit.com.diplomatssummit.invest.InvestActivity
 import diplomatssummit.com.diplomatssummit.partners
+import okhttp3.*
+import java.io.IOException
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -54,7 +57,7 @@ class Home : Fragment() {
     val galbutton:ImageView?=null
     val bp:ImageView?=null
     val art:ImageView?=null
-
+    private var targetText = String()
 
 
     fun getScreenWidth(): Int {
@@ -70,6 +73,26 @@ class Home : Fragment() {
         transaction?.replace(R.id.container, fragment)
         transaction?.addToBackStack(null)
         transaction?.commit()
+    }
+
+    fun fetchJson(url: String) {
+
+        val client = OkHttpClient()
+        val request = Request.Builder().url(url).build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onResponse(call: Call, response: Response) {
+                val body = response.body()?.string()
+
+                //Slicing the response
+                targetText = body.toString()
+
+            }
+
+            override fun onFailure(call: Call, e: IOException) {
+                println("Failed to execute request")
+            }
+        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -101,11 +124,16 @@ class Home : Fragment() {
         invButton.setOnClickListener(){
            val intent:Intent= Intent(context, InvestActivity::class.java)
             startActivity(intent)
+
         }
         timel.setOnClickListener(){
             /*val tlFragment=timeline_events.newInstance()
             openFragment(tlFragment)*/
             val intent:Intent= Intent(context, ActivityEvents::class.java)
+            fetchJson("https://diplomatssummit.com/volley/restactivity.php")
+            val newTarget=targetText.replace("[","").replace("]","")
+            Log.d("HomeTarget",newTarget)
+            intent.putExtra("target",newTarget)
             startActivity(intent)
         }
         galbutton.setOnClickListener(){
@@ -206,3 +234,4 @@ class Home : Fragment() {
 
 
 }
+

@@ -1,60 +1,44 @@
-package diplomatssummit.com.diplomatssummit.invest
+package diplomatssummit.com.diplomatssummit.Gallery
 
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.widget.Button
 import android.widget.SeekBar
 import diplomatssummit.com.diplomatssummit.R
 import diplomatssummit.com.diplomatssummit.app_ui.AnimManager
 import diplomatssummit.com.diplomatssummit.app_ui.GalleryRecyclerView
-import diplomatssummit.com.diplomatssummit.app_ui.InvAdapter
+import diplomatssummit.com.diplomatssummit.app_ui.Indicators.IndefinitePagerIndicator
 import diplomatssummit.com.diplomatssummit.app_ui.RecyclerAdapter
-import diplomatssummit.com.diplomatssummit.databases.InvestMethod
+import diplomatssummit.com.diplomatssummit.databases.GtableMethods
 
-class InvestActivity : AppCompatActivity() {
+class GalleryActivity:AppCompatActivity(){
+
     private var mSeekbar: SeekBar? = null
-    private val mRecyclerView: GalleryRecyclerView? = null
+    private var listener: gallery.OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_invest)
+        initializeWidgets()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+    }
 
-        title = "Investment Opportunities"
-
-
-
-        mSeekbar =findViewById(R.id.seekBar);
-        mSeekbar?.max=getDatas()!!.size-1
-
-        val loginBtn:Button=findViewById(R.id.loginBtn)
-
-        val mRecyclerView:GalleryRecyclerView=findViewById(R.id.rv_list)
-        val getDatas=intent.getStringArrayListExtra("imageurls")
-        val recyclerAdapter: InvAdapter = InvAdapter(
+    fun initializeWidgets(){
+        setContentView(R.layout.gallery_rv)
+        val mRecyclerView: GalleryRecyclerView =findViewById(R.id.rv_list)
+        val recyclerAdapter: RecyclerAdapter = RecyclerAdapter(
                 this,
-                getDatas,
-                getCountry(),
-                getDescr()
+                getDatas(),
+                getTitles()
         )
-
-
-        loginBtn.setOnClickListener {
-            val intent:Intent=Intent(this,LoginActivity::class.java)
-            startActivity(intent)
-        }
-
-        val itemClickListener:GalleryRecyclerView.OnItemClickListener
         mRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         mRecyclerView.adapter=recyclerAdapter
-
-
+        val indicator2: IndefinitePagerIndicator =findViewById(R.id.rv_Indicator)
+        indicator2.attachToRecyclerView(mRecyclerView)
         mRecyclerView
                 // set scroll speed（pixel/s）
                 .initFlingSpeed(9000)
@@ -78,7 +62,7 @@ class InvestActivity : AppCompatActivity() {
             }
         })
 
-        mSeekbar?.setOnSeekBarChangeListener(object:SeekBar.OnSeekBarChangeListener{
+        mSeekbar?.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 mRecyclerView.smoothScrollToPosition(progress);
             }
@@ -90,33 +74,46 @@ class InvestActivity : AppCompatActivity() {
 
             }
         })
+
+
+
+        // TODO: Rename method, update argument and hook method into UI event
+        fun onButtonPressed(uri: Uri) {
+            listener?.onFragmentInteraction(uri)
+        }
+
     }
 
     fun getDatas(): MutableList<String>? {
 
-        val ob2=InvestMethod()
+        val ob2= GtableMethods()
         val ar2=ob2.readMediaRowsBasedOnType(1)
         val s2=ob2.itemsize()
         var imagelist:MutableList<String>
+        var titlelist:MutableList<String>
         imagelist= arrayListOf()
-
+        titlelist= arrayListOf()
         var i=0
 
         while (i<s2) {
-            var ip2=ar2[i].MediaUrl
+            var ip2=ar2[i].GalleryThumb
+            var title=ar2[i].Title
+            title?.let { titlelist.add(i,it) }
             ip2!!.replace("-225x300","").let { imagelist.add(i, it) }
             Log.d("testGal",ip2)
+
             i++
         }
+
 
         return imagelist
     }
 
 
 
-    fun getCountry(): MutableList<String>? {
+    fun getTitles(): MutableList<String>? {
 
-        val ob2=InvestMethod()
+        val ob2= GtableMethods()
         val ar2=ob2.readMediaRowsBasedOnType(1)
         val s2=ob2.itemsize()
         var titlelist:MutableList<String>
@@ -124,25 +121,10 @@ class InvestActivity : AppCompatActivity() {
         var i=0
 
         while (i<s2) {
-            var title=ar2[i].Country
+            var ip2=ar2[i].GalleryThumb
+            var title=ar2[i].Title
             title?.let { titlelist.add(i,it) }
-            i++
-        }
-        return titlelist
-    }
-
-    fun getDescr(): MutableList<String>? {
-
-        val ob2=InvestMethod()
-        val ar2=ob2.readMediaRowsBasedOnType(1)
-        val s2=ob2.itemsize()
-        var titlelist:MutableList<String>
-        titlelist= arrayListOf()
-        var i=0
-
-        while (i<s2) {
-            var title=ar2[i].InDescription
-            title?.let { titlelist.add(i,it) }
+            Log.d("testGal",ip2)
             i++
         }
         return titlelist
@@ -152,5 +134,4 @@ class InvestActivity : AppCompatActivity() {
         onBackPressed()
         return true
     }
-
 }
