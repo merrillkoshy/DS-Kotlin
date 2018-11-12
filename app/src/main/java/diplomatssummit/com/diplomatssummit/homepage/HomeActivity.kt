@@ -21,6 +21,7 @@ class HomeActivity:AppCompatActivity(){
     private var upcTarget = String()
     private var invTarget = String()
     private var resultArray = ArrayList<String>()
+    private var countries=ArrayList<String>()
     private var resultArrayUpc = ArrayList<String>()
     private var resultArrayInvest = ArrayList<String>()
 
@@ -113,12 +114,16 @@ class HomeActivity:AppCompatActivity(){
         Picasso.get().load("https://diplomatssummit.com/mobile/hp_assets/dp.png").centerCrop().resize(1364, 298).onlyScaleDown().into(dp)
 
         invButton.setOnClickListener{
-            invTarget = invTarget.replace("[", "").replace("]", "")
-            val splitinvimg=splitTextInv(invTarget)
+            val arraytarget = invTarget.split("]")
+
+            val splitindex=splitText(arraytarget[0].replace("[", "").replace("]", ""))
+
+            countries= arraytarget[1].replace("\"","").replace("[", "").split(",") as ArrayList<String>
 
             val intent=Intent(this,InvestActivity::class.java)
-            intent.putExtra("imageurls",splitinvimg)
-
+            val bundle=Bundle()
+            bundle.putStringArrayList("imageurls",splitindex)
+            bundle.putStringArrayList("countries",countries)
             startActivity(intent)
 
         }

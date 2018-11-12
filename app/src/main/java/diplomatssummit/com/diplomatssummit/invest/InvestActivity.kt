@@ -8,11 +8,14 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.widget.Button
 import android.widget.SeekBar
+
 import diplomatssummit.com.diplomatssummit.R
 import diplomatssummit.com.diplomatssummit.app_ui.AnimManager
 import diplomatssummit.com.diplomatssummit.app_ui.GalleryRecyclerView
+
+
 import diplomatssummit.com.diplomatssummit.app_ui.InvAdapter
-import diplomatssummit.com.diplomatssummit.app_ui.RecyclerAdapter
+
 import diplomatssummit.com.diplomatssummit.databases.InvestMethod
 
 class InvestActivity : AppCompatActivity() {
@@ -35,12 +38,13 @@ class InvestActivity : AppCompatActivity() {
 
         val loginBtn:Button=findViewById(R.id.loginBtn)
 
-        val mRecyclerView:GalleryRecyclerView=findViewById(R.id.rv_list)
+        val mRecyclerView: GalleryRecyclerView =findViewById(R.id.rv_list)
         val getDatas=intent.getStringArrayListExtra("imageurls")
+        val getCountry=intent.getStringArrayListExtra("country")
         val recyclerAdapter: InvAdapter = InvAdapter(
                 this,
                 getDatas,
-                getCountry(),
+                getCountry,
                 getDescr()
         )
 

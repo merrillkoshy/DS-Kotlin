@@ -20,13 +20,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ryan.rv_gallery.util.DLog;
 import com.squareup.picasso.Picasso;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 
 import diplomatssummit.com.diplomatssummit.Gallery.Gal_InsidePageActivity;
 
 import diplomatssummit.com.diplomatssummit.R;
-import diplomatssummit.com.diplomatssummit.app_ui.util.DLog;
+
 import diplomatssummit.com.diplomatssummit.databases.GtableMethods;
 import diplomatssummit.com.diplomatssummit.homepage.Home;
 
