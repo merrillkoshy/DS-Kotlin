@@ -12,6 +12,7 @@ import android.widget.SeekBar
 import diplomatssummit.com.diplomatssummit.R
 import diplomatssummit.com.diplomatssummit.app_ui.AnimManager
 import diplomatssummit.com.diplomatssummit.app_ui.GalleryRecyclerView
+import diplomatssummit.com.diplomatssummit.app_ui.Indicators.IndefinitePagerIndicator
 
 
 import diplomatssummit.com.diplomatssummit.app_ui.InvAdapter
@@ -19,7 +20,7 @@ import diplomatssummit.com.diplomatssummit.app_ui.InvAdapter
 import diplomatssummit.com.diplomatssummit.databases.InvestMethod
 
 class InvestActivity : AppCompatActivity() {
-    private var mSeekbar: SeekBar? = null
+
     private val mRecyclerView: GalleryRecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,24 +34,32 @@ class InvestActivity : AppCompatActivity() {
 
 
 
-        mSeekbar =findViewById(R.id.seekBar);
-        mSeekbar?.max=getDatas()!!.size-1
+
 
         val loginBtn:Button=findViewById(R.id.loginBtn)
 
         val mRecyclerView: GalleryRecyclerView =findViewById(R.id.rv_list)
+
         val getDatas=intent.getStringArrayListExtra("imageurls")
-        val getCountry=intent.getStringArrayListExtra("country")
+        val getCountry=intent.getStringArrayListExtra("countries")
+        val getDescr=intent.getStringArrayListExtra("description")
+
+        //For Login Activity
+        val usernames=intent.getStringArrayListExtra("usernames")
+        val passwords=intent.getStringArrayListExtra("passwords")
+
         val recyclerAdapter: InvAdapter = InvAdapter(
                 this,
                 getDatas,
                 getCountry,
-                getDescr()
+                getDescr
         )
 
 
         loginBtn.setOnClickListener {
             val intent:Intent=Intent(this,LoginActivity::class.java)
+            intent.putExtra("usernames",usernames)
+            intent.putExtra("passwords",passwords)
             startActivity(intent)
         }
 
@@ -72,28 +81,11 @@ class InvestActivity : AppCompatActivity() {
                 // set default position
                 .initPosition(0)
                 // finally call method
-                .setUp();
+                .setUp()
 
+        val indicator: IndefinitePagerIndicator =findViewById(R.id.rv_indicator)
+        indicator.attachToRecyclerView(mRecyclerView)
 
-        mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                mSeekbar?.setProgress(mRecyclerView.getScrolledPosition());
-            }
-        })
-
-        mSeekbar?.setOnSeekBarChangeListener(object:SeekBar.OnSeekBarChangeListener{
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                mRecyclerView.smoothScrollToPosition(progress);
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-            }
-        })
     }
 
     fun getDatas(): MutableList<String>? {

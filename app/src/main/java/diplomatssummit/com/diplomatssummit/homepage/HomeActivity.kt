@@ -20,8 +20,10 @@ class HomeActivity:AppCompatActivity(){
     private var pastTarget = String()
     private var upcTarget = String()
     private var invTarget = String()
+    private var credsTarget = String()
     private var resultArray = ArrayList<String>()
     private var countries=ArrayList<String>()
+    private var indescriptions=ArrayList<String>()
     private var resultArrayUpc = ArrayList<String>()
     private var resultArrayInvest = ArrayList<String>()
 
@@ -32,6 +34,7 @@ class HomeActivity:AppCompatActivity(){
         fetchJsonUpcoming()
         fetchJsonPast()
         fetchJsonInvest()
+        fetchJson_CredTable()
     }
 
     fun fetchJsonInvest() {
@@ -97,6 +100,27 @@ class HomeActivity:AppCompatActivity(){
         })
     }
 
+    fun fetchJson_CredTable() {
+        val url = "https://diplomatssummit.com/volley/apploginactivity.php"
+
+        val client = OkHttpClient()
+        val request = Request.Builder().url(url).build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onResponse(call: Call, response: Response) {
+                val body = response.body()?.string()
+
+                //Slicing the response
+                credsTarget = body.toString()
+
+            }
+
+            override fun onFailure(call: Call, e: IOException) {
+                println("Failed to execute request")
+            }
+        })
+    }
+
     fun initializeWidgets(){
         setContentView(R.layout.fragment_home)
         val invButton: ImageView =findViewById(R.id.inv)
@@ -116,14 +140,41 @@ class HomeActivity:AppCompatActivity(){
         invButton.setOnClickListener{
             val arraytarget = invTarget.split("]")
 
+
+            val credsArray=credsTarget.replace("[","").replace("]","").replace("\"","").split(",")
+            val usernames=ArrayList<String>()
+            val passwords=ArrayList<String>()
+            var i=0
+            var k=1
+            Log.d("size",""+credsArray.size)
+            val size=credsArray.size
+            while(i<size)
+            {
+                val un=credsArray[i]
+                usernames.add(un)
+                Log.d("usernames",un)
+                i += 2
+
+            }
+            while(k<size) {
+                val pw = credsArray[k]
+                passwords.add(pw)
+                Log.d("passwords", pw)
+                k += 2
+            }
             val splitindex=splitText(arraytarget[0].replace("[", "").replace("]", ""))
 
             countries= arraytarget[1].replace("\"","").replace("[", "").split(",") as ArrayList<String>
 
+            indescriptions= arraytarget[2].replace("\"","").replace("[", "").replace("\\n","\n" ).replace("\\r","\r" ).replace("\\","" ).split(",") as ArrayList<String>
+
+
             val intent=Intent(this,InvestActivity::class.java)
-            val bundle=Bundle()
-            bundle.putStringArrayList("imageurls",splitindex)
-            bundle.putStringArrayList("countries",countries)
+            intent.putExtra("imageurls",splitindex)
+            intent.putExtra("countries",countries)
+            intent.putExtra("description",indescriptions)
+            intent.putExtra("usernames",usernames)
+            intent.putExtra("passwords",passwords)
             startActivity(intent)
 
         }

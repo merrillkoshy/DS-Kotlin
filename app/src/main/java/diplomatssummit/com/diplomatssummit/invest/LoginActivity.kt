@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
@@ -46,6 +47,8 @@ class LoginActivity : AppCompatActivity(){
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+
+
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
         val iv:ImageView=findViewById(R.id.register_prompt)
@@ -101,9 +104,22 @@ class LoginActivity : AppCompatActivity(){
     }
 
     fun UserLoginTask(unameStr: String, passwordStr: String) {
-        val uname=DUMMY_CREDENTIALS.get(0)
-        val pw= DUMMY_CREDENTIALS.get(1)
-        if (unameStr==uname && passwordStr==pw)
+        val usernames=intent.getStringArrayListExtra("usernames")
+        val passwords=intent.getStringArrayListExtra("passwords")
+        val usize= usernames.size
+        val psize= passwords.size
+        var i=0
+        var k=0
+        var uflag=""
+
+        while (i<usize){
+            if(unameStr==usernames[i]){
+                uflag=="true"
+            }
+        }
+
+
+        if (uflag=="true")
         {
             val intent:Intent=Intent(this,Authorised::class.java)
             intent.putExtra("userName",unameStr)
@@ -137,7 +153,11 @@ class LoginActivity : AppCompatActivity(){
         /**
          * A dummy authentication store containing known user names and passwords.
          * TODO: remove after connecting to a real authentication system.
+         * *
+         *
          */
+
+
         private val DUMMY_CREDENTIALS = arrayOf("admin", "5reaK!@#")
     }
 }

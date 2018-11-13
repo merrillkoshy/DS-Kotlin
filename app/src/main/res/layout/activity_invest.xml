@@ -22,15 +22,16 @@ android:orientation="horizontal">
     android:layout_height="425dp"
     />
 
-<SeekBar
-    android:id="@+id/seekBar"
-    style="@style/Base.Widget.AppCompat.SeekBar"
-    android:background="#80FFFFFF"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_marginBottom="100dp"
-    android:progress="1" />
+    <diplomatssummit.com.diplomatssummit.app_ui.Indicators.IndefinitePagerIndicator
+        android:id="@+id/rv_indicator"
+        android:layout_marginTop="640dp"
+        android:layout_marginStart="130dp"
+        app:dotColor="@color/colorPrimary"
+        app:selectedDotColor="@color/gold"
+        app:dotRadius="5dp"
+        app:selectedDotRadius="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/loginBtn"

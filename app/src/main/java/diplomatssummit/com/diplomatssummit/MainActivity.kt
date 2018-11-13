@@ -6,8 +6,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 
 import diplomatssummit.com.diplomatssummit.homepage.HomeActivity
+import okhttp3.*
+import java.io.IOException
 
 
 class MainActivity : AppCompatActivity(){
@@ -48,7 +51,9 @@ class MainActivity : AppCompatActivity(){
 
 
 
+
     }
+
 
 
 
