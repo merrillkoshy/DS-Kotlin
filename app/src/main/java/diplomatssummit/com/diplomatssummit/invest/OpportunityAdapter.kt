@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,9 @@ class OpportunityAdapter(
         private val mContext: Context,
         private val mRegion: List<String>?,
         private val mRegionImage: MutableList<String>?,
-        private val country: String) :
+        private val country: String,
+        private val description: String,
+        private val inMedia: String) :
         RecyclerView.Adapter<OpportunityAdapter.MyHolder>() {
 
 
@@ -46,10 +49,13 @@ class OpportunityAdapter(
         val imageUrl = mRegionImage!![position]
 
 
+
         intent.putExtra("RegionName",imageTitle)
         intent.putExtra("RegionUrl",imageUrl)
         intent.putExtra("country",country)
         intent.putExtra("position",position)
+        intent.putExtra("description",description)
+        intent.putExtra("inMedia",inMedia)
 
         Picasso.get().load(imageUrl).fit().centerCrop().into(holder.mView)
         holder.mTitles.text = imageTitle

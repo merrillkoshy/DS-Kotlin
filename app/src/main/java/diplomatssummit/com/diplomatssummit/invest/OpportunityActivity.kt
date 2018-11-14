@@ -8,7 +8,6 @@ import android.util.Log
 import android.widget.LinearLayout
 import android.widget.TextView
 import diplomatssummit.com.diplomatssummit.R
-import diplomatssummit.com.diplomatssummit.databases.CtyInvMethod
 
 class OpportunityActivity : AppCompatActivity() {
 var regionsWithImageUrls=String()
@@ -94,7 +93,7 @@ var flag=0
         rv.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
 
 
-        val adapter = OpportunityAdapter(this,regionList,urlsList,country)
+        val adapter = OpportunityAdapter(this,regionList,urlsList,country,description[flag],inMedia[flag])
         rv.adapter = adapter
     }
 

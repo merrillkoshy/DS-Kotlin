@@ -26,6 +26,9 @@ class FinalsknImages : AppCompatActivity() {
         val country=intent.getStringExtra("country")
         val region=intent.getStringExtra("region")
 
+        val ims=intent.getStringExtra("inMedia")
+
+
         title = ""
 
         imagelist=getImsfromTitle(country,region)

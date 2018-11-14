@@ -19,15 +19,27 @@ class FinalSkin : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+        val ims=intent.getStringExtra("inMedia")
+
+        Log.d("ims",ims)
 
         val region=intent.getStringExtra("RegionName")
         title=region
+
+
+        val imsSplit1=ims.split("}")
+
+
+
+
+
+
         val regionurl=intent.getStringExtra("RegionUrl")
         val country=intent.getStringExtra("country")
         val position=intent.getIntExtra("position",0)
-        val regionDescr=populateRegionDescription(country)
+        val regionDescr=intent.getStringExtra("description")
 
-        val splitContentinit=regionDescr[0].split('}')
+        val splitContentinit=regionDescr.split('}')
         val splitContent=splitContentinit[position].split('{')
         Log.d("regionNamefromSplit",splitContent[0])
         Log.d("splitContent",splitContent[1])
@@ -39,8 +51,9 @@ class FinalSkin : AppCompatActivity() {
         val fab:FloatingActionButton=findViewById(R.id.fab_finalskin)
         fab.setOnClickListener{
             val intent:Intent=Intent(this,FinalsknImages::class.java)
-            intent.putExtra("country",country)
-            intent.putExtra("region",region)
+
+
+            intent.putExtra("inMedia",ims)
             startActivity(intent)
 
         }
