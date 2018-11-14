@@ -20,6 +20,7 @@ import android.net.NetworkInfo
 import android.content.Context.CONNECTIVITY_SERVICE
 import android.support.v4.content.ContextCompat.getSystemService
 import android.net.ConnectivityManager
+import android.support.v7.app.AlertDialog
 import android.widget.Toast
 
 
@@ -37,15 +38,31 @@ class HomeActivity:AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initializeWidgets()
+
         if(isOnline()) {
+            initializeWidgets()
             fetchJsonUpcoming()
             fetchJsonPast()
             fetchJsonInvest()
             fetchJson_CredTable()
         }
         else{
-            Toast.makeText(this, "You are not connected to Internet", Toast.LENGTH_SHORT).show()
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Connection Failed")
+
+            // Display  message on alert dialog
+            builder.setMessage("Diplomats Summit:The App needs an active internet connection.Press close to exit application")
+
+            builder.setPositiveButton("CLOSE"){dialog,which ->
+                Toast.makeText(this,"Closing",Toast.LENGTH_SHORT).show()
+                finishAffinity()}
+
+
+            // Finally, make the alert dialog using builder
+            val dialog: AlertDialog = builder.create()
+
+            // Display the alert dialog on app interface
+            dialog.show()
         }
     }
 
@@ -156,80 +173,81 @@ class HomeActivity:AppCompatActivity(){
         Picasso.get().load("https://diplomatssummit.com/mobile/hp_assets/art.jpg").centerCrop().resize(600, 400).onlyScaleDown().into(art)
         Picasso.get().load("https://diplomatssummit.com/mobile/hp_assets/dp.png").centerCrop().resize(1364, 298).onlyScaleDown().into(dp)
 
-        invButton.setOnClickListener{
-            val arraytarget = invTarget.split("]")
+        if(isOnline()) {
+            invButton.setOnClickListener {
+                val arraytarget = invTarget.split("]")
 
 
-            val credsArray=credsTarget.replace("[","").replace("]","").replace("\"","").split(",")
-            val usernames=ArrayList<String>()
-            val passwords=ArrayList<String>()
-            var i=0
-            var k=1
-            Log.d("size",""+credsArray.size)
-            val size=credsArray.size
-            while(i<size)
-            {
-                val un=credsArray[i]
-                usernames.add(un)
-                Log.d("usernames",un)
-                i += 2
+                val credsArray = credsTarget.replace("[", "").replace("]", "").replace("\"", "").split(",")
+                val usernames = ArrayList<String>()
+                val passwords = ArrayList<String>()
+                var i = 0
+                var k = 1
+                Log.d("size", "" + credsArray.size)
+                val size = credsArray.size
+                while (i < size) {
+                    val un = credsArray[i]
+                    usernames.add(un)
+                    Log.d("usernames", un)
+                    i += 2
+
+                }
+                while (k < size) {
+                    val pw = credsArray[k]
+                    passwords.add(pw)
+                    Log.d("passwords", pw)
+                    k += 2
+                }
+                val splitindex = splitText(arraytarget[0].replace("[", "").replace("]", ""))
+
+                countries = arraytarget[1].replace("\"", "").replace("[", "").split(",") as ArrayList<String>
+
+                indescriptions = arraytarget[2].replace("\"", "").replace("[", "").replace("\\n", "\n").replace("\\r", "\r").replace("\\", "").split(",") as ArrayList<String>
+
+
+                val intent = Intent(this, InvestActivity::class.java)
+                intent.putExtra("imageurls", splitindex)
+                intent.putExtra("countries", countries)
+                intent.putExtra("description", indescriptions)
+                intent.putExtra("usernames", usernames)
+                intent.putExtra("passwords", passwords)
+                startActivity(intent)
 
             }
-            while(k<size) {
-                val pw = credsArray[k]
-                passwords.add(pw)
-                Log.d("passwords", pw)
-                k += 2
+
+
+
+            timel.setOnClickListener {
+
+
+                pastTarget = pastTarget.replace("[", "").replace("]", "")
+                val splitted = splitText(pastTarget)
+
+                upcTarget = upcTarget.replace("[", "").replace("]", "")
+                val splittedupc = splitTextUpc(upcTarget)
+
+                val intent = Intent(this, ActivityEvents::class.java)
+                intent.putExtra("datadoc", splitted)
+                intent.putExtra("upcoming", splittedupc)
+
+                startActivity(intent)
+
             }
-            val splitindex=splitText(arraytarget[0].replace("[", "").replace("]", ""))
-
-            countries= arraytarget[1].replace("\"","").replace("[", "").split(",") as ArrayList<String>
-
-            indescriptions= arraytarget[2].replace("\"","").replace("[", "").replace("\\n","\n" ).replace("\\r","\r" ).replace("\\","" ).split(",") as ArrayList<String>
-
-
-            val intent=Intent(this,InvestActivity::class.java)
-            intent.putExtra("imageurls",splitindex)
-            intent.putExtra("countries",countries)
-            intent.putExtra("description",indescriptions)
-            intent.putExtra("usernames",usernames)
-            intent.putExtra("passwords",passwords)
-            startActivity(intent)
-
-        }
 
 
 
-        timel.setOnClickListener{
-
-
-            pastTarget = pastTarget.replace("[", "").replace("]", "")
-            val splitted=splitText(pastTarget)
-
-            upcTarget = upcTarget.replace("[", "").replace("]", "")
-            val splittedupc=splitTextUpc(upcTarget)
-
-            val intent=Intent(this,ActivityEvents::class.java)
-            intent.putExtra("datadoc",splitted)
-            intent.putExtra("upcoming",splittedupc)
-
-            startActivity(intent)
-
-        }
-
-
-
-        galbutton.setOnClickListener(){
-            val intent: Intent = Intent(this, GalleryActivity::class.java)
-            startActivity(intent)
-        }
-        bp.setOnClickListener(){
-            val intent: Intent = Intent(this, PartnerActivity::class.java)
-            startActivity(intent)
-        }
-        art.setOnClickListener(){
-            val intent: Intent = Intent(this, ArticleReaderActivity::class.java)
-            startActivity(intent)
+            galbutton.setOnClickListener() {
+                val intent: Intent = Intent(this, GalleryActivity::class.java)
+                startActivity(intent)
+            }
+            bp.setOnClickListener() {
+                val intent: Intent = Intent(this, PartnerActivity::class.java)
+                startActivity(intent)
+            }
+            art.setOnClickListener() {
+                val intent: Intent = Intent(this, ArticleReaderActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 
