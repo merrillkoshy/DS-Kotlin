@@ -50,6 +50,7 @@ class LoginActivity : AppCompatActivity(){
 
 
 
+
         email_sign_in_button.setOnClickListener { attemptLogin() }
         val iv:ImageView=findViewById(R.id.register_prompt)
         Picasso.get().load("https://diplomatssummit.com/Registration_assets/join.jpg").centerCrop().fit().into(iv)
@@ -106,22 +107,33 @@ class LoginActivity : AppCompatActivity(){
     fun UserLoginTask(unameStr: String, passwordStr: String) {
         val usernames=intent.getStringArrayListExtra("usernames")
         val passwords=intent.getStringArrayListExtra("passwords")
+        val getDatas=intent.getStringArrayListExtra("imageurls")
+        val getCountry=intent.getStringArrayListExtra("countries")
+        val getDescr=intent.getStringArrayListExtra("description")
         val usize= usernames.size
         val psize= passwords.size
         var i=0
         var k=0
+        var getP=""
         var uflag=""
+        var pflag=""
 
         while (i<usize){
             if(unameStr==usernames[i]){
-                uflag=="true"
+                uflag="true"
+                getP=passwords[i]
             }
+            i++
         }
+        if (passwordStr==getP.trim().toString())
+            pflag="true"
 
-
-        if (uflag=="true")
+        if (uflag=="true" && pflag=="true")
         {
             val intent:Intent=Intent(this,Authorised::class.java)
+            intent.putExtra("imageurls",getDatas)
+            intent.putExtra("countries",getCountry)
+            intent.putExtra("description",getDescr)
             intent.putExtra("userName",unameStr)
             intent.putExtra("passWord",passwordStr)
             startActivity(intent)

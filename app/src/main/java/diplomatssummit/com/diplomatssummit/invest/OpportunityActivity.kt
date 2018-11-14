@@ -11,11 +11,11 @@ import diplomatssummit.com.diplomatssummit.R
 import diplomatssummit.com.diplomatssummit.databases.CtyInvMethod
 
 class OpportunityActivity : AppCompatActivity() {
-var regionsWithImageUrls: MutableList<String>? = null
+var regionsWithImageUrls=String()
 var regionsPlusUrl: ArrayList<String>? = null
 var regionList: ArrayList<String>? = null
 var urlsList: ArrayList<String>? = null
-
+var flag=0
 
     private var buffer: List<String>?=null
     private var buffer2: List<String>?=null
@@ -31,11 +31,34 @@ var urlsList: ArrayList<String>? = null
 
         Log.d("oA1",country)
 
-        regionsWithImageUrls=populateContent(country)
+
+        val mediaUrl=intent.getStringArrayListExtra("mediaUrl")
+        val countries=intent.getStringArrayListExtra("countries")
+        val description=intent.getStringArrayListExtra("description")
+        val inMedia=intent.getStringArrayListExtra("inMedia")
+
+
+        var a=0
+        while(a<countries.size){
+            if(country==countries[a]) {
+                flag = a
+                break
+            }
+            a++
+        }
+
+        Log.d("index:",""+flag)
+        Log.d("mediaUrl:",mediaUrl[flag])
+        Log.d("Countries:",countries[flag])
+        Log.d("Description:",description[flag])
+        Log.d("inMedia:",inMedia[flag])
+
+
+        regionsWithImageUrls=mediaUrl[flag]
 
 
         //Region-wise split(blobLevel)
-        val re1=regionsWithImageUrls!![0].split(')')
+        val re1=regionsWithImageUrls.split(')')
         val size= re1.size-1
         var i=0
         regionsPlusUrl= arrayListOf()
@@ -59,22 +82,7 @@ var urlsList: ArrayList<String>? = null
             j++
         }
 
-        //Region and urlblob split
-        val rsize=regionList!!.size
-        val usize=urlsList!!.size
 
-        /*var k=0
-
-        while(k<usize)
-        {
-            buffer2 = urlsList!![k].split(',')
-            Log.d("oA2", buffer2!![0])
-            k++
-        }*/
-
-
-        /*Log.d("oA3", regionList!![k])
-        Log.d("oA4", urlsList!![k])*/
 
 
         val heading:TextView=findViewById(R.id.heading)
@@ -95,22 +103,6 @@ var urlsList: ArrayList<String>? = null
         onBackPressed()
         return true
     }
-}
-
-fun populateContent(country:String): MutableList<String> {
-    val ciMethod=CtyInvMethod()
-    val ciLocal=ciMethod.readContentFromTitle(country)
-    val size=ciLocal.size
-    val imlist:MutableList<String>
-    imlist= arrayListOf()
-    var i=0
-    while(i<size)
-    {
-        val imageBlob= ciLocal[i].MediaUrl!!
-        imageBlob.let { imlist.add(i,it) }
-        i++
-    }
-    return imlist
 }
 
 

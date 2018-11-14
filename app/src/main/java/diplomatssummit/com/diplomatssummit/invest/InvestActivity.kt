@@ -60,6 +60,9 @@ class InvestActivity : AppCompatActivity() {
             val intent:Intent=Intent(this,LoginActivity::class.java)
             intent.putExtra("usernames",usernames)
             intent.putExtra("passwords",passwords)
+            intent.putExtra("imageurls",getDatas)
+            intent.putExtra("countries",getCountry)
+            intent.putExtra("description",getDescr)
             startActivity(intent)
         }
 

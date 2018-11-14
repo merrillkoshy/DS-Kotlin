@@ -15,9 +15,12 @@ import com.squareup.picasso.Picasso
 import diplomatssummit.com.diplomatssummit.R
 
 
-class OpportunityAdapter(private val mContext: Context, private val mRegion: List<String>?, private val mRegionImage: MutableList<String>?, private val country: String) : RecyclerView.Adapter<OpportunityAdapter.MyHolder>() {
-
-
+class OpportunityAdapter(
+        private val mContext: Context,
+        private val mRegion: List<String>?,
+        private val mRegionImage: MutableList<String>?,
+        private val country: String) :
+        RecyclerView.Adapter<OpportunityAdapter.MyHolder>() {
 
 
     private var mOnItemPhotoChangedListener: OnItemPhotoChangedListener? = null

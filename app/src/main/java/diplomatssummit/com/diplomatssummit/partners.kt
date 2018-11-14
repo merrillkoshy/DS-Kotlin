@@ -47,8 +47,6 @@ class partners : Fragment(){
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
     private val mMainThreadHandler: Handler = Handler()
-    private var mSeekbar: SeekBar? = null
-    private val mRecyclerView: GalleryRecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,8 +72,7 @@ class partners : Fragment(){
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.partner_rv, container, false)
-        mSeekbar = view.findViewById(R.id.seekBar)
-        mSeekbar?.max=getDatas()!!.size-1
+
 
         val mRecyclerView: GalleryRecyclerView =view.findViewById(R.id.rv_partnerlist)
         val recyclerAdapter: PartnerRCAdapter =PartnerRCAdapter(
@@ -101,30 +98,7 @@ class partners : Fragment(){
                 // set default position
                 .initPosition(0)
                 // finally call method
-                .setUp();
-
-
-        mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                mSeekbar?.setProgress(mRecyclerView.getScrolledPosition());
-            }
-        })
-
-        mSeekbar?.setOnSeekBarChangeListener(object:SeekBar.OnSeekBarChangeListener{
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                mRecyclerView.smoothScrollToPosition(progress);
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-            }
-        })
-
-
+                .setUp()
 
 
 
