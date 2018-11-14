@@ -1,5 +1,6 @@
 package diplomatssummit.com.diplomatssummit.homepage
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -15,6 +16,12 @@ import diplomatssummit.com.diplomatssummit.events.ActivityEvents
 import diplomatssummit.com.diplomatssummit.invest.InvestActivity
 import okhttp3.*
 import java.io.IOException
+import android.net.NetworkInfo
+import android.content.Context.CONNECTIVITY_SERVICE
+import android.support.v4.content.ContextCompat.getSystemService
+import android.net.ConnectivityManager
+import android.widget.Toast
+
 
 class HomeActivity:AppCompatActivity(){
     private var pastTarget = String()
@@ -31,11 +38,23 @@ class HomeActivity:AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeWidgets()
-        fetchJsonUpcoming()
-        fetchJsonPast()
-        fetchJsonInvest()
-        fetchJson_CredTable()
+        if(isOnline()) {
+            fetchJsonUpcoming()
+            fetchJsonPast()
+            fetchJsonInvest()
+            fetchJson_CredTable()
+        }
+        else{
+            Toast.makeText(this, "You are not connected to Internet", Toast.LENGTH_SHORT).show()
+        }
     }
+
+    protected fun isOnline(): Boolean {
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val netInfo = cm.activeNetworkInfo
+        return netInfo != null && netInfo.isConnectedOrConnecting
+    }
+
 
     fun fetchJsonInvest() {
         val url = "https://diplomatssummit.com/volley/investtable.php"
