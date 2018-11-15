@@ -10,8 +10,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import diplomatssummit.com.diplomatssummit.Gallery.gallery;
-
 
 public class ThreadUtils {
 
@@ -446,7 +444,7 @@ public class ThreadUtils {
     }
 
     public static Handler getHandler() {
-        return gallery.newInstance().getmMainThreadHandler();
+        return null;
     }
 
     public static void removeCallbacks(Runnable runnable) {

@@ -31,6 +31,7 @@ class GalleryPagerAdapter(private val mContext: Context, private val imageList: 
         val rootView = LayoutInflater.from(mContext).inflate(R.layout.gallery_inside_page, null, false)
 
         val imageUrl = imageList!![position]
+
         if(imageUrl=="")
         {
             val strin: String = "https://diplomatssummit.com/mobile/hp_assets/placeholder.jpg"

@@ -12,8 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
+import diplomatssummit.com.diplomatssummit.Gallery.GalleryActivity
 import diplomatssummit.com.diplomatssummit.R
-import diplomatssummit.com.diplomatssummit.Gallery.gallery
 import diplomatssummit.com.diplomatssummit.PartnerActivity
 import diplomatssummit.com.diplomatssummit.articles.ArticleReaderActivity
 import diplomatssummit.com.diplomatssummit.events.ActivityEvents
@@ -126,7 +126,7 @@ class Home : Fragment() {
             startActivity(intent)
 
         }
-        timel.setOnClickListener(){
+        timel.setOnClickListener{
             /*val tlFragment=timeline_events.newInstance()
             openFragment(tlFragment)*/
             val intent:Intent= Intent(context, ActivityEvents::class.java)
@@ -136,15 +136,15 @@ class Home : Fragment() {
             intent.putExtra("target",newTarget)
             startActivity(intent)
         }
-        galbutton.setOnClickListener(){
-            val galFragment= gallery.newInstance()
-            openFragment(galFragment)
+        galbutton.setOnClickListener{
+            val intent:Intent= Intent(context, GalleryActivity::class.java)
+            startActivity(intent)
         }
-        bp.setOnClickListener(){
+        bp.setOnClickListener{
             val intent:Intent=Intent(context,PartnerActivity::class.java)
             startActivity(intent)
         }
-        art.setOnClickListener(){
+        art.setOnClickListener{
             val intent:Intent= Intent(context, ArticleReaderActivity::class.java)
             startActivity(intent)
         }

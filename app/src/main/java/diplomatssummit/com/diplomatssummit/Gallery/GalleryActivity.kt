@@ -16,9 +16,6 @@ import diplomatssummit.com.diplomatssummit.databases.GtableMethods
 
 class GalleryActivity:AppCompatActivity(){
 
-    private var mSeekbar: SeekBar? = null
-    private var listener: gallery.OnFragmentInteractionListener? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeWidgets()
@@ -30,10 +27,21 @@ class GalleryActivity:AppCompatActivity(){
     fun initializeWidgets(){
         setContentView(R.layout.gallery_rv)
         val mRecyclerView: GalleryRecyclerView =findViewById(R.id.rv_list)
+
+        val getDatas=intent.getStringArrayListExtra("galleryThumb")
+        val getTitles=intent.getStringArrayListExtra("galleryTitle")
+        val getMediaUrl=intent.getStringArrayListExtra("galleryMediaUrl")
+
+
+        Log.d("galleryThumb",getDatas[0])
+        Log.d("galleryTitle",getTitles[0])
+        Log.d("getMediaUrl",getMediaUrl[0])
+
         val recyclerAdapter: RecyclerAdapter = RecyclerAdapter(
                 this,
-                getDatas(),
-                getTitles()
+                getDatas,
+                getTitles,
+                getMediaUrl
         )
         mRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         mRecyclerView.adapter=recyclerAdapter
@@ -55,80 +63,8 @@ class GalleryActivity:AppCompatActivity(){
                 .setUp();
 
 
-        mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                mSeekbar?.setProgress(mRecyclerView.getScrolledPosition());
-            }
-        })
-
-        mSeekbar?.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                mRecyclerView.smoothScrollToPosition(progress);
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-            }
-        })
-
-
-
-        // TODO: Rename method, update argument and hook method into UI event
-        fun onButtonPressed(uri: Uri) {
-            listener?.onFragmentInteraction(uri)
-        }
-
     }
 
-    fun getDatas(): MutableList<String>? {
-
-        val ob2= GtableMethods()
-        val ar2=ob2.readMediaRowsBasedOnType(1)
-        val s2=ob2.itemsize()
-        var imagelist:MutableList<String>
-        var titlelist:MutableList<String>
-        imagelist= arrayListOf()
-        titlelist= arrayListOf()
-        var i=0
-
-        while (i<s2) {
-            var ip2=ar2[i].GalleryThumb
-            var title=ar2[i].Title
-            title?.let { titlelist.add(i,it) }
-            ip2!!.replace("-225x300","").let { imagelist.add(i, it) }
-            Log.d("testGal",ip2)
-
-            i++
-        }
-
-
-        return imagelist
-    }
-
-
-
-    fun getTitles(): MutableList<String>? {
-
-        val ob2= GtableMethods()
-        val ar2=ob2.readMediaRowsBasedOnType(1)
-        val s2=ob2.itemsize()
-        var titlelist:MutableList<String>
-        titlelist= arrayListOf()
-        var i=0
-
-        while (i<s2) {
-            var ip2=ar2[i].GalleryThumb
-            var title=ar2[i].Title
-            title?.let { titlelist.add(i,it) }
-            Log.d("testGal",ip2)
-            i++
-        }
-        return titlelist
-    }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

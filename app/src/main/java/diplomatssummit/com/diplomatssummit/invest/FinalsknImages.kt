@@ -31,7 +31,14 @@ class FinalsknImages : AppCompatActivity() {
 
         title = ""
 
-        imagelist=getImsfromTitle(country,region)
+        val split1=ims.split("}")
+
+        var i=0
+        while(i<split1.size){
+            if(split1[i].split("{")[0]==region)
+                imagelist=split1[i].split("{")[1].split(",") as ArrayList<String>
+            i++
+        }
 
 
 
@@ -51,50 +58,6 @@ class FinalsknImages : AppCompatActivity() {
         return true
     }
 
-    fun getImsfromTitle(country: String,region:String): ArrayList<String> {
-        val ob=CtyInvMethod()
-        val fromTableAL=ob.readImagesFromTitle(country)
-        var size=fromTableAL.size
-        var i=0
-        var returningArrayList:ArrayList<String>
-        returningArrayList= arrayListOf()
-        var finalArrayList:ArrayList<String>
-        = arrayListOf()
 
-        var imageStringLine=String()
-
-        while(i<size)
-        {
-            var buffer=fromTableAL[i].InMedia
-            buffer?.let { returningArrayList.add(it) }
-            i++
-        }
-        val stage1filter=returningArrayList[0].split('}')
-        val stage1size=stage1filter.size-1
-
-        var j=0
-        val stage2filter:ArrayList<String>
-                =arrayListOf()
-        while(j<stage1size){
-            var buffer=stage1filter[j]
-           buffer.let {stage2filter.add(it) }
-            if (buffer.contains(region)){
-                imageStringLine=buffer.split('{')[1]
-            }
-            j++
-        }
-        val buffer=imageStringLine.split(',')
-        val sizeStringline=buffer.size
-
-        var k=0
-        while(k<sizeStringline)
-        {
-            var wordbuffer=buffer[k]
-            wordbuffer.let { finalArrayList.add(it) }
-            Log.d("fromTableAL", wordbuffer)
-            k++
-        }
-        return finalArrayList
-    }
 
 }

@@ -41,16 +41,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
     private Context mContext;
     private List<String> mDatas;
     private List<String> mTitles;
-    private List<String> mContent;
+    private ArrayList<String> mMediaUrl;
     private int flag=0;
 
     private OnItemPhotoChangedListener mOnItemPhotoChangedListener;
 
 
-    public RecyclerAdapter(Context mContext, List<String> mDatas,List<String> mTitles) {
+    public RecyclerAdapter(Context mContext, List<String> mDatas,List<String> mTitles,ArrayList<String> mMediaUrl) {
         this.mContext = mContext;
         this.mDatas = mDatas;
         this.mTitles=mTitles;
+        this.mMediaUrl=mMediaUrl;
     }
 
 
@@ -96,7 +97,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
                 }
 
                 Intent j = new Intent(mContext, Gal_InsidePageActivity.class);
-                j.putExtra("galCon",place);
+                j.putStringArrayListExtra("galCon",mMediaUrl);
                 j.putExtra("titleGal",imageTitle)
 ;                mContext.startActivity(j);
             }

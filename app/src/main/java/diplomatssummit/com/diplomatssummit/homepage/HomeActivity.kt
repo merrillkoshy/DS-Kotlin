@@ -8,7 +8,6 @@ import android.util.Log
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import diplomatssummit.com.diplomatssummit.Gallery.GalleryActivity
-import diplomatssummit.com.diplomatssummit.Gallery.gallery
 import diplomatssummit.com.diplomatssummit.PartnerActivity
 import diplomatssummit.com.diplomatssummit.R
 import diplomatssummit.com.diplomatssummit.articles.ArticleReaderActivity
@@ -29,11 +28,15 @@ class HomeActivity:AppCompatActivity(){
     private var upcTarget = String()
     private var invTarget = String()
     private var credsTarget = String()
+    private var galleryTarget=String()
     private var resultArray = ArrayList<String>()
     private var countries=ArrayList<String>()
     private var indescriptions=ArrayList<String>()
     private var resultArrayUpc = ArrayList<String>()
     private var resultArrayInvest = ArrayList<String>()
+    private var galleryMediaUrl = ArrayList<String>()
+    private var galleryThumb = ArrayList<String>()
+    private var galleryTitle = ArrayList<String>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +48,7 @@ class HomeActivity:AppCompatActivity(){
             fetchJsonPast()
             fetchJsonInvest()
             fetchJson_CredTable()
+            fetchJsonGallery()
         }
         else{
             val builder = AlertDialog.Builder(this)
@@ -93,6 +97,28 @@ class HomeActivity:AppCompatActivity(){
             }
         })
     }
+
+    fun fetchJsonGallery() {
+        val url = "https://diplomatssummit.com/volley/galleryactivity.php"
+
+        val client = OkHttpClient()
+        val request = Request.Builder().url(url).build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onResponse(call: Call, response: Response) {
+                val body = response.body()?.string()
+
+                //Slicing the response
+                galleryTarget = body.toString()
+
+            }
+
+            override fun onFailure(call: Call, e: IOException) {
+                println("Failed to execute request")
+            }
+        })
+    }
+
 
     fun fetchJsonPast() {
         val url = "https://diplomatssummit.com/volley/pastevents.php"
@@ -236,8 +262,33 @@ class HomeActivity:AppCompatActivity(){
 
 
 
-            galbutton.setOnClickListener() {
+            galbutton.setOnClickListener{
+
+                val arraytarget = galleryTarget.split("]")
+
+                galleryMediaUrl=arraytarget[0].
+                        replace("[","").
+                        replace("\\","").
+                        replace("\"","").
+                        replace("-225x300","").
+                        replace(" ","").split(",")as ArrayList<String>
+
+                galleryThumb=arraytarget[1].
+                        replace("[","").
+                        replace("\\","").
+                        replace("\"","").
+                        replace("-225x300","").split(",")as ArrayList<String>
+
+                galleryTitle=arraytarget[2].
+                        replace("[","").
+                        replace("\\","").
+                        replace("\"","").split(",")as ArrayList<String>
+
                 val intent: Intent = Intent(this, GalleryActivity::class.java)
+                intent.putExtra("galleryMediaUrl",galleryMediaUrl)
+                intent.putExtra("galleryThumb",galleryThumb)
+                intent.putExtra("galleryTitle",galleryTitle)
+
                 startActivity(intent)
             }
             bp.setOnClickListener() {

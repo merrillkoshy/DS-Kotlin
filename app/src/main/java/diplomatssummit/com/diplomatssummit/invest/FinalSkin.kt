@@ -39,6 +39,8 @@ class FinalSkin : AppCompatActivity() {
         val position=intent.getIntExtra("position",0)
         val regionDescr=intent.getStringExtra("description")
 
+
+
         val splitContentinit=regionDescr.split('}')
         val splitContent=splitContentinit[position].split('{')
         Log.d("regionNamefromSplit",splitContent[0])
@@ -52,18 +54,21 @@ class FinalSkin : AppCompatActivity() {
         fab.setOnClickListener{
             val intent:Intent=Intent(this,FinalsknImages::class.java)
 
-
+            intent.putExtra("region",region)
+            intent.putExtra("country",country)
             intent.putExtra("inMedia",ims)
             startActivity(intent)
 
         }
 
         val postheading=splitContent[1].split('^')[0]
-        val postExtract=splitContent[1].split('^')[1]
-        if(splitContent[0]==region) {
+        val postExtract=splitContent[1].split('^')[1].replace("u201c","\"").replace("u201d","\"").replace("u2018","\'").replace("u2019","\'").replace("u2013",":").replace("  ","\n")
+        Log.d("postHeading",postheading)
+        Log.d("postExtract",postExtract)
+
             posthead.setText(postheading)
             tv.setText(postExtract)
-        }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -76,6 +76,8 @@ class InvAuthdapter(private val mContext: Context, private val mDatas: List<Stri
         holder.mTitles.text = imageTitle
 
         var description=ArrayList<String>()
+        var mediaUrl=ArrayList<String>()
+        var countries=ArrayList<String>()
         /*Animation animation,imageanim;
         animation = AnimationUtils.loadAnimation(mContext,R.anim.slide_up);
         imageanim = AnimationUtils.loadAnimation(mContext,R.anim.image_slideup);
@@ -84,17 +86,34 @@ class InvAuthdapter(private val mContext: Context, private val mDatas: List<Stri
         val place = ArrayList<String>()
         holder.mChange.setOnClickListener {
             val arraytarget = countryDetails.split("]")
-/*
-            val inMedia=arraytarget[2].replace("[","").replace("\\","").replace("\"","").split(",")*/
-            val mediaUrl=arraytarget[0].replace("[","").replace("\\r","\r").replace("\\n","\n").replace("\\","").replace("\"","").split(",") as ArrayList<String>
-            val countries=arraytarget[1].replace("[","").replace("\"","").split(",")as ArrayList<String>
-            val sizeDum=arraytarget[2].replace("[","").replace("\\","").replace("\"","").split("},")
+
+            val sizeDum1=arraytarget[0].replace("[","").replace("\\r","\r").replace("\\n","\n").replace("\\","").replace("\"","").split(",")
+            val sizeDum2=arraytarget[1].replace("[","").replace("\"","").split(",")
+            val sizeDum3=arraytarget[2].replace("[","").replace("\\","").replace("   ","").split("$#")
+
+            var a=0
             var b=0
-            while(b<sizeDum.size)
+            var c=0
+
+            while(a<sizeDum1.size)
             {
-                description.add(sizeDum[b])
+                mediaUrl.add(sizeDum1[a])
+                a++
+            }
+            while(b<sizeDum2.size)
+            {
+                countries.add(sizeDum2[b])
                 b++
             }
+            while(c<sizeDum3.size){
+
+                description.add(sizeDum3[c])
+                c++
+            }
+
+            Log.d("description_outer1",description[0])
+            Log.d("description_outer2",description[1])
+
             val inMedia=arraytarget[3].replace("[","").replace("\\r","\r").replace("\\n","\n").replace("\\","").replace("\"","").split("$")as ArrayList<String>
 
             intent.putStringArrayListExtra("mediaUrl",mediaUrl)
