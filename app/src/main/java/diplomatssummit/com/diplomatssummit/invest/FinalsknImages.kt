@@ -14,7 +14,7 @@ class FinalsknImages : AppCompatActivity() {
 
     var imagelist=ArrayList<String>()
     var titleIm=String()
-
+    var flag= 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,15 +31,30 @@ class FinalsknImages : AppCompatActivity() {
 
         title = ""
 
-        val split1=ims.split("}")
-
+        val split1=ims.replace("\\\n","").replace("\\\r","").split("}")
+        var buffer=String()
+        var split2=split1
         var i=0
         while(i<split1.size){
-            if(split1[i].split("{")[0]==region)
-                imagelist=split1[i].split("{")[1].split(",") as ArrayList<String>
+            Log.d(region.replace("\n","").trim().toString(),split1[i].split("{")[0].trim().toString())
+            if(split1[i].split("{")[0].trim().toString()==region.replace("\n","").trim().toString()) {
+                Log.d("its a match",""+i)
+                flag = i
+                break
+            }
             i++
         }
 
+
+        split2=split1[flag].split("{")[1].split(",")
+        var k=0
+        while(k<split2.size)
+        {
+            buffer=split2[k]
+            Log.d("buffer",buffer)
+            imagelist.add(buffer)
+            k++
+        }
 
 
         val viewpager: ViewPager =findViewById(R.id.inside_pager)

@@ -35,7 +35,14 @@ class GalleryActivity:AppCompatActivity(){
 
         Log.d("galleryThumb",getDatas[0])
         Log.d("galleryTitle",getTitles[0])
-        Log.d("getMediaUrl",getMediaUrl[0])
+
+        var i=0
+        while(i<getMediaUrl.size)
+        {
+            Log.d("getMediaUrl",getMediaUrl[i])
+            i++
+        }
+
 
         val recyclerAdapter: RecyclerAdapter = RecyclerAdapter(
                 this,

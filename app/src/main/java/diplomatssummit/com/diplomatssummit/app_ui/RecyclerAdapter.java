@@ -41,7 +41,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
     private Context mContext;
     private List<String> mDatas;
     private List<String> mTitles;
-    private ArrayList<String> mMediaUrl;
+    private List<String> mMediaUrl;
     private int flag=0;
 
     private OnItemPhotoChangedListener mOnItemPhotoChangedListener;
@@ -76,6 +76,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
         DLog.d(TAG, "RecyclerAdapter onBindViewHolder" + "--> position = " + position);
         String imageUrl = mDatas.get(position);
         final String imageTitle=mTitles.get(position);
+        final String imageUrls=mMediaUrl.get(position);
         Picasso.get().load(imageUrl).fit().centerCrop().into(holder.mView);
         List getTitleonBind1=getTitle(position);
         String getTitleonBind2=getTitleonBind1.get(0).toString();
@@ -97,7 +98,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
                 }
 
                 Intent j = new Intent(mContext, Gal_InsidePageActivity.class);
-                j.putStringArrayListExtra("galCon",mMediaUrl);
+                j.putExtra("galCon",imageUrls);
                 j.putExtra("titleGal",imageTitle)
 ;                mContext.startActivity(j);
             }

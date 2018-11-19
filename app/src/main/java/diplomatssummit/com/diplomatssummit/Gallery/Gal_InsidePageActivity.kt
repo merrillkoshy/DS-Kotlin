@@ -31,7 +31,17 @@ class Gal_InsidePageActivity : AppCompatActivity() {
 
 
 
-        imagelist=intent.getStringArrayListExtra("galCon")
+        val buffer=intent.getStringExtra("galCon")
+        Log.d("see-buffer",buffer)
+        val tray=buffer.split(",")
+        var w=0
+        while (w<tray.size)
+        {
+            imagelist.add(tray[w])
+            Log.d("tray",tray[w])
+            w++
+        }
+
         titleIm=intent.getStringExtra("titleGal")
         size = imagelist.size
 

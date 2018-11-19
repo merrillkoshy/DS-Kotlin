@@ -21,7 +21,7 @@ class FinalSkin : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         val ims=intent.getStringExtra("inMedia")
 
-        Log.d("ims",ims)
+        Log.d("imsFS",ims)
 
         val region=intent.getStringExtra("RegionName")
         title=region

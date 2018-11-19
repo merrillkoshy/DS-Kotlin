@@ -48,7 +48,7 @@ class OpportunityAdapter(
         val imageTitle = mRegion!![position]
         val imageUrl = mRegionImage!![position]
 
-
+        Log.d("insideAdapterinMage",inMedia)
 
         intent.putExtra("RegionName",imageTitle)
         intent.putExtra("RegionUrl",imageUrl)

@@ -116,6 +116,7 @@ class InvAuthdapter(private val mContext: Context, private val mDatas: List<Stri
 
             val inMedia=arraytarget[3].replace("[","").replace("\\r","\r").replace("\\n","\n").replace("\\","").replace("\"","").split("$")as ArrayList<String>
 
+
             intent.putStringArrayListExtra("mediaUrl",mediaUrl)
             intent.putStringArrayListExtra("countries",countries)
             intent.putStringArrayListExtra("description",description)

@@ -32,7 +32,7 @@ class GalleryPagerAdapter(private val mContext: Context, private val imageList: 
 
         val imageUrl = imageList!![position]
 
-        if(imageUrl=="")
+        if(imageUrl=="NULL")
         {
             val strin: String = "https://diplomatssummit.com/mobile/hp_assets/placeholder.jpg"
             val pagerImageView = rootView.findViewById<ImageView>(R.id.galleryinside)
