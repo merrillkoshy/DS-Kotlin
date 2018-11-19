@@ -48,7 +48,7 @@ class FinalSkin : AppCompatActivity() {
         val iv:ImageView=findViewById(R.id.finalSkinImage)
         val tv:TextView=findViewById(R.id.finalSkinContent)
         val posthead:TextView=findViewById(R.id.postheading)
-        Picasso.get().load(regionurl).resize(400,200).centerCrop().into(iv)
+        Picasso.get().load(regionurl).resize(400,200).centerCrop().placeholder( R.drawable.progress_animation ).into(iv)
 
         val fab:FloatingActionButton=findViewById(R.id.fab_finalskin)
         fab.setOnClickListener{

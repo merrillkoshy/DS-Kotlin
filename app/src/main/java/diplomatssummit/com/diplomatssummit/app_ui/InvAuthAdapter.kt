@@ -70,7 +70,7 @@ class InvAuthdapter(private val mContext: Context, private val mDatas: List<Stri
         val imageTitle = mTitles!![position]
         val contents=mContent!![position]
         val intent=Intent(mContext,OpportunityActivity::class.java)
-        Picasso.get().load(imageUrl).fit().centerCrop().into(holder.mView)
+        Picasso.get().load(imageUrl).fit().centerCrop().placeholder( R.drawable.progress_animation ).into(holder.mView)
         fetchJson_CountryDetails()
 
         holder.mTitles.text = imageTitle

@@ -78,7 +78,7 @@ public class InvAdapter extends RecyclerView.Adapter<InvAdapter.MyHolder> {
         DLog.d(TAG, "RecyclerAdapter onBindViewHolder" + "--> position = " + position);
         String imageUrl = mDatas.get(position);
         final String imageTitle=mTitles.get(position);
-        Picasso.get().load(imageUrl).fit().centerCrop().into(holder.mView);
+        Picasso.get().load(imageUrl).fit().centerCrop().placeholder( R.drawable.progress_animation ).into(holder.mView);
 
         holder.mTitles.setText(imageTitle);
 

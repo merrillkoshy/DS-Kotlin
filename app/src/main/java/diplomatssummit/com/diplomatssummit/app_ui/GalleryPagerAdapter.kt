@@ -37,11 +37,11 @@ class GalleryPagerAdapter(private val mContext: Context, private val imageList: 
             val strin: String = "https://diplomatssummit.com/mobile/hp_assets/placeholder.jpg"
             val pagerImageView = rootView.findViewById<ImageView>(R.id.galleryinside)
             Log.d("gPA_test", strin)
-            Picasso.get().load(strin).centerCrop().fit().into(pagerImageView)
+            Picasso.get().load(strin).centerCrop().fit().placeholder( R.drawable.progress_animation ).into(pagerImageView)
         }else {
             val pagerImageView = rootView.findViewById<ImageView>(R.id.galleryinside)
             Log.d("gPA_test", imageUrl)
-            Picasso.get().load(imageUrl).centerCrop().fit().into(pagerImageView)
+            Picasso.get().load(imageUrl).centerCrop().fit().placeholder( R.drawable.progress_animation ).into(pagerImageView)
         }
         viewGroup.addView(rootView)
 

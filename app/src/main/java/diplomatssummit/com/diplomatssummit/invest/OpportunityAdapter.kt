@@ -57,7 +57,7 @@ class OpportunityAdapter(
         intent.putExtra("description",description)
         intent.putExtra("inMedia",inMedia)
 
-        Picasso.get().load(imageUrl).fit().centerCrop().into(holder.mView)
+        Picasso.get().load(imageUrl).fit().centerCrop().placeholder( R.drawable.progress_animation ).into(holder.mView)
         holder.mTitles.text = imageTitle
         holder.mCardView.setOnClickListener{
             mContext.startActivity(intent)
