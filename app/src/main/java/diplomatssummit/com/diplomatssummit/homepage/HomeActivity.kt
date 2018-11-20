@@ -278,8 +278,12 @@ class HomeActivity:AppCompatActivity(){
                         replace("\\","").
                         replace("\"","").
                         replace("-225x300","").
-                        replace(" ","").split(",")as ArrayList<String>
-
+                        replace(" ","").split("}")as ArrayList<String>
+                var i=0
+                while(i<galleryMediaUrl.size) {
+                    Log.d("HomeGal", galleryMediaUrl[i])
+                    i++
+                }
                 galleryThumb=arraytarget[1].
                         replace("[","").
                         replace("\\","").
