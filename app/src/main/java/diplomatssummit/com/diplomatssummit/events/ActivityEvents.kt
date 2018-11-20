@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_events.*
 import okhttp3.*
 import java.io.IOException
 import diplomatssummit.com.diplomatssummit.MainActivity
-
+import diplomatssummit.com.diplomatssummit.app_ui.ExternalEventsAdapter
 
 
 class ActivityEvents:AppCompatActivity(){
@@ -47,7 +47,7 @@ class ActivityEvents:AppCompatActivity(){
         val past:TextView=findViewById(R.id.pastIv)
         past.text="PAST EVENTS"
         val ttimes:TextView=findViewById(R.id.t_times_iv)
-        ttimes.text="Events from 10times"
+        ttimes.text="Events in Dubai"
     }
     fun rvlists(){
         val upcData=intent.getStringArrayListExtra("upcoming")
@@ -62,7 +62,17 @@ class ActivityEvents:AppCompatActivity(){
         past.layoutManager=LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
         past.adapter=pastAdapter
 
-        val ttimesAdapter:PartnerRCAdapter= PartnerRCAdapter(this,ttimeslist())
+        val extEvents=intent.getStringArrayListExtra("extEvents")[0]
+        val ext_Events=extEvents.split("*")
+        val external_events=ArrayList<String>()
+        var i=1
+        while(i<ext_Events.size)
+        {
+            external_events.add(ext_Events[i])
+            Log.d("ext_Events",ext_Events[i])
+            i++
+        }
+        val ttimesAdapter= ExternalEventsAdapter(external_events)
         val ttimes:RecyclerView=findViewById(R.id.t_times_rv)
         ttimes.layoutManager=LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
         ttimes.adapter=ttimesAdapter

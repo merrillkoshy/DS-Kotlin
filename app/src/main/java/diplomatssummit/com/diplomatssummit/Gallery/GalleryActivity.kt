@@ -67,11 +67,8 @@ class GalleryActivity:AppCompatActivity(){
                 // set default position
                 .initPosition(0)
                 // finally call method
-                .setUp();
-
-
+                .setUp()
     }
-
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

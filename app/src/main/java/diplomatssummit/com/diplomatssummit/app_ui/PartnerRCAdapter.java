@@ -57,7 +57,7 @@ public class PartnerRCAdapter extends RecyclerView.Adapter<PartnerRCAdapter.MyHo
 
         DLog.d(TAG, "RecyclerAdapter onBindViewHolder" + "--> position = " + position);
         String imageUrl = mDatas.get(position);
-        Picasso.get().load(imageUrl).fit().centerCrop().into(holder.mView);
+        Picasso.get().load(imageUrl).fit().centerCrop().placeholder(R.drawable.progress_animation).into(holder.mView);
         }
 
      public int getPos(final int position){

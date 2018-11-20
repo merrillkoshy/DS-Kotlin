@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.animation.AnimationUtils
@@ -36,8 +37,20 @@ class ArticleReaderActivity:AppCompatActivity(), GestureDetector.OnGestureListen
         setContentView(R.layout.articles_vpager)
 
         swipe= GestureDetector(this@ArticleReaderActivity,this@ArticleReaderActivity)
+
+        val articlesThumb=intent.getStringExtra("articlesThumb")
+        val articlesTitle=intent.getStringExtra("articlesTitle")
+        val articlesSD=intent.getStringExtra("articlesSD")
+        val articlesLD=intent.getStringExtra("articlesLD")
+
+
+        val getImage=articlesThumb.split(",")
+        val getPreviewtext=articlesTitle.split(",")
+        val getTeasertext=articlesSD.split("$")
+        val getFullStory=articlesLD.split("$")
+
         val viewpager: ViewPager =findViewById(R.id.inside_pager)
-        val pagerAdapter = ArticleAdapter(this, getImage(),getPreviewtext(),getTeasertext(),getFullStory())
+        val pagerAdapter = ArticleAdapter(this, getImage,getPreviewtext,getTeasertext,getFullStory)
         viewpager.adapter = pagerAdapter
         val springdot: SpringDotsIndicator =findViewById(R.id.spring_dot)
         springdot.setViewPager(viewpager)

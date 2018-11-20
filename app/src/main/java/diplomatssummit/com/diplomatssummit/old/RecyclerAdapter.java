@@ -1,4 +1,4 @@
-package diplomatssummit.com.diplomatssummit.app_ui;
+package diplomatssummit.com.diplomatssummit.old;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -33,7 +33,9 @@ import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
+/*
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHolder> {
 
@@ -42,6 +44,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
     private List<String> mDatas;
     private List<String> mTitles;
     private ArrayList<String> mMediaUrl;
+    private String t1;
     private int flag=0;
 
     private OnItemPhotoChangedListener mOnItemPhotoChangedListener;
@@ -78,9 +81,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
         final String imageTitle=mTitles.get(position);
         int i=0;
         while(i<mMediaUrl.size()) {
-            Log.d("mMediaUrl", mMediaUrl.get(i));
+            t1=mMediaUrl.get(i);
+            String[] separated = t1.split(Pattern.quote("{"));
+            Log.d("mMediaUrl",separated[0]);
             i++;
         }
+
 
         Picasso.get().load(imageUrl).fit().centerCrop().into(holder.mView);
         List getTitleonBind1=getTitle(position);
@@ -103,7 +109,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
                 }
 
                 Intent j = new Intent(mContext, Gal_InsidePageActivity.class);
-                j.putStringArrayListExtra("galCon",mMediaUrl.get(position));
+                j.putStringArrayListExtra("galCon",mMediaUrl);
                 j.putExtra("titleGal",imageTitle)
 ;                mContext.startActivity(j);
             }
@@ -152,4 +158,4 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
 
     private class TAG {
     }
-}
+}*/

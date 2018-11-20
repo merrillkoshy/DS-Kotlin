@@ -40,10 +40,22 @@ class PartnerActivity : AppCompatActivity() {
 
         try {
 
+            val partnerNames=intent.getStringExtra("partnerNames")
+            val partnerThumbs=intent.getStringExtra("partnerThumbs")
+
+            val achieveThumb=intent.getStringExtra("achieveThumb")
+            val achieveSD=intent.getStringExtra("achieveSD")
+            val achieveLD=intent.getStringExtra("achieveLD")
+
+            Log.d("Names",partnerNames)
+            Log.d("Thumbs",partnerThumbs)
+            val getDatas=partnerThumbs.split(",")
+
+
             val mRecyclerView: GalleryRecyclerView =findViewById(R.id.rv_partnerlist)
             val recyclerAdapter: PartnerRCAdapter =PartnerRCAdapter(
                     this,
-                    getDatas()
+                    getDatas
 
             )
             val itemClickListener:GalleryRecyclerView.OnItemClickListener
@@ -69,6 +81,8 @@ class PartnerActivity : AppCompatActivity() {
                     // finally call method
                     .setUp()
 
+
+
             val animleft:Animation=AnimationUtils.loadAnimation(this,R.anim.slide_left)
             val achieveIv:ImageView=findViewById(R.id.achievements_icon)
             val achieveTv:TextView=findViewById(R.id.achievements)
@@ -77,10 +91,13 @@ class PartnerActivity : AppCompatActivity() {
             associations_icon.startAnimation(animleft)
             associations.startAnimation(animleft)
 
+            val getAchievementsImage=achieveThumb.split(",")
+            val getAchievementsDescriptionShort=achieveSD.split("$")
+            val getAchievementsDescriptionLong=achieveLD.split("$")
             val achieveRv: GalleryRecyclerView =findViewById(R.id.rv_achievelist)
             val rcyad2: Viewstory = Viewstory(
                     this,
-                    getAchievementsImage(),getAchievementsDescriptionShort(),getAchievementsDescriptionLong()
+                    getAchievementsImage,getAchievementsDescriptionShort,getAchievementsDescriptionLong
             )
 
 
@@ -103,26 +120,6 @@ class PartnerActivity : AppCompatActivity() {
     }
 
 
-    fun getDatas(): MutableList<String>? {
-
-        val ob2= PartnerMethod()
-        val ar2=ob2.readMediaRowsBasedOnType(1)
-        val s2=ob2.itemsize()
-        var imagelist:MutableList<String>
-
-        imagelist= arrayListOf()
-
-        var i=0
-
-        while (i<s2) {
-            var ip2=ar2[i].MediaUrl
-            ip2?.let { imagelist.add(i, it) }
-            i++
-        }
-
-
-        return imagelist
-    }
 
     fun getAchievementsImage(): MutableList<String> {
 

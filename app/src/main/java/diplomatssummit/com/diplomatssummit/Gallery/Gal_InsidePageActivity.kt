@@ -32,8 +32,10 @@ class Gal_InsidePageActivity : AppCompatActivity() {
 
 
         val buffer=intent.getStringExtra("galCon")
-        Log.d("see-buffer",buffer)
-        val tray=buffer.split(",")
+        var bufferForUrls=intent.getStringExtra("mediasGal")
+        bufferForUrls=bufferForUrls.split("{")[1]
+        Log.d("see-buffer",bufferForUrls)
+        val tray=bufferForUrls.split(",")
         var w=0
         while (w<tray.size)
         {
@@ -45,12 +47,6 @@ class Gal_InsidePageActivity : AppCompatActivity() {
         titleIm=intent.getStringExtra("titleGal")
         size = imagelist.size
 
-        var i = 0
-        Log.d("gSize_test", size.toString())
-        while (i < size) {
-            Log.d("gAct_test", imagelist[i])
-            i++
-        }
 
         val viewpager: ViewPager =findViewById(R.id.inside_pager)
         val pagerAdapter = GalleryPagerAdapter(this, imagelist)

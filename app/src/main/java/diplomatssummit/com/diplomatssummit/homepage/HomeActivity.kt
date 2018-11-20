@@ -19,8 +19,12 @@ import android.net.NetworkInfo
 import android.content.Context.CONNECTIVITY_SERVICE
 import android.support.v4.content.ContextCompat.getSystemService
 import android.net.ConnectivityManager
+import android.os.AsyncTask
 import android.support.v7.app.AlertDialog
+import android.view.View
 import android.widget.Toast
+import kotlinx.android.synthetic.main.fragment_events.*
+import org.jsoup.Jsoup
 
 
 class HomeActivity:AppCompatActivity(){
@@ -28,6 +32,9 @@ class HomeActivity:AppCompatActivity(){
     private var upcTarget = String()
     private var invTarget = String()
     private var credsTarget = String()
+    private var partnersTarget = String()
+    private var achievementsTarget = String()
+    private var articlesTarget = String()
     private var galleryTarget=String()
     private var resultArray = ArrayList<String>()
     private var countries=ArrayList<String>()
@@ -37,7 +44,7 @@ class HomeActivity:AppCompatActivity(){
     private var galleryMediaUrl = ArrayList<String>()
     private var galleryThumb = ArrayList<String>()
     private var galleryTitle = ArrayList<String>()
-
+    val event_listing: ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +56,10 @@ class HomeActivity:AppCompatActivity(){
             fetchJsonInvest()
             fetchJson_CredTable()
             fetchJsonGallery()
+            fetchJson_PartnersTable()
+            fetchJson_Achievements()
+            fetchJson_Articles()
+            SiteGrabber().execute()
         }
         else{
             val builder = AlertDialog.Builder(this)
@@ -119,7 +130,6 @@ class HomeActivity:AppCompatActivity(){
         })
     }
 
-
     fun fetchJsonPast() {
         val url = "https://diplomatssummit.com/volley/pastevents.php"
 
@@ -181,6 +191,131 @@ class HomeActivity:AppCompatActivity(){
                 println("Failed to execute request")
             }
         })
+    }
+
+    fun fetchJson_PartnersTable() {
+        val url = "https://diplomatssummit.com/volley/partneractivity.php"
+
+        val client = OkHttpClient()
+        val request = Request.Builder().url(url).build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onResponse(call: Call, response: Response) {
+                val body = response.body()?.string()
+
+                //Slicing the response
+                partnersTarget = body.toString()
+
+            }
+
+            override fun onFailure(call: Call, e: IOException) {
+                println("Failed to execute request")
+            }
+        })
+    }
+
+    fun fetchJson_Achievements() {
+        val url = "https://diplomatssummit.com/volley/achieveactivity.php"
+
+        val client = OkHttpClient()
+        val request = Request.Builder().url(url).build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onResponse(call: Call, response: Response) {
+                val body = response.body()?.string()
+
+                //Slicing the response
+                achievementsTarget = body.toString()
+
+            }
+
+            override fun onFailure(call: Call, e: IOException) {
+                println("Failed to execute request")
+            }
+        })
+    }
+
+    fun fetchJson_Articles() {
+        val url = "https://diplomatssummit.com/volley/articlesTable.php"
+
+        val client = OkHttpClient()
+        val request = Request.Builder().url(url).build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onResponse(call: Call, response: Response) {
+                val body = response.body()?.string()
+
+                //Slicing the response
+                articlesTarget = body.toString()
+
+            }
+
+            override fun onFailure(call: Call, e: IOException) {
+                println("Failed to execute request")
+            }
+        })
+    }
+
+    private inner class SiteGrabber : AsyncTask<Void, Boolean, String>() {
+
+        override fun doInBackground(vararg voids: Void): String {
+
+            publishProgress(true)
+
+            val data = StringBuilder()
+            val sitecont = StringBuilder()
+            var i=0
+            try {
+
+                val document = Jsoup.connect("https://10times.com/dubai-ae").get()
+                //Document parsed = Jsoup.parseBodyFragment("https://10times.com/dubai-ae");
+                val body = document.body()
+                val newValue = ""
+                val paragraphs = body.getElementsByTag("h2")
+
+                loop@for (element in paragraphs){
+                    val ad="#reveal-ad"
+                    val ad_select=document.select(ad)
+
+                    i++
+                    val date=document.select("#content > tr:nth-child(" + i + ") > td.text-drkr").toString()
+                    if(date=="")
+                        continue@loop
+                    val pattern = "<[^>]*>".toRegex()
+
+                    val oldValue = pattern
+
+
+                    val output1 = date.replace(oldValue, newValue)
+                    val output=output1.replace(ad_select.text(),"")
+                    data.append("\n\n"+"*").append(output).append("\n\n").append(element.text())
+                }
+                data.append("\n\n")
+
+
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            publishProgress(false)
+
+            return data.toString()
+        }
+
+        override fun onPostExecute(response: String?) {
+            var response = response
+
+            if (response == null || response.isEmpty()) {
+                response = "Parsing Exception"
+            }
+
+            addlist(response)
+        }
+    }
+    private fun addlist(response: String) {
+        var response = response
+        event_listing.add(response)
     }
 
     fun initializeWidgets(){
@@ -248,8 +383,6 @@ class HomeActivity:AppCompatActivity(){
 
             }
 
-
-
             timel.setOnClickListener {
 
 
@@ -260,14 +393,15 @@ class HomeActivity:AppCompatActivity(){
                 val splittedupc = splitTextUpc(upcTarget)
 
                 val intent = Intent(this, ActivityEvents::class.java)
+
+                Log.d("event_listing",event_listing[0])
+                intent.putStringArrayListExtra("extEvents",event_listing)
                 intent.putExtra("datadoc", splitted)
                 intent.putExtra("upcoming", splittedupc)
 
                 startActivity(intent)
 
             }
-
-
 
             galbutton.setOnClickListener{
 
@@ -302,12 +436,127 @@ class HomeActivity:AppCompatActivity(){
 
                 startActivity(intent)
             }
+
+
             bp.setOnClickListener() {
                 val intent: Intent = Intent(this, PartnerActivity::class.java)
+
+
+                var buffer=partnersTarget.split("]")
+
+                var buffer2=achievementsTarget.split("]")
+
+                intent.putExtra("partnerNames",buffer[0].
+                        replace("\"","").
+                        replace("[",""))
+
+                intent.putExtra("partnerThumbs",buffer[1].
+                        replace("\"","").
+                        replace("[","").
+                        replace("\\",""))
+
+                intent.putExtra("achieveThumb",buffer2[0].
+                        replace("\"","").
+                        replace("[","").
+                        replace(" ",""))
+
+                intent.putExtra("achieveSD",buffer2[1].
+                        replace("\"","").
+                        replace("[","").
+                        replace("\\u2013"," - ").
+                        replace("\\r","\r").
+                        replace("\\n","\n").
+                        replace("\\",""))
+
+                intent.putExtra("achieveLD",buffer2[2].
+                        replace("\"","").
+                        replace("[","").
+                        replace("\\u2013"," - ").
+                        replace("\\u2019","\'").
+                        replace("\\u201d","\"").
+                        replace("\\u201c","\"").
+                        replace("\\r","\r").
+                        replace("\\n","\n").
+                        replace("\\",""))
                 startActivity(intent)
             }
+
+
             art.setOnClickListener() {
+
+                var buffer=articlesTarget.split("]")
                 val intent: Intent = Intent(this, ArticleReaderActivity::class.java)
+
+                intent.putExtra("articlesThumb",buffer[0].
+                        replace("\"","").
+                        replace("[","").
+                        replace(" ","").
+                        replace("\\",""))
+                Log.d("articlesThumb",buffer[0].
+                        replace("\"","").
+                        replace("[","").
+                        replace(" ","").
+                        replace("\\",""))
+
+                intent.putExtra("articlesTitle",buffer[1].
+                        replace("\"","").
+                        replace("[","").
+                        replace("\\u2013"," - ").
+                        replace("\\r","\r").
+                        replace("\\n","\n").
+                        replace("\\",""))
+                Log.d("articlesTitle",buffer[1].
+                        replace("\"","").
+                        replace("[","").
+                        replace("\\u2013"," - ").
+                        replace("\\r","\r").
+                        replace("\\n","\n").
+                        replace("\\",""))
+
+
+                intent.putExtra("articlesSD",buffer[2].
+                        replace("\"","").
+                        replace("[","").
+                        replace("\\u2013"," - ").
+                        replace("\\u2019","\'").
+                        replace("\\u201d","\"").
+                        replace("\\u201c","\"").
+                        replace("\\r","\r").
+                        replace("\\n","\n").
+                        replace("\\",""))
+                Log.d("articlesSD",buffer[2].
+                        replace("\"","").
+                        replace("[","").
+                        replace("\\u2013"," - ").
+                        replace("\\u2019","\'").
+                        replace("\\u201d","\"").
+                        replace("\\u201c","\"").
+                        replace("\\r","\r").
+                        replace("\\n","\n").
+                        replace("\\",""))
+
+
+                intent.putExtra("articlesLD",buffer[3].
+                        replace("\"","").
+                        replace("[","").
+                        replace("\\u2013"," - ").
+                        replace("\\u2019","\'").
+                        replace("\\u201d","\"").
+                        replace("\\u201c","\"").
+                        replace("\\r","\r").
+                        replace("\\n","\n").
+                        replace("\\",""))
+                Log.d("articlesLD",buffer[3].
+                        replace("\"","").
+                        replace("[","").
+                        replace("\\u2013"," - ").
+                        replace("\\u2019","\'").
+                        replace("\\u201d","\"").
+                        replace("\\u201c","\"").
+                        replace("\\r","\r").
+                        replace("\\n","\n").
+                        replace("\\",""))
+
                 startActivity(intent)
             }
         }
@@ -323,12 +572,6 @@ class HomeActivity:AppCompatActivity(){
             resultArray.add(buffer)
             i++
         }
-        val result_size = resultArray.size
-        var k = 0
-        while (k < result_size) {
-            Log.d("RA", resultArray[k])
-            k++
-        }
         return resultArray
 
     }
@@ -343,35 +586,10 @@ class HomeActivity:AppCompatActivity(){
             resultArrayUpc.add(buffer)
             i++
         }
-        val result_size = resultArrayUpc.size
-        var k = 0
-        while (k < result_size) {
-            Log.d("RA-UPC", resultArrayUpc[k])
-            k++
-        }
         return resultArrayUpc
 
     }
 
-    fun splitTextInv(targetText: String): ArrayList<String> {
-
-        var targetArray = targetText.split(",")
-        val size = targetArray.size
-        var i = 0
-        while (i < size) {
-            val buffer = targetArray[i].replace("\"", "").replace("\\", "").replace(" ", "")
-            resultArrayInvest.add(buffer)
-            i++
-        }
-        val result_size = resultArrayInvest.size
-        var k = 0
-        while (k < result_size) {
-            Log.d("RA-INV", resultArrayInvest[k])
-            k++
-        }
-        return resultArrayInvest
-
-    }
 
 
 }
