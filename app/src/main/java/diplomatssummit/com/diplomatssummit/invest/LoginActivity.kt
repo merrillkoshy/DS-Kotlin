@@ -20,6 +20,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import diplomatssummit.com.diplomatssummit.MainActivity
 import diplomatssummit.com.diplomatssummit.R
+import diplomatssummit.com.diplomatssummit.invest.Membership.MembershipActivity
 
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -53,7 +54,11 @@ class LoginActivity : AppCompatActivity(){
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
         val iv:ImageView=findViewById(R.id.register_prompt)
-        Picasso.get().load("https://diplomatssummit.com/Registration_assets/join.jpg").centerCrop().fit().into(iv)
+        Picasso.get().load("https://diplomatssummit.com/Registration_assets/join.jpg").centerCrop().fit().placeholder(R.drawable.progress_animation).into(iv)
+        iv.setOnClickListener{
+            val intent=Intent(this,MembershipActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 

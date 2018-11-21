@@ -19,4 +19,79 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+
+    <string-array name="salutation">
+        <item>--</item>
+        <item>Mr.</item>
+        <item>Ms.</item>
+        <item>Mrs.</item>
+        <item>Dr.</item>
+        <item>Sir</item>
+
+    </string-array>
+
+    <string-array name="companysize">
+        <item>--</item>
+        <item>1–49</item>
+        <item>50–99</item>
+        <item>100 and above</item>
+
+    </string-array>
+
+    <string-array name="industry">
+        <item>--</item>
+        <item>Advertising/Public Relations</item>
+        <item>Agribusiness</item>
+        <item>Architectural Services</item>
+        <item>Aviation</item>
+        <item>Attorneys/Law Firms</item>
+        <item>Automotive</item>
+        <item>Banks, Commercial</item>
+        <item>Bars &amp; Restaurants</item>
+        <item>Books, Magazines &amp; Newspapers</item>
+        <item>Builders/General Contractors</item>
+        <item>Business Services</item>
+        <item>Civil Servants/Public Officials</item>
+        <item>Clothing Manufacturing</item>
+        <item>Communications/Electronics</item>
+        <item>Computer Software</item>
+        <item>Doctors &amp; Other Health Professionals</item>
+        <item>Education</item>
+        <item>Electronics Manufacturing &amp; Equipment</item>
+        <item>Energy &amp; Natural Resources</item>
+        <item>Entertainment Industry</item>
+        <item>Farming</item>
+        <item>Food &amp; Beverage</item>
+        <item>Finance / Credit Companies</item>
+        <item>Foreign &amp; Defense Policy </item>
+        <item>General Contractors</item>
+        <item>Government</item>
+        <item>Hotels, Motels &amp; Tourism</item>
+        <item>Industrial Unions</item>
+        <item>Information Technology ( IT )</item>
+        <item>Labor</item>
+        <item>Other</item>
+        <item>Professional Sports, Sports Arenas &amp; Related Equipment &amp; Services</item>
+        <item>Real Estate</item>
+        <item>Retail Sales</item>
+        <item>Special Trade Contractors</item>
+        <item>Transportation/ Logistics</item>
+    </string-array>
+
+    <string-array name="affliation">
+        <item>--</item>
+        <item>NGO</item>
+        <item>Government</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="act">
+        <item>--</item>
+        <item>Below $25,000</item>
+        <item>$25,000 - $50,000</item>
+        <item>$50,000 - $100,000</item>
+        <item>$100,000 and above</item>
+    </string-array>
+
 </resources>

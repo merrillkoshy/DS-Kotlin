@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
-import diplomatssummit.com.diplomatssummit.Dataclasses.DCResponse
 import diplomatssummit.com.diplomatssummit.app_ui.Indicators.IndefinitePagerIndicator
 import diplomatssummit.com.diplomatssummit.app_ui.PartnerRCAdapter
 import kotlinx.android.synthetic.main.activity_events.*
@@ -63,7 +62,7 @@ class BetaActivity:AppCompatActivity() {
             val splitted=splitText(targetText)
             tv.text = splitted[0]
 
-            val intent=Intent(this,DCResponse::class.java)
+            val intent=Intent(this,BetaActivity::class.java)
             intent.putExtra("datadoc",splitted)
             startActivity(intent)
             val pastAdapter: PartnerRCAdapter = PartnerRCAdapter(this,splitted)

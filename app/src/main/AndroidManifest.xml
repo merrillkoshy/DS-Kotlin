@@ -10,14 +10,19 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+    <!-- For Membership Photo upload -->
+   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:name=".DiplomatApp"
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".SplashActivity"
@@ -35,6 +40,7 @@
         <activity
             android:name=".MainActivity"
             android:icon="@mipmap/ic_launcher"
+            android:exported="true"
             android:roundIcon="@mipmap/ic_launcher_round" />
         <activity android:name=".Gallery.Gal_InsidePageActivity" />
         <activity android:name=".invest.InvestActivity" />
@@ -46,17 +52,17 @@
         <activity android:name=".invest.FinalSkin" />
         <activity android:name=".invest.FinalsknImages" />
         <activity android:name=".app_ui.stories.DetailedStory" />
-        <activity android:name=".PartnerActivity"></activity>
+        <activity android:name=".PartnerActivity" />
         <activity android:name=".articles.ArticleReaderActivity" />
         <activity android:name=".app_ui.OnSwipeTouchListener" />
         <activity android:name=".articles.ReadSelectedArticle" />
         <activity android:name=".events.ActivityEvents" />
         <activity android:name=".app_ui.SampleActivity" />
         <activity android:name=".BetaActivity" />
-        <activity android:name=".Dataclasses.DCResponse" />
+        <activity android:name=".Networking.DCResponse" />
         <activity android:name=".homepage.HomeActivity" />
         <activity android:name=".Gallery.GalleryActivity" />
-
+        <activity android:name=".invest.Membership.MembershipActivity"></activity>
     </application>
 
 </manifest>
