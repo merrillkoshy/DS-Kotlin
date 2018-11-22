@@ -11,8 +11,11 @@ import android.support.v4.app.ActivityCompat.startActivityForResult
 import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.View.GONE
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import com.android.volley.NetworkResponse
+import com.android.volley.Request
 import com.squareup.picasso.Picasso
 import diplomatssummit.com.diplomatssummit.R
 import kotlinx.android.synthetic.main.activity_membership.*
@@ -21,25 +24,26 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
+import com.android.volley.Response
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.Volley
 import diplomatssummit.com.diplomatssummit.Networking.ServerResponse
-import diplomatssummit.com.diplomatssummit.Networking.Service
+import diplomatssummit.com.diplomatssummit.Networking.UploadImage
+import diplomatssummit.com.diplomatssummit.Networking.VolleyMultipartRequest
+import diplomatssummit.com.diplomatssummit.app_ui.CustomDropDownAdapter
 
 import okhttp3.*
 import okhttp3.RequestBody
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
-
-
-
-
-
+import org.json.JSONException
+import org.json.JSONObject
 
 
 class MembershipActivity : AppCompatActivity() {
 
     private val GALLERY = 1
     private val CAMERA = 2
-    internal var service: Service? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +54,7 @@ class MembershipActivity : AppCompatActivity() {
             showPictureDialog()
         }
 
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
     }
@@ -57,29 +62,27 @@ class MembershipActivity : AppCompatActivity() {
 
 private fun showPictureDialog() {
     val pictureDialog = AlertDialog.Builder(this)
-    pictureDialog.setTitle("Select Action")
-    val pictureDialogItems = arrayOf("Select photo from gallery", "Capture photo from camera")
+    pictureDialog.setTitle("Upload Your Photo")
+    val pictureDialogItems = arrayOf("Select photo from gallery")
     pictureDialog.setItems(pictureDialogItems
     ) { dialog, which ->
         when (which) {
             0 -> choosePhotoFromGallary()
-            1 -> takePhotoFromCamera()
         }
     }
     pictureDialog.show()
 }
 
 fun choosePhotoFromGallary() {
-    val galleryIntent = Intent(Intent.ACTION_PICK,
+
+    val intent=Intent(this,UploadImage::class.java)
+    startActivity(intent)
+/*    val galleryIntent = Intent(Intent.ACTION_PICK,
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
 
-    startActivityForResult(galleryIntent, GALLERY)
+    startActivityForResult(galleryIntent, GALLERY)*/
 }
 
-private fun takePhotoFromCamera() {
-    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-    startActivityForResult(intent, CAMERA)
-}
 
 public override fun onActivityResult(requestCode:Int, resultCode:Int, data: Intent?) {
 
@@ -101,33 +104,6 @@ public override fun onActivityResult(requestCode:Int, resultCode:Int, data: Inte
                 Toast.makeText(this@MembershipActivity, "Image Saved!", Toast.LENGTH_SHORT).show()
                 Picasso.get().load(contentURI).fit().placeholder(R.drawable.progress_animation).into(iv)
 
-                val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-                val cursor = contentResolver.query(contentURI!!, filePathColumn, null, null, null)
-                        ?: return
-
-                cursor.moveToFirst()
-
-                val columnIndex = cursor.getColumnIndex(filePathColumn[0])
-                val filePath = cursor.getString(columnIndex)
-                cursor.close()
-
-                val file = File(filePath)
-
-
-                val reqFile = RequestBody.create(MediaType.parse("image/*"), file)
-                val body = MultipartBody.Part.createFormData("upload", file.name, reqFile)
-                val name = RequestBody.create(MediaType.parse("text/plain"), "upload_test")
-
-
-                val req = service!!.postImage(body, name)
-
-                req.enqueue(object : Callback<ResponseBody>() {
-                    fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {}
-
-                    fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        t.printStackTrace()
-                    }
-                })
 
             }
             catch (e: IOException) {
@@ -138,14 +114,8 @@ public override fun onActivityResult(requestCode:Int, resultCode:Int, data: Inte
         }
 
     }
-    else if (requestCode == CAMERA)
-    {
-        val thumbnail = data!!.extras!!.get("data") as Bitmap
-        val bm=saveImage(thumbnail)
-        iv.visibility=GONE
-        Toast.makeText(this@MembershipActivity, "Image Saved!", Toast.LENGTH_SHORT).show()
-    }
 }
+
 
 
 
